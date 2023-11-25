@@ -34,7 +34,6 @@ const Signup: React.FC = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [displayName, setDisplayName] = useState("");
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -42,9 +41,9 @@ const Signup: React.FC = () => {
         if (data?.user?.identities?.length === 0) {
             alert("This user already exists");
         }
-        console.log(email, password, displayName);
-        console.log(data)
-        console.log(error)
+        if (error) {
+            alert(error)
+        }
 
     };
 
@@ -96,18 +95,7 @@ const Signup: React.FC = () => {
                                 disabled={false}
                             />
                         </IonRow>
-                        <IonRow>
-                            <IonInput
-                                label="Display Name"
-                                helperText="Enter your display name"
-                                labelPlacement="floating"
-                                counter={true}
-                                maxlength={32}
-                                minlength={8}
-                                onIonChange={(e) => setDisplayName(e.detail.value!)}
-                                disabled={false}
-                            />
-                        </IonRow>
+
                         <IonRow>
                             <IonCol className="ion-padding-top">
                                 <IonButton type="submit" expand="block">Signup</IonButton>
