@@ -1,9 +1,11 @@
 import { IonContent, IonHeader, IonInput, IonPage, IonText, IonTitle, IonToolbar, IonButton, IonGrid, IonCol, IonRow, IonButtons, IonMenuButton } from '@ionic/react';
 import { useState } from 'react';
 import { Signup as HandleSignup, Login as HanldeLogin } from '../apis/AuthenticationAPI';
-
+import { Redirect} from 'react-router';
+import { useHistory } from "react-router-dom";
 
 const Signup: React.FC = () => {
+
 
     /* Email Validation */
     const [isTouched, setIsTouched] = useState(false);
@@ -26,12 +28,12 @@ const Signup: React.FC = () => {
     };
 
 
-
     const markTouched = () => {
         setIsTouched(true);
     };
     /* Email Validation */
 
+    const history = useHistory();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -40,9 +42,10 @@ const Signup: React.FC = () => {
         const { data, error } = await HandleSignup(email, password);
         if (data?.user?.identities?.length === 0) {
             alert("This user already exists");
+            history.push("/login")
         }
         if (error) {
-            alert(error)
+            alert(error);
         }
 
     };
