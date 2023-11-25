@@ -22,26 +22,30 @@ import { useAuth } from '../contexts/AuthContext';
 import { useHistory } from 'react-router';
 import { GetServerHealthData} from '../apis/ConnectivityAPI';
 import HealthData from "../apis/ConnectivityAPI";
+import {Login as ApiLogin} from '../apis/AuthenticationAPI';
 
 
 const Login: React.FC = () => {
     const history = useHistory();
     const [email, setEmail] = useState("demo@linklabs.app");
-    const [password, setPassword] = useState("password");
+    const [password, setPassword] = useState("Password1@");
     const [isLoginFailed, setLoginFailed] = useState(false);
 
     const { login, isAuthenticated } = useAuth();
 
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         console.log("submit button clicked")
-        // Prevent the default behaviour (refresh page) of the form submit event
-        e.preventDefault();
-        // If the user has entered an email and password, attempt to log them in
+        event.preventDefault();
+
+        console.log("email: " + email + " password: " + password)
+
         if (email && password) {
-            const loginSuccess: boolean | null = login(email, password);
-            if (loginSuccess === false) {
-                setLoginFailed(true);
+            const { data, error } = await ApiLogin(email, password);
+            if (error) {
+                console.error(error);
+                alert(error);
             }
+            console.log(data)
         }
     }
 
@@ -140,13 +144,6 @@ const Login: React.FC = () => {
                         <IonCol>
                             <IonButton color="secondary"  type="submit" expand="block">Login</IonButton>
                             {/* <Button type="primary">Login</Button> */}
-                        </IonCol>
-                        <IonCol>
-                            <IonText color="medium">
-                                <p> debug info: </p>
-                                <p>Server Status: {isHelathData?.data?.health ? 'Healthy' : 'Unhealthy'}</p>
-                                <p>Server Version: {isHelathData?.data?.version}</p>
-                            </IonText>
                         </IonCol>
 
                     </form>

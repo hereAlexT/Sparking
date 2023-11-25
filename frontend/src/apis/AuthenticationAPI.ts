@@ -21,11 +21,6 @@ const Login = async (email: string, password: string) => {
         email: email,
         password: password
     })
-    if (error) {
-        console.error(data, error)
-    } else {
-        console.log(data)
-    }
     return { data, error };
 };
 
