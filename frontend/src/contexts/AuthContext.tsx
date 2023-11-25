@@ -1,21 +1,22 @@
 import { createContext, useContext, useReducer, ReactNode } from "react"
-import { User } from "../shared/interfaces/User.interfaces";
+import { Login as ApiLogin, Signup as ApiSignup } from '../apis/AuthenticationAPI';
+import type {
+    User,
+    Session
+} from '@supabase/gotrue-js/src/lib/types'
 
 
-const AuthContext = createContext({
-    user: null,
-    isAuthenticated: false,
-    login: (email: string, password: string): boolean => { return false; },
-    logout: () => {},
-});
 
-const initialState = {
-    user: null,
-    isAuthenticated: false,
-}
+type AuthContextType = {
+    user: User | null,
+    session: Session | null,
+    isAuthenticated: boolean,
+    login: (email: string, password: string) => void,
+    logout: () => void,
+};
 
 interface State {
-    user: any;
+    user?: User;
 }
 
 interface Action {
@@ -23,13 +24,28 @@ interface Action {
     payload?: any;
 }
 
+
+const AuthContext = createContext<AuthContextType>({
+    user: null,
+    session: null,
+    isAuthenticated: false,
+    login: (email: string, password: string) => { },
+    logout: () => { },
+});
+
+const initialState = {
+    user: null,
+    isAuthenticated: false,
+}
+
+
 function reducer(state: State, action: Action) {
     switch (action.type) {
         case "login":
-            return { ...state, user: action.payload, isAuthenticated: true }
+            return { ...state, user: action.payload.user, session: action.payload.session, isAuthenticated: true }
         case "logout":
             console.log("reducer : logout")
-            return { ...state, user: null, isAuthenticated: false };
+            return { ...state, user: null, session: null, isAuthenticated: false };
         case "signup":
             console.log("reducer : signup")
             return { ...state, user: action.payload, isAuthenticated: true };
@@ -39,13 +55,6 @@ function reducer(state: State, action: Action) {
 }
 
 
-const TEST_USER = {
-    userId: "123",
-    displayName: "Crazy John",
-    password: "password",
-    email: "demo@linklabs.app",
-    createdDate: new Date(),
-};
 
 interface AuthProviderProps {
     children: ReactNode;
@@ -56,15 +65,19 @@ function AuthProvider({ children }: AuthProviderProps) {
         reducer,
         initialState);
 
-    function login(email: string, password: string): boolean {
-        console.log("login function called " + email + " + " + password)
-        if (email === TEST_USER.email && password === TEST_USER.password) {
-            dispatch({ type: "login", payload: TEST_USER });
-            return true;
-        } else {
-            return false;
+    const login = async (email: string, password: string) => {
+        console.log("AuthContext " + email + " + " + password)
+        try {
+            const { user, session } = await ApiLogin(email, password);
+            dispatch({ type: "login", payload: { user, session } })
+        } catch (error) {
+            console.error(error)
+            throw error;
         }
+
     }
+
+
     function logout() {
         console.log("AuthenContext - logout")
         dispatch({ type: "logout" });
@@ -74,8 +87,8 @@ function AuthProvider({ children }: AuthProviderProps) {
         console.log("AuthenContext - signup")
 
 
-        
-        dispatch({ type: "signup", payload: { email, password, displayName }})
+
+        dispatch({ type: "signup", payload: { email, password, displayName } })
     }
 
 

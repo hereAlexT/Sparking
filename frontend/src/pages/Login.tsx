@@ -20,9 +20,8 @@ import {
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useHistory } from 'react-router';
-import { GetServerHealthData} from '../apis/ConnectivityAPI';
+import { GetServerHealthData } from '../apis/ConnectivityAPI';
 import HealthData from "../apis/ConnectivityAPI";
-import {Login as ApiLogin} from '../apis/AuthenticationAPI';
 
 
 const Login: React.FC = () => {
@@ -34,18 +33,14 @@ const Login: React.FC = () => {
     const { login, isAuthenticated } = useAuth();
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        console.log("submit button clicked")
         event.preventDefault();
-
-        console.log("email: " + email + " password: " + password)
-
         if (email && password) {
-            const { data, error } = await ApiLogin(email, password);
-            if (error) {
+            try {
+                await login(email, password);
+            } catch (error) {
                 console.error(error);
-                alert(error);
+                setLoginFailed(true);
             }
-            console.log(data)
         }
     }
 
@@ -54,6 +49,7 @@ const Login: React.FC = () => {
             history.push("/timeline");
         }
     }, [isAuthenticated]);
+
 
     /* Email Address Validation 
     * You don't want to show validation while the user is typing.
@@ -80,12 +76,6 @@ const Login: React.FC = () => {
     /* Email Validation Done */
 
 
-    const [isHelathData, setIsHealthData] = useState<HealthData | null>(null)
-    useEffect(() => {
-        GetServerHealthData().then((response) => {
-            setIsHealthData(response)
-        })
-    })
 
 
 
@@ -94,7 +84,7 @@ const Login: React.FC = () => {
         <IonPage id="main">
             <IonHeader>
                 <IonToolbar>
-                <IonButtons slot="start">
+                    <IonButtons slot="start">
                         <IonMenuButton />
                     </IonButtons>
                     <IonTitle>Login</IonTitle>
@@ -142,7 +132,7 @@ const Login: React.FC = () => {
                             </IonText>
                         </IonCol>
                         <IonCol>
-                            <IonButton color="secondary"  type="submit" expand="block">Login</IonButton>
+                            <IonButton color="secondary" type="submit" expand="block">Login</IonButton>
                             {/* <Button type="primary">Login</Button> */}
                         </IonCol>
 
