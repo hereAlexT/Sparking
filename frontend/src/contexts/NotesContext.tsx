@@ -2,7 +2,6 @@ import { createContext, useContext, useReducer, ReactNode } from "react"
 import {
     NOTE_ACTION,
     Note,
-    CreateNoteRequest,
     CreateNoteAction,
     DeleteNoteAction,
     UpdateNoteAction,
@@ -64,7 +63,6 @@ const NotesContext = createContext<NotesContextType>({
 const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
     const [notes, dispatch] = useReducer(reducer, [])
     const createNote = async (unSyncedNote: UnSyncedNote) => {
-        console.log("createnote")
         dispatch({ type: NOTE_ACTION.CREATE_NOTE, payload: unSyncedNote })
     }
 
