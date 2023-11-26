@@ -6,88 +6,48 @@ import {
     IonToolbar,
     IonList,
     IonItem,
-    IonInfiniteScroll,
-    IonInfiniteScrollContent,
-    IonAvatar,
-    IonLabel,
-    IonCard,
-    IonCardContent,
-    IonCardHeader,
-    IonCardSubtitle,
-    IonCardTitle,
     IonButton,
-    IonPopover,
-    IonSearchbar,
-    IonAlert,
-    useIonAlert,
-    useIonModal,
     IonModal,
-    IonIcon,
     IonButtons,
     IonMenuButton
 } from '@ionic/react';
 import BasicNoteCard from '../components/BasicNoteCard';
 import CardEditor from '../components/CardEditor';
 import { useState, useEffect } from 'react';
-import { Note, NoteId } from '../shared/interfaces/Note.interfaces';
-
-const defaultCards: Note[] = [
-    // {
-    //   noteId: "1",
-    //   createdDate: new Date("2023-01-01T00:00:00Z"),
-    //   body: "This is the body of note 1"
-    // },
-    // {
-    //   noteId: "2",
-    //   createdDate: new Date("2023-01-02T00:00:00Z"),
-    //   body: "This is the body of note 2"
-    // },
-    // {
-    //   noteId: "3",
-    //   createdDate: new Date("2023-01-03T00:00:00Z"),
-    //   body: "This is the body of note 3"
-    // },
-    // {
-    //   noteId: "4",
-    //   createdDate: new Date("2023-01-04T00:00:00Z"),
-    //   body: "This is the body of note 4"
-    // },
-    // {
-    //   noteId: "5",
-    //   createdDate: new Date("2023-01-05T00:00:00Z"),
-    //   body: "This is the body of note 5"
-    // },
-];
+import { useNotes } from '../contexts/NotesContext';
+import {
+    Note,
+    UnSyncedNote,
+    NoteId,
+} from '../shared/types';
+import { v4 as uuidv4 } from 'uuid';
 
 const TimeLine: React.FC = () => {
-    const [cards, setCards] = useState<Note[]>(defaultCards);
 
 
-    const handleOnCreateNote = (note: Note) => {
-        // search on cards, check if noteId already exists
-        if (cards.find(card => card.noteId === note.noteId)) {
-            console.log("Note already exists, update the notes")
-            // update the card in cards where card.noteId = note.noteId and use setCards to update State
-            const updateCards = cards.map(card => {
-                if (card.noteId === note.noteId) {
-                    return note;
-                }
-                else {
-                    return card;
-                }
-            });
-            setCards(updateCards);
-        }
+    const { notes, createNote, deleteNote, updateNote, getNotes } = useNotes();
 
-        else {
-            setCards([...cards, note]);
-        }
+    const handleOnCreateNote = async  (note: UnSyncedNote) => {
+        console.log("handleOnCreateNote")
+        await createNote({
+            id: note.id || uuidv4(),
+            createdDate: note.createdDate,
+            body: note.body
+        })
+
+    }
+
+    const handleOnUpdateNote = (note: UnSyncedNote) => {
+        updateNote({
+            id: note.id,
+            createdDate: note.createdDate,
+            body: note.body
+        });
     }
 
 
     const handleOnDeleteNote = (noteId: NoteId) => {
-        const updateCards = cards.filter(card => card.noteId !== noteId);
-        setCards(updateCards);
+        deleteNote(noteId);
     }
 
 
@@ -96,7 +56,7 @@ const TimeLine: React.FC = () => {
 
 
     const handleOnEditNote = (noteId: NoteId) => {
-        const foundNote = cards.find(card => card.noteId === noteId);
+        const foundNote = notes.find((n: Note) => n.id === noteId);
         setSelectedNote(foundNote || undefined);
         setIsEditorOpen(true);
     };
@@ -117,15 +77,14 @@ const TimeLine: React.FC = () => {
             <IonContent>
                 <IonList>
                     <IonItem>
-                        <CardEditor onCreateNote={handleOnCreateNote} />
+                        <CardEditor onProcessNote={handleOnCreateNote} />
                     </IonItem>
-
-                    {cards.map((card, index) => (
-                        <IonItem key={card.noteId} button={true} detail={false}>
+                    {notes.map((note: Note) => (
+                        <IonItem key={note.id} button={true} detail={false}>
                             <BasicNoteCard
-                                noteId={card.noteId}
-                                createdDate={card.createdDate}
-                                body={card.body}
+                                noteId={note.id}
+                                createdDate={note.createdDate}
+                                body={note.body}
                                 onDeleteNote={handleOnDeleteNote}
                                 onEditNote={handleOnEditNote}
                             />
@@ -144,7 +103,7 @@ const TimeLine: React.FC = () => {
                     </IonToolbar>
                 </IonHeader>
                 <IonContent className="ion-padding">
-                    <CardEditor onCreateNote={handleOnCreateNote} note={selectedNote} />
+                    <CardEditor onProcessNote={handleOnUpdateNote} note={selectedNote} />
                 </IonContent>
             </IonModal>
         </IonPage >

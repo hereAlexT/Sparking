@@ -1,18 +1,8 @@
 import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
-  IonIcon,
-  IonLabel,
   IonRouterOutlet,
-  IonTabBar,
-  IonTabButton,
-  IonTabs,
   setupIonicReact,
-  IonMenu,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
   IonSplitPane
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
@@ -49,6 +39,7 @@ import ComponentLab from './pages/ComponentLab'
 import Menu from './components/Menu';
 import { AuthProvider } from './contexts/AuthContext';
 import { useAuth } from './contexts/AuthContext';
+import { NotesProvider } from './contexts/NotesContext';
 
 setupIonicReact();
 
@@ -56,15 +47,17 @@ const App: React.FC = () => {
   const { logout } = useAuth();
   return (
     < AuthProvider >
-      <IonApp className='max-w-3xl mx-auto w-full app-background'>
-        {/* <IonApp className=''> */}
-        <IonReactRouter>
-          <IonSplitPane contentId="main">
-            <Menu />
-            <Routes />
-          </IonSplitPane>
-      </IonReactRouter>
-    </IonApp>
+      <NotesProvider>
+        <IonApp className='max-w-3xl mx-auto w-full app-background'>
+          {/* <IonApp className=''> */}
+          <IonReactRouter>
+            <IonSplitPane contentId="main">
+              <Menu />
+              <Routes />
+            </IonSplitPane>
+          </IonReactRouter>
+        </IonApp>
+      </NotesProvider>
     </AuthProvider >)
 };
 

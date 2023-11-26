@@ -2,45 +2,39 @@ import {
     IonCardContent,
     IonCard,
     IonCardHeader,
-    IonCardSubtitle,
-    IonCardTitle,
     IonButton,
     IonCol,
     IonRow,
-    IonItem, IonList, IonSelect, IonSelectOption, IonPopover, IonContent,
-    IonActionSheet,
+
     IonGrid,
     IonTextarea
 
 } from '@ionic/react';
 import { useState, ChangeEvent } from 'react';
 import './BasicNoteCard.css';
-import { Note} from '../shared/interfaces/Note.interfaces';
+import { Note, SyncedNote, UnSyncedNote } from '../shared/types';
+import { v4 as uuidv4 } from 'uuid';
+
 interface ContainerProps {
-    onCreateNote: (noteContent: Note) => void;
+    onProcessNote: (noteContent: Note) => void;
     note?: Note;
 }
 
-const CardEditor: React.FC<ContainerProps> = ({ onCreateNote, note }) => {
+const CardEditor: React.FC<ContainerProps> = ({ onProcessNote: onProcessNote, note }) => {
     const [content, setContent] = useState(note?.body || '');
     const handleInput = (event: CustomEvent) => {
         const value = event.detail.value;
         setContent(value);
     };
-    const submitNote = () => {
+
+    const HandleOnSubmitNote = () => {
         const newNote: Note = {
-            noteId: (Math.random() + 1).toString(36).substring(7),
-            createdDate: new Date(),
+            id: note?.id || uuidv4(),
+            createdDate: note?.createdDate || new Date(),
             body: content
         }
-        console.log("let's see note exist or not")
-        console.log(note);
-        if (note) {
-            newNote.noteId = note.noteId;
-        }
-        console.log(newNote);
-        onCreateNote(newNote);
-        setContent(' ');
+        onProcessNote(newNote);
+        setContent('');
     }
 
     return (
@@ -59,7 +53,7 @@ const CardEditor: React.FC<ContainerProps> = ({ onCreateNote, note }) => {
                         </IonRow>
                         <IonRow class="ion-justify-content-end">
                             <IonCol size="auto">
-                                <IonButton color="tertiary" item-end size="small" onClick={submitNote}>Submit</IonButton>
+                                <IonButton color="tertiary" item-end size="small" onClick={HandleOnSubmitNote}>Submit</IonButton>
                             </IonCol>
                         </IonRow>
                     </IonGrid>

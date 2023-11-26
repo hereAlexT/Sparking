@@ -24,7 +24,7 @@ const ComponentLab: React.FC = () => {
                 <IonGrid>
                     <IonRow>
                         <IonCol>
-                            <CardEditor onCreateNote={()=>{}}/>
+                            <CardEditor onProcessNote={()=>{}}/>
                         </IonCol>
 
                     </IonRow>

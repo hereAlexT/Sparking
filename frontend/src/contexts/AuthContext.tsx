@@ -25,20 +25,6 @@ interface Action {
 }
 
 
-const AuthContext = createContext<AuthContextType>({
-    user: null,
-    session: null,
-    isAuthenticated: false,
-    login: (email: string, password: string) => { },
-    logout: () => { },
-});
-
-const initialState = {
-    user: null,
-    isAuthenticated: false,
-}
-
-
 function reducer(state: State, action: Action) {
     switch (action.type) {
         case "login":
@@ -54,6 +40,19 @@ function reducer(state: State, action: Action) {
     }
 }
 
+
+const AuthContext = createContext<AuthContextType>({
+    user: null,
+    session: null,
+    isAuthenticated: false,
+    login: (email: string, password: string) => { },
+    logout: () => { },
+});
+
+const initialState = {
+    user: null,
+    isAuthenticated: false,
+}
 
 
 interface AuthProviderProps {
