@@ -11,7 +11,7 @@ import {
     SyncedNote,
     UnSyncedNote,
 } from '../shared/types';
-import { getNotes as getNotesApi } from '../apis/NoteAPI'
+import { getNotes as getNotesApi, createNote as createNoteApi } from '../apis/NoteAPI'
 import camelcaseKeys from 'camelcase-keys';
 
 
@@ -64,6 +64,9 @@ const NotesContext = createContext<NotesContextType>({
 const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
     const [notes, dispatch] = useReducer(reducer, [])
     const createNote = async (unSyncedNote: UnSyncedNote) => {
+        let _notes: SyncedNote[] = await createNoteApi(unSyncedNote);
+        console.log("createNote")
+        console.log(_notes)
         dispatch({ type: NOTE_ACTION.CREATE_NOTE, payload: unSyncedNote })
     }
 

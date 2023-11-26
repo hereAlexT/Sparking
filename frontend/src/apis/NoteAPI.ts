@@ -1,10 +1,17 @@
 import { supabase } from '../supabaseClient'
 import { SyncedNote, UnSyncedNote, Note } from '../shared/types'
+import { Database } from '../shared/db.types'
 
 // Function to insert a new note in the "notes" table
-export async function createNote(body: string) {
+export async function createNote(unSyncedNote: UnSyncedNote) {
     try {
-        const { data } = await supabase.from('notes').insert();
+        const note: Database['public']['Tables']['notes']['Insert'] = {
+            body: unSyncedNote.body,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+        }
+        const { data } = await supabase.from('notes').insert(note);
+        console.log(data)
     } catch (error) {
         console.error(error);
         throw error;
