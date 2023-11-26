@@ -8,8 +8,12 @@ import {
     GetNoteAction,
     GetNotesAction,
     NoteId,
+    SyncedNote,
     UnSyncedNote,
 } from '../shared/types';
+import { getNotes as getNotesApi } from '../apis/NoteAPI'
+import camelcaseKeys from 'camelcase-keys';
+
 
 
 interface NotesProviderProps {
@@ -21,8 +25,6 @@ type NoteAction = GetNoteAction | GetNotesAction | CreateNoteAction | DeleteNote
 
 
 const reducer = (state: Note[], action: NoteAction): Note[] => {
-    console.log("state")
-    console.log(state)
     switch (action.type) {
         case NOTE_ACTION.CREATE_NOTE:
             console.log("reducer : CREATE_NOTE")
@@ -34,8 +36,7 @@ const reducer = (state: Note[], action: NoteAction): Note[] => {
             console.log("reducer : UPDATE_NOTE")
             return state.map(note => note.id === (action.payload ? action.payload.id : null) ? action.payload : note);
         case NOTE_ACTION.GET_NOTES:
-            //get notes online
-            console.log("reducer : GET_NOTES")
+            return action.payload;
         default:
             return state;
     }
@@ -46,7 +47,7 @@ type NotesContextType = {
     createNote: (note: Note) => void;
     deleteNote: (id: NoteId) => void;
     updateNote: (note: Note) => void;
-    getNotes: (notes: Note[]) => void;
+    getNotes: () => Promise<Note[]>;
 };
 
 const NotesContext = createContext<NotesContextType>({
@@ -54,7 +55,7 @@ const NotesContext = createContext<NotesContextType>({
     createNote: (note: Note) => { },
     deleteNote: (id: NoteId) => { },
     updateNote: (note: Note) => { },
-    getNotes: (notes: Note[]) => { },
+    getNotes: () => Promise.resolve([]),
 });
 
 
@@ -74,8 +75,24 @@ const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
         dispatch({ type: NOTE_ACTION.UPDATE_NOTE, payload: note })
     }
 
-    const getNotes = async (notes: Note[]) => {
-        dispatch({ type: NOTE_ACTION.GET_NOTES })
+    /**
+     * Fetches notes from the API and updates the state.
+     * @param notes - The array of synced notes.
+     */
+    const getNotes = async (): Promise<Note[]> => {
+        //Connect to API and fetch all notes
+        let _notes: SyncedNote[] = await getNotesApi();
+        // conert snakecase to camelcase by using camelcaseKeys
+        _notes = camelcaseKeys(_notes, { deep: true });
+        _notes = _notes.map(note => ({
+            ...note,
+            updatedAt: new Date(note.updatedAt),
+            createdAt: new Date(note.createdAt)
+        }));
+        console.log("getNotes")
+        console.log(_notes)
+        dispatch({ type: NOTE_ACTION.GET_NOTES, payload: _notes })
+        return _notes;
     }
 
     return (

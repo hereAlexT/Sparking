@@ -25,13 +25,22 @@ import { v4 as uuidv4 } from 'uuid';
 const TimeLine: React.FC = () => {
 
 
-    const { notes, createNote, deleteNote, updateNote, getNotes } = useNotes();
 
-    const handleOnCreateNote = async  (note: UnSyncedNote) => {
+    const { notes, createNote, deleteNote, updateNote, getNotes } = useNotes();
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        setIsLoading(true);
+        getNotes().then(() => {
+            setIsLoading(false);
+        });
+    }, []);
+
+    const handleOnCreateNote = async (note: UnSyncedNote) => {
         console.log("handleOnCreateNote")
         await createNote({
             id: note.id || uuidv4(),
-            createdDate: note.createdDate,
+            createdAt: note.createdAt,
             body: note.body
         })
 
@@ -40,7 +49,7 @@ const TimeLine: React.FC = () => {
     const handleOnUpdateNote = (note: UnSyncedNote) => {
         updateNote({
             id: note.id,
-            createdDate: note.createdDate,
+            createdAt: note.createdAt,
             body: note.body
         });
     }
@@ -79,17 +88,16 @@ const TimeLine: React.FC = () => {
                     <IonItem>
                         <CardEditor onProcessNote={handleOnCreateNote} />
                     </IonItem>
-                    {notes.map((note: Note) => (
-                        <IonItem key={note.id} button={true} detail={false}>
-                            <BasicNoteCard
-                                noteId={note.id}
-                                createdDate={note.createdDate}
-                                body={note.body}
-                                onDeleteNote={handleOnDeleteNote}
-                                onEditNote={handleOnEditNote}
-                            />
-                        </IonItem>
-                    ))}
+                    {isLoading ? <IonItem>Loading...</IonItem> :
+                        notes.map((note: Note) => (
+                            <IonItem key={note.id} button={true} detail={false}>
+                                <BasicNoteCard
+                                    note={note}
+                                    onDeleteNote={handleOnDeleteNote}
+                                    onEditNote={handleOnEditNote}
+                                />
+                            </IonItem>
+                        ))}
                 </IonList>
 
             </IonContent>

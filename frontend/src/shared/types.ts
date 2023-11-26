@@ -5,11 +5,12 @@ export type NoteId = string;
 export interface Note {
     id: NoteId;
     body: string;
-    createdDate: Date;
+    createdAt: Date;
 }
 
 export interface SyncedNote extends Note {
     // This is a synced id with the backend
+    updatedAt: Date;
 
 }
 
@@ -61,6 +62,7 @@ export interface UpdateNoteAction {
 
 export interface GetNotesAction {
     type: NOTE_ACTION.GET_NOTES
+    payload: Note[]
 }
 
 export interface GetNoteAction {
