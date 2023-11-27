@@ -15,6 +15,7 @@ import {
     addOutline as addIcon,
     logInOutline as logInIcon,
     logOutOutline as logOutIcon,
+    prismOutline as prismOutlineIcon,
 } from 'ionicons/icons';
 import { useAuth } from "../contexts/AuthContext";
 
@@ -23,11 +24,9 @@ const routes = {
     appPages: [
         { title: 'Login', path: '/login', icon: logInIcon },
         { title: 'Signup', path: '/signup', icon: addIcon },
-        // { title: 'Timeline', path: '/tabs/timeline', icon: flaskIcon },
-        // { title: 'ComponentLab', path: '/tabs/comlab', icon: flaskIcon },
     ],
     loggedInPages: [
-        { title: 'Timelines', path: '/timeline', icon: logInIcon },
+        { title: 'Timeline', path: '/timeline', icon: prismOutlineIcon },
         { title: 'Logout', path: '/logout', icon: logInIcon },
     ],
     loggedOutPages: [

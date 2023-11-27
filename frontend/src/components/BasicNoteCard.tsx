@@ -26,21 +26,27 @@ const BasicNoteCard: React.FC<ContainerProps> = ({ note, onDeleteNote, onEditNot
         <>
             <div className="m-0 p-0 w-full">
                 <IonCard >
-                    <IonCardContent className="p-3">
+                    <IonCardContent className="p-2">
                         <IonRow className="p-0 m-0">
-                            <IonCol className='m-0 p-0'>
+                            <IonCol 
+                            className='m-0 p-0 font-bold text-[13px]'
+                            style={{ color: '#71717A' }}
+                            >
                                 {note.createdAt.toLocaleString('en-GB', {
                                     day: '2-digit',
-                                    month: '2-digit',
-                                    year: 'numeric',
-                                    hour: '2-digit',
-                                    minute: '2-digit',
-                                    hour12: false,
+                                    month: 'short',
+                                    year: '2-digit',
                                     timeZone: 'UTC'
-                                }).replace(',', '')}
+                                }).replace(',', '')} · Summer Hill, Syndey
                             </IonCol>
                             <IonCol size="auto" className='m-0 p-0 align-top'>
-                                <IonButton className='m-0 p-0 align-top'item-end size="small" fill="clear" id={`note-popover-${note.id}`}>
+                                <IonButton
+                                    /* Style here is used to remove default style, do not modify. Always use tailwind CSS */
+                                    style={{ '--padding-start': '0px', '--padding-end': '0px' }}
+                                    className='pr-1 m-0 align-top'
+                                    item-end size="small"
+                                    fill="clear"
+                                    id={`note-popover-${note.id}`}>
                                     <IonIcon slot="icon-only" size="small" icon={meanuOutlineIcon}></IonIcon>
                                 </IonButton>
                             </IonCol>
