@@ -15,6 +15,7 @@ import {
     getNotes as getNotesApi,
     createNote as createNoteApi,
     updateNote as updateNoteApi,
+    deleteNote as deleteNoteApi
 } from '../apis/NoteAPI'
 import camelcaseKeys from 'camelcase-keys';
 
@@ -73,8 +74,10 @@ const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
         dispatch({ type: NOTE_ACTION.CREATE_NOTE, payload: unSyncedNote })
     }
 
-    const deleteNote = async (id: NoteId) => {
-        dispatch({ type: NOTE_ACTION.DELETE_NOTE, payload: id })
+    const deleteNote = async (noteId: NoteId) => {
+        let response = await deleteNoteApi(noteId);
+        console.log(response)
+        dispatch({ type: NOTE_ACTION.DELETE_NOTE, payload: noteId })
     }
 
     const updateNote = async (unSyncedNote: UnSyncedNote) => {

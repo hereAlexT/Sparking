@@ -27,7 +27,6 @@ interface ContainerProps {
 }
 
 const BasicNoteCard: React.FC<ContainerProps> = ({ note, onDeleteNote, onEditNote }) => {
-    console.log(typeof note.createdAt);
     return (
         <>
             <div className="m-0 p-0 w-full">

@@ -1,5 +1,5 @@
 import { supabase } from '../supabaseClient'
-import { SyncedNote, UnSyncedNote, Note } from '../shared/types'
+import { SyncedNote, UnSyncedNote, Note, NoteId } from '../shared/types'
 import { Database } from '../shared/db.types'
 
 // Function to insert a new note in the "notes" table
@@ -38,12 +38,10 @@ export async function updateNote(unsyncedNote: UnSyncedNote) {
 }
 
 // Function to delete a note from the "notes" table
-export async function deleteNote(id: number) {
+export async function deleteNote(noteId: NoteId) {
     try {
-        const { data, error } = await supabase.from('notes').delete().eq('id', id)
-        if (error) {
-            throw new Error(error.message)
-        }
+        const { data } = await supabase.from('notes').delete().eq('id', noteId)
+        console.log(data)
         return data
     } catch (error) {
         console.error('Error deleting note:', error)
