@@ -87,7 +87,7 @@ const TimeLine: React.FC = () => {
             <IonContent >
                 <IonList >
                     <IonItem>
-                        <CardEditor onProcessNote={handleOnCreateNote} />
+                            <CardEditor className='w-full p-0' onProcessNote={handleOnCreateNote} />
                     </IonItem>
                     {isLoading ? <IonItem>Loading...</IonItem> :
                         notes.map((note: Note) => (
@@ -102,17 +102,19 @@ const TimeLine: React.FC = () => {
                 </IonList>
 
             </IonContent>
-            <IonModal isOpen={isEditorOpen}>
+            <IonModal isOpen={isEditorOpen} className='p-5'>
                 <IonHeader>
                     <IonToolbar>
-                        <IonTitle>Edit Memo</IonTitle>
+                        {/* <IonTitle>Edit Memo</IonTitle> */}
                         <IonButtons slot="end">
                             <IonButton onClick={() => setIsEditorOpen(false)}>Close</IonButton>
                         </IonButtons>
                     </IonToolbar>
                 </IonHeader>
-                <IonContent className="ion-padding">
-                    <CardEditor onProcessNote={handleOnUpdateNote} note={selectedNote} />
+                <IonContent className="p-0 m-0 w-full h-full">
+                    <div>
+                        <CardEditor onProcessNote={handleOnUpdateNote} note={selectedNote} />
+                    </div>
                 </IonContent>
             </IonModal>
         </IonPage >

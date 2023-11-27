@@ -19,9 +19,10 @@ import { sendOutline as sendOutLineIcon } from 'ionicons/icons';
 interface ContainerProps {
     onProcessNote: (noteContent: Note) => void;
     note?: Note;
+    className?: string;
 }
 
-const CardEditor: React.FC<ContainerProps> = ({ onProcessNote: onProcessNote, note }) => {
+const CardEditor: React.FC<ContainerProps> = ({ onProcessNote: onProcessNote, note, className }) => {
     const [content, setContent] = useState(note?.body || '');
     const handleInput = (event: CustomEvent) => {
         const value = event.detail.value;
@@ -40,13 +41,11 @@ const CardEditor: React.FC<ContainerProps> = ({ onProcessNote: onProcessNote, no
     }
 
     return (
-        <div className="m-0 p-0 w-full">
-            <IonCard>
+            <IonCard className={className} >
                 <IonCardContent className='p-1'>
                     <IonGrid>
                         <IonRow>
                             <IonTextarea
-              
                                 value={content}
                                 onIonInput={handleInput}
                                 rows={5}
@@ -72,7 +71,7 @@ const CardEditor: React.FC<ContainerProps> = ({ onProcessNote: onProcessNote, no
                     </IonGrid>
                 </IonCardContent>
             </IonCard>
-        </div>
+
     )
 }
 export default CardEditor;
