@@ -1,7 +1,7 @@
 import { IonContent, IonHeader, IonInput, IonPage, IonText, IonTitle, IonToolbar, IonButton, IonGrid, IonCol, IonRow, IonButtons, IonMenuButton } from '@ionic/react';
-import { useState } from 'react';
-import { Signup as ApiSignup } from '../apis/AuthenticationAPI';
+import { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
+import { useAuth } from '../contexts/AuthContext';
 
 const Signup: React.FC = () => {
 
@@ -35,22 +35,33 @@ const Signup: React.FC = () => {
     const history = useHistory();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [comfirmPassword, setComfirmPassword] = useState("");
+
+    const { signup, isAuthenticated } = useAuth();
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            history.push("/timeline");
+        }
+    }, [isAuthenticated]);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        if (password !== comfirmPassword) {
+            alert("Password and comfirm password are not matched");
+            return;
+        }
+
+
         try {
-            const { user, session } = await ApiSignup(email, password);
-            if (user?.identities?.length === 0) {
-                alert("This user already exists");
-                history.push("/login")
-            }
+            await signup(email, password);
         } catch (error) {
             alert(error)
             console.log(error);
         }
 
-
     };
+    
 
 
     return (
@@ -102,6 +113,20 @@ const Signup: React.FC = () => {
                         </IonRow>
 
                         <IonRow>
+                            <IonInput
+                                type="password"
+                                label="Comfirm Password"
+                                helperText="Type your password"
+                                labelPlacement="floating"
+                                counter={true}
+                                maxlength={32}
+                                minlength={8}
+                                onIonChange={(e) => setComfirmPassword(e.detail.value!)}
+                                disabled={false}
+                            />
+                        </IonRow>
+
+                        <IonRow>
                             <IonCol className="ion-padding-top">
                                 <IonButton type="submit" expand="block">Signup</IonButton>
                             </IonCol>
@@ -118,7 +143,7 @@ const Signup: React.FC = () => {
 
 
             </IonContent>
-        </IonPage>
+        </IonPage >
     );
 };
 

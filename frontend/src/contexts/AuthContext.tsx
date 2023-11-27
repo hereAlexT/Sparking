@@ -28,7 +28,7 @@ function reducer(state: State, action: Action) {
             return { ...state, user: null, session: null, isAuthenticated: false };
         case "signup":
             console.log("reducer : signup")
-            return { ...state, user: action.payload, isAuthenticated: true, session:null };
+            return { ...state, user: action.payload, isAuthenticated: true, session: null };
         default:
             throw new Error("Unknown action type");
     }
@@ -86,10 +86,23 @@ function AuthProvider({ children }: AuthProviderProps) {
         dispatch({ type: "logout" });
     }
 
-    function signup(email: string, password: string) {
+    const signup = async (email: string, password: string) => {
         console.log("AuthenContext - signup")
+        try {
+            console.log("hehh")
+            const { user, session } = await ApiSignup(email, password)
+                .catch(error => {
+                    console.error('Error during signup:', error);
+                    throw error;
+                });;
+            console.log(user)
+            console.log(session)
+            dispatch({ type: "signup", payload: { email, password } })
+        } catch (error) {
+            console.error(error)
+            throw error;
+        }
 
-        dispatch({ type: "signup", payload: { email, password } })
     }
 
 

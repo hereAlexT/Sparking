@@ -9,7 +9,7 @@ import type {
 
 const Signup = async (email: string, password: string) => {
     try {
-        const { data: { user, session }, error } = await supabase.auth.signUp({
+        const { data: { user, session } } = await supabase.auth.signUp({
             email: email,
             password: password,
         });
