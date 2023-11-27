@@ -6,12 +6,14 @@ import { Database } from '../shared/db.types'
 export async function createNote(unSyncedNote: UnSyncedNote) {
     try {
         const note: Database['public']['Tables']['notes']['Insert'] = {
+            id: unSyncedNote.id,
             body: unSyncedNote.body,
             created_at: new Date().toISOString(),
             updated_at: new Date().toISOString(),
         }
         const { data } = await supabase.from('notes').insert(note);
         console.log(data)
+        return data;
     } catch (error) {
         console.error(error);
         throw error;
@@ -19,13 +21,16 @@ export async function createNote(unSyncedNote: UnSyncedNote) {
 }
 
 // Function to update a note in the "notes" table
-export async function updateNote(id: number, body: string) {
+export async function updateNote(unsyncedNote: UnSyncedNote) {
     try {
-        const { data, error } = await supabase.from('notes').update({ body }).eq('id', id)
-        if (error) {
-            throw new Error(error.message)
+        const note: Database['public']['Tables']['notes']['Update'] = {
+        
+            body: unsyncedNote.body,
+            updated_at: new Date().toISOString(),
         }
-        return data
+        const { data } = await supabase.from('notes').update(note).eq('id', unsyncedNote.id)
+        return data;
+
     } catch (error) {
         console.error('Error updating note:', error)
         throw error

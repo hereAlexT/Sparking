@@ -11,7 +11,11 @@ import {
     SyncedNote,
     UnSyncedNote,
 } from '../shared/types';
-import { getNotes as getNotesApi, createNote as createNoteApi } from '../apis/NoteAPI'
+import {
+    getNotes as getNotesApi,
+    createNote as createNoteApi,
+    updateNote as updateNoteApi,
+} from '../apis/NoteAPI'
 import camelcaseKeys from 'camelcase-keys';
 
 
@@ -64,9 +68,8 @@ const NotesContext = createContext<NotesContextType>({
 const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
     const [notes, dispatch] = useReducer(reducer, [])
     const createNote = async (unSyncedNote: UnSyncedNote) => {
-        let _notes: SyncedNote[] = await createNoteApi(unSyncedNote);
-        console.log("createNote")
-        console.log(_notes)
+        let response = await createNoteApi(unSyncedNote);
+        console.log(response)
         dispatch({ type: NOTE_ACTION.CREATE_NOTE, payload: unSyncedNote })
     }
 
@@ -74,8 +77,11 @@ const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
         dispatch({ type: NOTE_ACTION.DELETE_NOTE, payload: id })
     }
 
-    const updateNote = async (note: UnSyncedNote) => {
-        dispatch({ type: NOTE_ACTION.UPDATE_NOTE, payload: note })
+    const updateNote = async (unSyncedNote: UnSyncedNote) => {
+        let response = await updateNoteApi(unSyncedNote);
+        console.log(response)
+
+        dispatch({ type: NOTE_ACTION.UPDATE_NOTE, payload: unSyncedNote })
     }
 
     /**

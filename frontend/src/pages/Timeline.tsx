@@ -41,6 +41,7 @@ const TimeLine: React.FC = () => {
         await createNote({
             id: note.id || uuidv4(),
             createdAt: note.createdAt,
+            updatedAt: note.updatedAt,
             body: note.body
         })
 
@@ -50,6 +51,7 @@ const TimeLine: React.FC = () => {
         updateNote({
             id: note.id,
             createdAt: note.createdAt,
+            updatedAt: new Date(),
             body: note.body
         });
     }

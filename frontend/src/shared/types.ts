@@ -5,13 +5,14 @@ export type NoteId = string;
 export interface Note {
     id: NoteId;
     body: string;
+    // createdAt should be assigned locally.
     createdAt: Date;
+    // updatedAt should be assigned locally.
+    updatedAt: Date;
 }
 
 export interface SyncedNote extends Note {
     // This is a synced id with the backend
-    updatedAt: Date;
-
 }
 
 
@@ -19,7 +20,6 @@ export interface SyncedNote extends Note {
  * the true uuid should be assigned by the backend
  */
 export interface UnSyncedNote extends Note {
-    
 }
 
 
