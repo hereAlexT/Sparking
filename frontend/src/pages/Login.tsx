@@ -63,11 +63,17 @@ const Login: React.FC = () => {
         );
     };
 
-    const validate = (ev: Event) => {
-        const value = (ev.target as HTMLInputElement).value;
-        setIsValid(undefined);
-        if (value === '') return;
-        validateEmail(value) !== null ? setIsValid(true) : setIsValid(false);
+    const validate = (ev: CustomEvent) => {
+        console.log("hhh")
+        const v = ev.detail.value ?? '';
+        if (v === '') {
+            setIsValid(true);
+        } else {
+            const value = (ev.target as HTMLInputElement).value;
+            setIsValid(undefined);
+            if (value === '') return;
+            validateEmail(value) !== null ? setIsValid(true) : setIsValid(false);
+        }
     };
 
     const markTouched = () => {
@@ -82,60 +88,75 @@ const Login: React.FC = () => {
 
     return (
         <IonPage id="main">
-            <IonHeader>
-                <IonToolbar>
-                    <IonButtons slot="start">
-                        <IonMenuButton />
-                    </IonButtons>
-                    <IonTitle>Login</IonTitle>
-                </IonToolbar>
-            </IonHeader>
+
+
             <IonContent>
                 <IonHeader collapse="condense">
                     <IonToolbar>
-                        <IonTitle size="large">Login</IonTitle>
+                        <IonButtons slot="start">
+                            <IonMenuButton />
+                        </IonButtons>
+
                     </IonToolbar>
                 </IonHeader>
                 <IonGrid className='ion-padding'>
                     <form onSubmit={handleSubmit}>
                         <IonCol>
-                            <IonInput
-                                className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
-                                type="email"
-                                fill="solid"
-                                label="Email"
-                                labelPlacement="floating"
-                                errorText="Invalid email"
-                                onIonInput={(event) => validate(event)}
-                                onIonBlur={() => markTouched()}
-                                value={email}
-                                onIonChange={(e) => setEmail(e.detail.value!)}
-                            ></IonInput>
+                            <IonRow>
+                                <IonCol>
+                                    <IonText>
+                                        <h1 className='text-3xl font-semibold'>Welcome to BlueYeti.</h1>
+                                    </IonText>
+                                </IonCol>
+                            </IonRow>
+                            <IonRow className='mt-8'>
+                                <IonCol>
+                                    <IonInput
+                                        className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
+                                        type="email"
+                                        fill="solid"
+                                        label="Email"
+                                        labelPlacement="floating"
+                                        errorText="Invalid email"
+                                        // onIonInput={(event) => validate(event)}
+                                        onIonBlur={() => markTouched()}
+                                        value={email}
+                                        onIonChange={(e) => setEmail(e.detail.value ?? '')}
+                                    ></IonInput>
+                                </IonCol>
+                            </IonRow>
+                            <IonRow>
+                                <IonCol>
+                                    <IonInput
+                                        type="password"
+                                        fill="solid"
+                                        label="Password"
+                                        labelPlacement="floating"
+                                        errorText='Invalid password'
+                                        counter={true}
+                                        maxlength={32}
+                                        minlength={8}
+                                        value={password}
+                                        onIonChange={(e) => setPassword(e.detail.value ?? '')}
+                                    ></IonInput>
+                                </IonCol>
+                            </IonRow>
+                            <IonRow>
+                                <IonCol>
+                                    <IonButton color="primary" type="submit" expand="block" >Login</IonButton>
+                                    {/* <Button type="primary">Login</Button> */}
+                                </IonCol>
+                            </IonRow>
+                            <IonRow>
+                                <IonRow>
+                                    <IonCol>
+                                        <IonText color="medium">
+                                            <a>Forgot password?</a>
+                                        </IonText>
+                                    </IonCol>
+                                </IonRow>
+                            </IonRow>
                         </IonCol>
-                        <IonCol>
-                            <IonInput
-                                type="password"
-                                fill="solid"
-                                label="Password"
-                                labelPlacement="floating"
-                                errorText='Invalid password'
-                                counter={true}
-                                maxlength={32}
-                                minlength={8}
-                                value={password}
-                                onIonChange={(e) => setPassword(e.detail.value!)}
-                            ></IonInput>
-                        </IonCol>
-                        <IonCol>
-                            <IonText color="medium">
-                                <p>Just click "login" </p>
-                            </IonText>
-                        </IonCol>
-                        <IonCol>
-                            <IonButton color="secondary" type="submit" expand="block">Login</IonButton>
-                            {/* <Button type="primary">Login</Button> */}
-                        </IonCol>
-
                     </form>
 
                 </IonGrid>
