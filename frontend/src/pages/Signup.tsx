@@ -38,14 +38,17 @@ const Signup: React.FC = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const { data, error } = await ApiSignup(email, password);
-        if (data?.user?.identities?.length === 0) {
-            alert("This user already exists");
-            history.push("/login")
+        try {
+            const { user, session } = await ApiSignup(email, password);
+            if (user?.identities?.length === 0) {
+                alert("This user already exists");
+                history.push("/login")
+            }
+        } catch (error) {
+            alert(error)
+            console.log(error);
         }
-        if (error) {
-            alert(error);
-        }
+
 
     };
 

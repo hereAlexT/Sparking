@@ -31,6 +31,7 @@ const CardEditor: React.FC<ContainerProps> = ({ onProcessNote: onProcessNote, no
         const newNote: Note = {
             id: note?.id || uuidv4(),
             createdAt: note?.createdAt || new Date(),
+            updatedAt: new Date(),
             body: content
         }
         onProcessNote(newNote);

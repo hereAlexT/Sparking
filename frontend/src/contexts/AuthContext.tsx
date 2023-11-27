@@ -7,13 +7,7 @@ import type {
 
 
 
-type AuthContextType = {
-    user: User | null,
-    session: Session | null,
-    isAuthenticated: boolean,
-    login: (email: string, password: string) => void,
-    logout: () => void,
-};
+
 
 interface State {
     user?: User;
@@ -34,12 +28,20 @@ function reducer(state: State, action: Action) {
             return { ...state, user: null, session: null, isAuthenticated: false };
         case "signup":
             console.log("reducer : signup")
-            return { ...state, user: action.payload, isAuthenticated: true };
+            return { ...state, user: action.payload, isAuthenticated: true, session:null };
         default:
             throw new Error("Unknown action type");
     }
 }
 
+type AuthContextType = {
+    user: User | null,
+    session: Session | null,
+    isAuthenticated: boolean,
+    login: (email: string, password: string) => void,
+    logout: () => void,
+    signup: (email: string, password: string) => void,
+};
 
 const AuthContext = createContext<AuthContextType>({
     user: null,
@@ -47,10 +49,12 @@ const AuthContext = createContext<AuthContextType>({
     isAuthenticated: false,
     login: (email: string, password: string) => { },
     logout: () => { },
+    signup: (email: string, password: string) => { },
 });
 
 const initialState = {
     user: null,
+    session: null,
     isAuthenticated: false,
 }
 
@@ -60,7 +64,7 @@ interface AuthProviderProps {
 }
 
 function AuthProvider({ children }: AuthProviderProps) {
-    const [{ user, isAuthenticated }, dispatch] = useReducer(
+    const [{ user, session, isAuthenticated }, dispatch] = useReducer(
         reducer,
         initialState);
 
@@ -82,17 +86,15 @@ function AuthProvider({ children }: AuthProviderProps) {
         dispatch({ type: "logout" });
     }
 
-    function signup(email: string, password: string, displayName: string) {
+    function signup(email: string, password: string) {
         console.log("AuthenContext - signup")
 
-
-
-        dispatch({ type: "signup", payload: { email, password, displayName } })
+        dispatch({ type: "signup", payload: { email, password } })
     }
 
 
     return (
-        <AuthContext.Provider value={{ user, isAuthenticated, login, logout, signup }}>
+        <AuthContext.Provider value={{ user, session, isAuthenticated, login, logout, signup }}>
             {children}
         </AuthContext.Provider>
     )
