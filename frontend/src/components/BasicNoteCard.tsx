@@ -26,18 +26,27 @@ const BasicNoteCard: React.FC<ContainerProps> = ({ note, onDeleteNote, onEditNot
         <>
             <div className="m-0 p-0 w-full">
                 <IonCard >
-                    <IonCardContent className="">
-                        <IonRow className="ion-justify-content-end ion-align-items-start" style={{ padding: 0 }}>
-                            <IonCol size="auto">
-                                <IonButton item-end size="small" fill="clear" id={`note-popover-${note.id}`}>
-                                    <IonIcon slot="icon-only" icon={meanuOutlineIcon}></IonIcon>
+                    <IonCardContent className="p-3">
+                        <IonRow className="p-0 m-0">
+                            <IonCol className='m-0 p-0'>
+                                {note.createdAt.toLocaleString('en-GB', {
+                                    day: '2-digit',
+                                    month: '2-digit',
+                                    year: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    hour12: false,
+                                    timeZone: 'UTC'
+                                }).replace(',', '')}
+                            </IonCol>
+                            <IonCol size="auto" className='m-0 p-0 align-top'>
+                                <IonButton className='m-0 p-0 align-top'item-end size="small" fill="clear" id={`note-popover-${note.id}`}>
+                                    <IonIcon slot="icon-only" size="small" icon={meanuOutlineIcon}></IonIcon>
                                 </IonButton>
                             </IonCol>
                         </IonRow>
                         <IonRow> {note.body}</IonRow>
-                        <IonRow>
-                            <IonCardSubtitle className="">{note.createdAt.toTimeString()}</IonCardSubtitle>
-                        </IonRow>
+
 
                     </IonCardContent>
                 </IonCard>
