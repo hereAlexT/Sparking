@@ -74,9 +74,8 @@ const TimeLine: React.FC = () => {
 
 
     return (
-        <IonPage id="main">
+        <IonPage id="main" >
             <IonHeader>
-
                 <IonToolbar>
                     <IonButtons slot="start">
                         <IonMenuButton />
@@ -85,8 +84,8 @@ const TimeLine: React.FC = () => {
                     {/* <IonSearchbar disabled={true} placeholder="Search function under developing"></IonSearchbar> */}
                 </IonToolbar>
             </IonHeader>
-            <IonContent>
-                <IonList>
+            <IonContent >
+                <IonList >
                     <IonItem>
                         <CardEditor onProcessNote={handleOnCreateNote} />
                     </IonItem>

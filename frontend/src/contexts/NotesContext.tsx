@@ -33,7 +33,7 @@ const reducer = (state: Note[], action: NoteAction): Note[] => {
     switch (action.type) {
         case NOTE_ACTION.CREATE_NOTE:
             console.log("reducer : CREATE_NOTE")
-            return [...state, action.payload];
+            return [action.payload, ...state];
         case NOTE_ACTION.DELETE_NOTE:
             console.log("reducer : DELETE_NOTE")
             return state.filter(note => note.id !== action.payload);
@@ -103,6 +103,7 @@ const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
         }));
         console.log("getNotes")
         console.log(_notes)
+        _notes.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
         dispatch({ type: NOTE_ACTION.GET_NOTES, payload: _notes })
         return _notes;
     }

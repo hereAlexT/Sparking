@@ -1,23 +1,18 @@
 import {
     IonCardContent,
     IonCard,
-    IonCardHeader,
     IonCardSubtitle,
-    IonCardTitle,
     IonButton,
     IonCol,
     IonRow,
     IonItem,
     IonList,
-    IonSelect,
-    IonSelectOption,
     IonPopover,
     IonContent,
-    IonActionSheet,
     IonIcon
 } from '@ionic/react';
 import { menuOutline as meanuOutlineIcon } from 'ionicons/icons';
-import {Note, NoteId} from '../shared/types';
+import { Note, NoteId } from '../shared/types';
 import './BasicNoteCard.css'
 
 interface ContainerProps {
@@ -40,7 +35,9 @@ const BasicNoteCard: React.FC<ContainerProps> = ({ note, onDeleteNote, onEditNot
                             </IonCol>
                         </IonRow>
                         <IonRow> {note.body}</IonRow>
-                        <IonRow><IonCardSubtitle className="">{note.createdAt.toTimeString()}</IonCardSubtitle></IonRow>
+                        <IonRow>
+                            <IonCardSubtitle className="">{note.createdAt.toTimeString()}</IonCardSubtitle>
+                        </IonRow>
 
                     </IonCardContent>
                 </IonCard>

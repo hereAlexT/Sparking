@@ -5,15 +5,16 @@ import {
     IonButton,
     IonCol,
     IonRow,
-
     IonGrid,
-    IonTextarea
+    IonTextarea,
+    IonIcon
 
 } from '@ionic/react';
 import { useState, ChangeEvent } from 'react';
 import './BasicNoteCard.css';
 import { Note, SyncedNote, UnSyncedNote } from '../shared/types';
 import { v4 as uuidv4 } from 'uuid';
+import { sendOutline as sendOutLineIcon } from 'ionicons/icons';
 
 interface ContainerProps {
     onProcessNote: (noteContent: Note) => void;
@@ -41,20 +42,31 @@ const CardEditor: React.FC<ContainerProps> = ({ onProcessNote: onProcessNote, no
     return (
         <div className="m-0 p-0 w-full">
             <IonCard>
-                <IonCardHeader></IonCardHeader>
-                <IonCardContent>
+                <IonCardContent className='p-1'>
                     <IonGrid>
                         <IonRow>
                             <IonTextarea
-                                label="What just heppened?"
-                                label-placement="floating"
+              
                                 value={content}
                                 onIonInput={handleInput}
-                                rows={5}></IonTextarea>
+                                rows={5}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                        HandleOnSubmitNote();
+                                    }
+                                }}
+                            />
                         </IonRow>
                         <IonRow class="ion-justify-content-end">
-                            <IonCol size="auto">
-                                <IonButton color="tertiary" item-end size="small" onClick={HandleOnSubmitNote}>Submit</IonButton>
+                            <IonCol size="auto" className="m-0 p-0">
+                                <IonButton
+                                    color="tertiary"
+                                    item-end size="small"
+                                    onClick={HandleOnSubmitNote}
+                                    className='m-0'
+                                    >
+                                    <IonIcon slot="icon-only" icon={sendOutLineIcon}></IonIcon>
+                                </IonButton>
                             </IonCol>
                         </IonRow>
                     </IonGrid>
