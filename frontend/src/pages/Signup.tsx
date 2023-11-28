@@ -61,26 +61,28 @@ const Signup: React.FC = () => {
         }
 
     };
-    
+
 
 
     return (
         <IonPage id="main">
-            <IonHeader>
-                <IonToolbar>
-                    <IonButtons slot="start">
-                        <IonMenuButton />
-                    </IonButtons>
-                    <IonTitle>Sign up</IonTitle>
-                </IonToolbar>
-            </IonHeader>
+
             <IonContent>
                 <IonHeader collapse="condense">
                     <IonToolbar>
-                        <IonTitle size="large">Signup</IonTitle>
+                        <IonButtons slot="start">
+                            <IonMenuButton />
+                        </IonButtons>
                     </IonToolbar>
                 </IonHeader>
                 <IonGrid className='ion-padding'>
+                    <IonRow>
+                        <IonCol>
+                            <IonText>
+                                <h1 className='text-3xl font-semibold'>Signup</h1>
+                            </IonText>
+                        </IonCol>
+                    </IonRow>
                     <form onSubmit={handleSubmit}>
                         <IonRow>
                             <IonInput

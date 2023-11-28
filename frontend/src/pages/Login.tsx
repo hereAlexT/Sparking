@@ -101,62 +101,61 @@ const Login: React.FC = () => {
                 </IonHeader>
                 <IonGrid className='ion-padding'>
                     <form onSubmit={handleSubmit}>
-                        <IonCol>
+                        <IonRow>
+                            <IonCol>
+                                <IonText>
+                                    <h1 className='text-3xl font-semibold'>Welcome to BlueYeti.</h1>
+                                </IonText>
+                            </IonCol>
+                        </IonRow>
+                        <IonRow className='mt-8'>
+                            <IonCol>
+                                <IonInput
+                                    className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
+                                    type="email"
+                                    fill="solid"
+                                    label="Email"
+                                    labelPlacement="floating"
+                                    errorText="Invalid email"
+                                    // onIonInput={(event) => validate(event)}
+                                    onIonBlur={() => markTouched()}
+                                    value={email}
+                                    onIonChange={(e) => setEmail(e.detail.value ?? '')}
+                                ></IonInput>
+                            </IonCol>
+                        </IonRow>
+                        <IonRow>
+                            <IonCol>
+                                <IonInput
+                                    type="password"
+                                    fill="solid"
+                                    label="Password"
+                                    labelPlacement="floating"
+                                    errorText='Invalid password'
+                                    counter={true}
+                                    maxlength={32}
+                                    minlength={8}
+                                    value={password}
+                                    onIonChange={(e) => setPassword(e.detail.value ?? '')}
+                                ></IonInput>
+                            </IonCol>
+                        </IonRow>
+                        <IonRow>
+                            <IonCol>
+                                <IonButton color="primary" type="submit" expand="block" >Login</IonButton>
+                                {/* <Button type="primary">Login</Button> */}
+                            </IonCol>
+                        </IonRow>
+                        <IonRow>
                             <IonRow>
                                 <IonCol>
-                                    <IonText>
-                                        <h1 className='text-3xl font-semibold'>Welcome to BlueYeti.</h1>
+                                    <IonText color="medium">
+                                        <a>Forgot password?</a>
                                     </IonText>
                                 </IonCol>
                             </IonRow>
-                            <IonRow className='mt-8'>
-                                <IonCol>
-                                    <IonInput
-                                        className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
-                                        type="email"
-                                        fill="solid"
-                                        label="Email"
-                                        labelPlacement="floating"
-                                        errorText="Invalid email"
-                                        // onIonInput={(event) => validate(event)}
-                                        onIonBlur={() => markTouched()}
-                                        value={email}
-                                        onIonChange={(e) => setEmail(e.detail.value ?? '')}
-                                    ></IonInput>
-                                </IonCol>
-                            </IonRow>
-                            <IonRow>
-                                <IonCol>
-                                    <IonInput
-                                        type="password"
-                                        fill="solid"
-                                        label="Password"
-                                        labelPlacement="floating"
-                                        errorText='Invalid password'
-                                        counter={true}
-                                        maxlength={32}
-                                        minlength={8}
-                                        value={password}
-                                        onIonChange={(e) => setPassword(e.detail.value ?? '')}
-                                    ></IonInput>
-                                </IonCol>
-                            </IonRow>
-                            <IonRow>
-                                <IonCol>
-                                    <IonButton color="primary" type="submit" expand="block" >Login</IonButton>
-                                    {/* <Button type="primary">Login</Button> */}
-                                </IonCol>
-                            </IonRow>
-                            <IonRow>
-                                <IonRow>
-                                    <IonCol>
-                                        <IonText color="medium">
-                                            <a>Forgot password?</a>
-                                        </IonText>
-                                    </IonCol>
-                                </IonRow>
-                            </IonRow>
-                        </IonCol>
+                        </IonRow>
+
                     </form>
 
                 </IonGrid>
