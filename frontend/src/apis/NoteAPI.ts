@@ -4,60 +4,47 @@ import { Database } from '../shared/db.types'
 
 // Function to insert a new note in the "notes" table
 export async function createNote(unSyncedNote: UnSyncedNote) {
-    try {
-        const note: Database['public']['Tables']['notes']['Insert'] = {
-            id: unSyncedNote.id,
-            body: unSyncedNote.body,
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString(),
-        }
-        const { data } = await supabase.from('notes').insert(note);
-        console.log(data)
-        return data;
-    } catch (error) {
-        console.error(error);
-        throw error;
+    const note: Database['public']['Tables']['notes']['Insert'] = {
+        id: unSyncedNote.id,
+        body: unSyncedNote.body,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
     }
+    const { data, error } = (await supabase.from('notes').insert(note));
+    if (error) throw error;
+    return data;
 }
 
 // Function to update a note in the "notes" table
 export async function updateNote(unsyncedNote: UnSyncedNote) {
-    try {
-        const note: Database['public']['Tables']['notes']['Update'] = {
-        
-            body: unsyncedNote.body,
-            updated_at: new Date().toISOString(),
-        }
-        const { data } = await supabase.from('notes').update(note).eq('id', unsyncedNote.id)
-        return data;
 
-    } catch (error) {
-        console.error('Error updating note:', error)
-        throw error
+    const note: Database['public']['Tables']['notes']['Update'] = {
+
+        body: unsyncedNote.body,
+        updated_at: new Date().toISOString(),
     }
+
+    const { data, error } = await supabase.from('notes').update(note).eq('id', unsyncedNote.id)
+    if (error) throw error;
+    return data;
+
 }
+
 
 // Function to delete a note from the "notes" table
 export async function deleteNote(noteId: NoteId) {
-    try {
-        const { data } = await supabase.from('notes').delete().eq('id', noteId)
-        console.log(data)
-        return data
-    } catch (error) {
-        console.error('Error deleting note:', error)
-        throw error
-    }
+    const { data, error } = await supabase.from('notes').delete().eq('id', noteId)
+    if (error) throw error;
+    return data;
 }
 
 
 
 
 export const getNotes = async (): Promise<SyncedNote[]> => {
-    try {
-        const { data } = await supabase.from('notes').select();
-        return data as SyncedNote[];
-    } catch (error) {
-        console.error(error);
-        throw error;
-    }
+
+    const { data, error } = await supabase.from('notes').select();
+    if (error) throw error;
+    return data as SyncedNote[];
+
 }

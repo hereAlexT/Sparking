@@ -32,13 +32,10 @@ type NoteAction = GetNoteAction | GetNotesAction | CreateNoteAction | DeleteNote
 const reducer = (state: Note[], action: NoteAction): Note[] => {
     switch (action.type) {
         case NOTE_ACTION.CREATE_NOTE:
-            console.log("reducer : CREATE_NOTE")
             return [action.payload, ...state];
         case NOTE_ACTION.DELETE_NOTE:
-            console.log("reducer : DELETE_NOTE")
             return state.filter(note => note.id !== action.payload);
         case NOTE_ACTION.UPDATE_NOTE:
-            console.log("reducer : UPDATE_NOTE")
             return state.map(note => note.id === (action.payload ? action.payload.id : null) ? action.payload : note);
         case NOTE_ACTION.GET_NOTES:
             return action.payload;
@@ -67,23 +64,35 @@ const NotesContext = createContext<NotesContextType>({
 
 const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
     const [notes, dispatch] = useReducer(reducer, [])
+
     const createNote = async (unSyncedNote: UnSyncedNote) => {
-        let response = await createNoteApi(unSyncedNote);
-        console.log(response)
-        dispatch({ type: NOTE_ACTION.CREATE_NOTE, payload: unSyncedNote })
+        try {
+            let response = await createNoteApi(unSyncedNote);
+            dispatch({ type: NOTE_ACTION.CREATE_NOTE, payload: unSyncedNote });
+        } catch (err) {
+            throw err;
+        }
     }
 
     const deleteNote = async (noteId: NoteId) => {
-        let response = await deleteNoteApi(noteId);
-        console.log(response)
-        dispatch({ type: NOTE_ACTION.DELETE_NOTE, payload: noteId })
+        try {
+            let response = await deleteNoteApi(noteId);
+            dispatch({ type: NOTE_ACTION.DELETE_NOTE, payload: noteId })
+        } catch (err) {
+            throw err;
+        }
     }
 
-    const updateNote = async (unSyncedNote: UnSyncedNote) => {
-        let response = await updateNoteApi(unSyncedNote);
-        console.log(response)
 
-        dispatch({ type: NOTE_ACTION.UPDATE_NOTE, payload: unSyncedNote })
+
+    const updateNote = async (unSyncedNote: UnSyncedNote) => {
+        try {
+            let response = await updateNoteApi(unSyncedNote);
+            dispatch({ type: NOTE_ACTION.UPDATE_NOTE, payload: unSyncedNote })
+
+        } catch (err) {
+            throw err;
+        }
     }
 
     /**

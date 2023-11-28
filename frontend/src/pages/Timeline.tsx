@@ -29,7 +29,8 @@ const TimeLine: React.FC = () => {
 
     const { notes, createNote, deleteNote, updateNote, getNotes } = useNotes();
     const [isLoading, setIsLoading] = useState(true);
-    const { isOnline } = useMeta();
+    // const { isOnline } = useMeta();
+    const isOnline = true;
 
     useEffect(() => {
         setIsLoading(true);
@@ -39,27 +40,45 @@ const TimeLine: React.FC = () => {
     }, []);
 
     const handleOnCreateNote = async (note: UnSyncedNote) => {
-        await createNote({
-            id: note.id || uuidv4(),
-            createdAt: note.createdAt,
-            updatedAt: note.updatedAt,
-            body: note.body
-        })
+        try {
+            await createNote({
+                id: note.id || uuidv4(),
+                createdAt: note.createdAt,
+                updatedAt: note.updatedAt,
+                body: note.body
+            })
+        } catch (error) {
+            console.log("error")
+            console.log(error)
+            alert((error as Error).message);
+        }
 
     }
 
-    const handleOnUpdateNote = (note: UnSyncedNote) => {
-        updateNote({
-            id: note.id,
-            createdAt: note.createdAt,
-            updatedAt: new Date(),
-            body: note.body
-        });
+    const handleOnUpdateNote = async (note: UnSyncedNote) => {
+        try {
+            await updateNote({
+                id: note.id,
+                createdAt: note.createdAt,
+                updatedAt: new Date(),
+                body: note.body
+            });
+        } catch (error) {
+            console.log("error")
+            console.log(error)
+            alert((error as Error).message);
+        }
     }
 
 
-    const handleOnDeleteNote = (noteId: NoteId) => {
-        deleteNote(noteId);
+    const handleOnDeleteNote = async (noteId: NoteId) => {
+        try {
+            await deleteNote(noteId);
+        } catch (error) {
+            console.log("error")
+            console.log(error)
+            alert((error as Error).message);
+        }
     }
 
 
