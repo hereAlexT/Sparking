@@ -1,5 +1,9 @@
 import { createContext, useContext, useReducer, ReactNode } from "react"
-import { Login as ApiLogin, Signup as ApiSignup } from '../apis/AuthenticationAPI';
+import { 
+    Login as ApiLogin, 
+    Signup as ApiSignup,
+    Logout as ApiLogout
+ } from '../apis/AuthenticationAPI';
 import type {
     User,
     Session
@@ -11,6 +15,8 @@ import type {
 
 interface State {
     user?: User;
+    session?: Session;
+    isAuthenticated: boolean;
 }
 
 interface Action {
@@ -28,7 +34,7 @@ function reducer(state: State, action: Action) {
             return { ...state, user: null, session: null, isAuthenticated: false };
         case "signup":
             console.log("reducer : signup")
-            return { ...state, user: action.payload, isAuthenticated: true, session: null };
+            return { ...state, user: null, isAuthenticated: false, session: null };
         default:
             throw new Error("Unknown action type");
     }
@@ -81,9 +87,15 @@ function AuthProvider({ children }: AuthProviderProps) {
     }
 
 
-    function logout() {
+    const logout = async () => {
         console.log("AuthenContext - logout")
-        dispatch({ type: "logout" });
+        try {
+            await ApiLogout();
+            dispatch({ type: "logout" });
+        } catch (error) {
+            console.error(error)
+            throw error;
+        }
     }
 
     const signup = async (email: string, password: string) => {
