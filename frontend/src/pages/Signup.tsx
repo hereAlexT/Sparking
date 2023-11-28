@@ -2,6 +2,7 @@ import { IonContent, IonHeader, IonInput, IonPage, IonText, IonTitle, IonToolbar
 import { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import { useAuth } from '../contexts/AuthContext';
+import { useMeta } from '../contexts/MetaContext';
 
 const Signup: React.FC = () => {
 
@@ -38,6 +39,7 @@ const Signup: React.FC = () => {
     const [comfirmPassword, setComfirmPassword] = useState("");
 
     const { signup, isAuthenticated } = useAuth();
+    const { isOnline } = useMeta();
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -130,7 +132,9 @@ const Signup: React.FC = () => {
 
                         <IonRow>
                             <IonCol className="ion-padding-top">
-                                <IonButton type="submit" expand="block">Signup</IonButton>
+                                <IonButton disabled={!isOnline} type="submit" expand="block">
+                                    {isOnline ? "Signup" : "Cannot signup: You are Offline"}
+                                </IonButton>
                             </IonCol>
                         </IonRow>
 

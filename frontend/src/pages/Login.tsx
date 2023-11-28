@@ -4,15 +4,11 @@ import {
     IonInput,
     IonPage,
     IonText,
-    IonTitle,
     IonToolbar,
     IonButton,
     IonGrid,
     IonCol,
     IonRow,
-    IonPopover,
-    IonList,
-    IonItem,
     IonAlert,
     IonButtons,
     IonMenuButton
@@ -20,9 +16,7 @@ import {
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useHistory } from 'react-router';
-import { GetServerHealthData } from '../apis/ConnectivityAPI';
-import HealthData from "../apis/ConnectivityAPI";
-
+import { useMeta } from '../contexts/MetaContext';
 
 const Login: React.FC = () => {
     const history = useHistory();
@@ -31,6 +25,7 @@ const Login: React.FC = () => {
     const [isLoginFailed, setLoginFailed] = useState(false);
 
     const { login, isAuthenticated } = useAuth();
+    const {isOnline} = useMeta();
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -142,8 +137,9 @@ const Login: React.FC = () => {
                         </IonRow>
                         <IonRow>
                             <IonCol>
-                                <IonButton color="primary" type="submit" expand="block" >Login</IonButton>
-                                {/* <Button type="primary">Login</Button> */}
+                                <IonButton disabled={!isOnline} color="primary" type="submit" expand="block" >
+                                    {isOnline ? "Login" : "Cannot login: You are Offline"}
+                                    </IonButton>
                             </IonCol>
                         </IonRow>
                         <IonRow>
