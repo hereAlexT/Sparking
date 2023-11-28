@@ -65,7 +65,6 @@ const NotesContext = createContext<NotesContextType>({
 
 
 
-
 const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
     const [notes, dispatch] = useReducer(reducer, [])
     const createNote = async (unSyncedNote: UnSyncedNote) => {
@@ -116,7 +115,7 @@ const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
 }
 
 const useNotes = () => {
-    const context = useContext(NotesContext)
+    const context = useContext(NotesContext);
     if (context === undefined) {
         throw new Error("useNotes must be used within a NotesProvider")
     }

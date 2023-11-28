@@ -19,9 +19,10 @@ interface ContainerProps {
     note: Note;
     onDeleteNote(noteId: NoteId): void;
     onEditNote(noteId: NoteId): void;
+    isOnline: boolean;
 }
 
-const BasicNoteCard: React.FC<ContainerProps> = ({ note, onDeleteNote, onEditNote }) => {
+const BasicNoteCard: React.FC<ContainerProps> = ({ note, onDeleteNote, onEditNote, isOnline }) => {
     return (
         <>
             <div className="m-0 p-0 w-full">
@@ -71,7 +72,7 @@ const BasicNoteCard: React.FC<ContainerProps> = ({ note, onDeleteNote, onEditNot
                         <IonItem button={true} detail={false} onClick={((e) => onEditNote(note.id))}>
                             Edit
                         </IonItem>
-                        <IonItem button={true} detail={false} onClick={(e) => onDeleteNote(note.id)}>
+                        <IonItem disabled={!isOnline} button={true} detail={false} onClick={(e) => onDeleteNote(note.id)}>
                             Delete
                         </IonItem>
                     </IonList>

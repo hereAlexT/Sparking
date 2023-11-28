@@ -15,6 +15,7 @@ import BasicNoteCard from '../components/BasicNoteCard';
 import CardEditor from '../components/CardEditor';
 import { useState, useEffect } from 'react';
 import { useNotes } from '../contexts/NotesContext';
+import { useMeta } from '../contexts/MetaContext';
 import {
     Note,
     UnSyncedNote,
@@ -28,6 +29,7 @@ const TimeLine: React.FC = () => {
 
     const { notes, createNote, deleteNote, updateNote, getNotes } = useNotes();
     const [isLoading, setIsLoading] = useState(true);
+    const { isOnline } = useMeta();
 
     useEffect(() => {
         setIsLoading(true);
@@ -37,7 +39,6 @@ const TimeLine: React.FC = () => {
     }, []);
 
     const handleOnCreateNote = async (note: UnSyncedNote) => {
-        console.log("handleOnCreateNote")
         await createNote({
             id: note.id || uuidv4(),
             createdAt: note.createdAt,
@@ -80,19 +81,20 @@ const TimeLine: React.FC = () => {
                     <IonButtons slot="start">
                         <IonMenuButton />
                     </IonButtons>
-                    <IonTitle>Timeline</IonTitle>
+                    <IonTitle>Timeline {isOnline ? '' : '[Offline]'}</IonTitle>
                     {/* <IonSearchbar disabled={true} placeholder="Search function under developing"></IonSearchbar> */}
                 </IonToolbar>
             </IonHeader>
             <IonContent >
                 <IonList >
                     <IonItem>
-                            <CardEditor className='w-full p-0' onProcessNote={handleOnCreateNote} />
+                        <CardEditor isOnline={isOnline} className='w-full p-0' onProcessNote={handleOnCreateNote} />
                     </IonItem>
                     {isLoading ? <IonItem>Loading...</IonItem> :
                         notes.map((note: Note) => (
                             <IonItem key={note.id} button={true} detail={false}>
                                 <BasicNoteCard
+                                    isOnline={isOnline}
                                     note={note}
                                     onDeleteNote={handleOnDeleteNote}
                                     onEditNote={handleOnEditNote}
@@ -113,7 +115,7 @@ const TimeLine: React.FC = () => {
                 </IonHeader>
                 <IonContent className="p-0 m-0 w-full h-full">
                     <div>
-                        <CardEditor onProcessNote={handleOnUpdateNote} note={selectedNote} />
+                        <CardEditor isOnline={isOnline} onProcessNote={handleOnUpdateNote} note={selectedNote} />
                     </div>
                 </IonContent>
             </IonModal>

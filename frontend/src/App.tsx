@@ -40,25 +40,28 @@ import Menu from './components/Menu';
 import { AuthProvider } from './contexts/AuthContext';
 import { useAuth } from './contexts/AuthContext';
 import { NotesProvider } from './contexts/NotesContext';
+import { MetaProvider } from './contexts/MetaContext';
 
 setupIonicReact();
 
 const App: React.FC = () => {
   const { logout } = useAuth();
   return (
-    < AuthProvider >
-      <NotesProvider>
-        <IonApp className='max-w-3xl mx-auto w-full app-background'>
-          {/* <IonApp className=''> */}
-          <IonReactRouter>
-            <IonSplitPane contentId="main">
-              <Menu />
-              <Routes />
-            </IonSplitPane>
-          </IonReactRouter>
-        </IonApp>
-      </NotesProvider>
-    </AuthProvider >)
+    <MetaProvider>
+      < AuthProvider >
+        <NotesProvider>
+          <IonApp className='max-w-3xl mx-auto w-full app-background'>
+            {/* <IonApp className=''> */}
+            <IonReactRouter>
+              <IonSplitPane contentId="main">
+                <Menu />
+                <Routes />
+              </IonSplitPane>
+            </IonReactRouter>
+          </IonApp>
+        </NotesProvider>
+      </AuthProvider >
+    </MetaProvider>)
 };
 
 const Routes: React.FC = () => {

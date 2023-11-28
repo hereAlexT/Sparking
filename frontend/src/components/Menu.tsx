@@ -18,6 +18,7 @@ import {
     prismOutline as prismOutlineIcon,
 } from 'ionicons/icons';
 import { useAuth } from "../contexts/AuthContext";
+import { useMeta } from "../contexts/MetaContext";
 
 
 const routes = {
@@ -47,6 +48,7 @@ interface MenuProps {
 
 const Menu: React.FC<MenuProps> = ({ }) => {
     const { isAuthenticated } = useAuth();
+    // const { isOnline } = useMeta();
 
     function renderlistItems(list: Pages[]) {
         // Ensure only pages with a path are rendered
@@ -67,8 +69,11 @@ const Menu: React.FC<MenuProps> = ({ }) => {
             <IonContent>
                 <IonList>
                     <IonListHeader>Account</IonListHeader>
-                    {isAuthenticated ? renderlistItems(routes.loggedInPages) :renderlistItems(routes.appPages)}
+                    {isAuthenticated ? renderlistItems(routes.loggedInPages) : renderlistItems(routes.appPages)}
                 </IonList>
+                {/* <IonList>
+                    {isOnline ? 'You are online' : 'You are offline'}
+                </IonList> */}
                 {/* <IonList>
                     <IonListHeader>Account</IonListHeader>
                     {renderlistItems(routes.loggedInPages)}

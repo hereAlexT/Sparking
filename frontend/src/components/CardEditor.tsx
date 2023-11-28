@@ -20,9 +20,10 @@ interface ContainerProps {
     onProcessNote: (noteContent: Note) => void;
     note?: Note;
     className?: string;
+    isOnline: boolean;
 }
 
-const CardEditor: React.FC<ContainerProps> = ({ onProcessNote: onProcessNote, note, className }) => {
+const CardEditor: React.FC<ContainerProps> = ({ onProcessNote: onProcessNote, note, className, isOnline }) => {
     const [content, setContent] = useState(note?.body || '');
     const handleInput = (event: CustomEvent) => {
         const value = event.detail.value;
@@ -46,7 +47,8 @@ const CardEditor: React.FC<ContainerProps> = ({ onProcessNote: onProcessNote, no
                 <IonGrid>
                     <IonRow>
                         <IonTextarea
-                            value={content}
+                            disabled={!isOnline}
+                            value={isOnline ? content : "We are working on offline editing!"}
                             onIonInput={handleInput}
                             rows={5}
                             autoGrow={true}
@@ -61,8 +63,6 @@ const CardEditor: React.FC<ContainerProps> = ({ onProcessNote: onProcessNote, no
                                         const newContent = content.slice(0, cursorPosition) + '\n' + content.slice(cursorPosition);
                                         setContent(newContent);
                                     }
-
-
                                 }
                             }}
 
@@ -71,6 +71,8 @@ const CardEditor: React.FC<ContainerProps> = ({ onProcessNote: onProcessNote, no
                     <IonRow class="ion-justify-content-end">
                         <IonCol size="auto" className="m-0 p-0">
                             <IonButton
+                                disabled={!isOnline}
+
                                 color="tertiary"
                                 item-end size="small"
                                 onClick={HandleOnSubmitNote}
