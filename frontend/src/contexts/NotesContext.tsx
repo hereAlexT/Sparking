@@ -109,8 +109,8 @@ const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
             updatedAt: new Date(note.updatedAt),
             createdAt: new Date(note.createdAt)
         }));
-        console.log("getNotes")
-        console.log(_notes)
+        console.log("getNotes called")
+        // console.log(_notes)
         _notes.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
         dispatch({ type: NOTE_ACTION.GET_NOTES, payload: _notes })
         return _notes;

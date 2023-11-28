@@ -16,6 +16,7 @@ import CardEditor from '../components/CardEditor';
 import { useState, useEffect } from 'react';
 import { useNotes } from '../contexts/NotesContext';
 import { useMeta } from '../contexts/MetaContext';
+import { useAuth } from '../contexts/AuthContext';
 import {
     Note,
     UnSyncedNote,
@@ -25,15 +26,14 @@ import { v4 as uuidv4 } from 'uuid';
 
 const TimeLine: React.FC = () => {
 
-
-
     const { notes, createNote, deleteNote, updateNote, getNotes } = useNotes();
     const [isLoading, setIsLoading] = useState(true);
-    // const { isOnline } = useMeta();
-    const isOnline = true;
+    const { isOnline } = useMeta();
+    const { isAuthenticated } = useAuth();
 
     useEffect(() => {
         setIsLoading(true);
+        console.log("i fire once. isAuthenticated:" + isAuthenticated)
         getNotes().then(() => {
             setIsLoading(false);
         });

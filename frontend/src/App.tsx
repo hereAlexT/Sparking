@@ -41,7 +41,6 @@ import { AuthProvider } from './contexts/AuthContext';
 import { useAuth } from './contexts/AuthContext';
 import { NotesProvider } from './contexts/NotesContext';
 import { MetaProvider } from './contexts/MetaContext';
-import PrivateRoute from './components/PrivateRoute';
 
 setupIonicReact();
 
@@ -66,7 +65,7 @@ const App: React.FC = () => {
 };
 
 const Routes: React.FC = () => {
-  const { logout } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
 
   return (
     <IonRouterOutlet id="main">
@@ -74,13 +73,14 @@ const Routes: React.FC = () => {
       <Route path="/tabs" render={() => <MainTabs />} />
       <Route path="/signup" component={Signup} />
       <Route path="/login" component={Login} />
-      <PrivateRoute path="/timeline" component={TimeLine} />
       <Route path="/comlab" component={ComponentLab} />
+      <Route
+        path="/timeline"
+        component={isAuthenticated ? TimeLine : Login}
+      />
       <Route exact path="/logout" render={() => {
-        console.log('Logout route hit');
-        console.log('Logout function:', logout);
         logout();
-        return <Redirect to="/login" />
+        return <Redirect to="/" />
       }} />
     </IonRouterOutlet>
   );
