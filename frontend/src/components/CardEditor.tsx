@@ -41,36 +41,48 @@ const CardEditor: React.FC<ContainerProps> = ({ onProcessNote: onProcessNote, no
     }
 
     return (
-            <IonCard className={className} >
-                <IonCardContent className='p-1'>
-                    <IonGrid>
-                        <IonRow>
-                            <IonTextarea
-                                value={content}
-                                onIonInput={handleInput}
-                                rows={5}
-                                onKeyDown={(e) => {
-                                    if (e.key === 'Enter') {
-                                        HandleOnSubmitNote();
+        <IonCard className={className} >
+            <IonCardContent className='p-1'>
+                <IonGrid>
+                    <IonRow>
+                        <IonTextarea
+                            value={content}
+                            onIonInput={handleInput}
+                            rows={5}
+                            autoGrow={true}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' && !(e.metaKey || e.ctrlKey)) {
+                                    HandleOnSubmitNote();
+                                } else if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+                                    console.log('Ctrl + Enter');
+                                    const textareaElement = e.currentTarget.querySelector('textarea');
+                                    if (textareaElement) {
+                                        const cursorPosition = textareaElement.selectionStart;
+                                        const newContent = content.slice(0, cursorPosition) + '\n' + content.slice(cursorPosition);
+                                        setContent(newContent);
                                     }
-                                }}
-                            />
-                        </IonRow>
-                        <IonRow class="ion-justify-content-end">
-                            <IonCol size="auto" className="m-0 p-0">
-                                <IonButton
-                                    color="tertiary"
-                                    item-end size="small"
-                                    onClick={HandleOnSubmitNote}
-                                    className='m-0'
-                                    >
-                                    <IonIcon slot="icon-only" icon={sendOutLineIcon}></IonIcon>
-                                </IonButton>
-                            </IonCol>
-                        </IonRow>
-                    </IonGrid>
-                </IonCardContent>
-            </IonCard>
+
+
+                                }
+                            }}
+
+                        />
+                    </IonRow>
+                    <IonRow class="ion-justify-content-end">
+                        <IonCol size="auto" className="m-0 p-0">
+                            <IonButton
+                                color="tertiary"
+                                item-end size="small"
+                                onClick={HandleOnSubmitNote}
+                                className='m-0'
+                            >
+                                <IonIcon slot="icon-only" icon={sendOutLineIcon}></IonIcon>
+                            </IonButton>
+                        </IonCol>
+                    </IonRow>
+                </IonGrid>
+            </IonCardContent>
+        </IonCard>
 
     )
 }
