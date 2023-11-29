@@ -62,7 +62,7 @@ const Settings: React.FC = () => {
 
                 <IonList inset={true} >
                     {/* routerlink is causing bug */}
-                    <IonItem routerLink="/logout">
+                    <IonItem routerLink="/logout" routerDirection="none">
                         <IonIcon color="danger" areia-hidden={true} icon={logOutOutlineIcon} slot="start" ></IonIcon>
                         <IonLabel color="danger">Logout</IonLabel>
                     </IonItem>
