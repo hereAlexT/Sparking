@@ -10,10 +10,12 @@ import {
 
 } from '@ionic/react';
 import { useState } from 'react';
-import './BasicNoteCard.css';
-import { Note } from '../shared/types';
 import { v4 as uuidv4 } from 'uuid';
 import { arrowDownOutline as arrowDownOutlineIcon } from 'ionicons/icons';
+
+import { Note } from '../shared/types';
+
+import './CardEditor.css';
 
 interface ContainerProps {
     onProcessNote: (noteContent: Note) => void;
@@ -47,31 +49,31 @@ const CardEditor: React.FC<ContainerProps> = ({ onProcessNote: onProcessNote, no
                     <IonRow >
                         <IonCol>
                             <IonTextarea
-                                className='ion-no-padding pt-1 px-1 text-black'
+                                className='pt-1 px-1 text-black native-textarea-p0-m0 border-b border-slate-400'
                                 disabled={!isOnline}
                                 value={isOnline ? content : "We are working on offline editing!"}
                                 onIonInput={handleInput}
-                                rows={2}
-                                autoGrow={true}
+                                rows={0}
+                                autoGrow={false}
                                 color="primary"
                                 placeholder="You got a good idea💡, right?"
-                                onKeyDown={(e) => {
-                                    if (e.key === 'Enter' && !(e.metaKey || e.ctrlKey)) {
-                                        HandleOnSubmitNote();
-                                    } else if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
-                                        console.log('Ctrl + Enter');
-                                        const textareaElement = e.currentTarget.querySelector('textarea');
-                                        if (textareaElement) {
-                                            const cursorPosition = textareaElement.selectionStart;
-                                            const newContent = content.slice(0, cursorPosition) + '\n' + content.slice(cursorPosition);
-                                            setContent(newContent);
-                                        }
-                                    }
-                                }}
+                                // onKeyDown={(e) => {
+                                //     if (e.key === 'Enter' && !(e.metaKey || e.ctrlKey)) {
+                                //         HandleOnSubmitNote();
+                                //     } else if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+                                //         console.log('Ctrl + Enter');
+                                //         const textareaElement = e.currentTarget.querySelector('textarea');
+                                //         if (textareaElement) {
+                                //             const cursorPosition = textareaElement.selectionStart;
+                                //             const newContent = content.slice(0, cursorPosition) + '\n' + content.slice(cursorPosition);
+                                //             setContent(newContent);
+                                //         }
+                                //     }
+                                // }}
                             />
                         </IonCol>
                     </IonRow>
-                    <IonRow className="ion-justify-content-end border-t border-slate-400 p-0 m-0">
+                    <IonRow className="ion-justify-content-end p-0 m-0">
                         <IonCol size="auto" className="m-0 p-0 ion-no-padding">
                             <IonButton
                                 disabled={!isOnline}

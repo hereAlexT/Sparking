@@ -28,6 +28,7 @@ import { settings } from 'ionicons/icons';
 
 const Settings: React.FC = () => {
     console.log("Settings.tsx: Settings")
+    const { user } = useAuth();
 
     return (
         <IonPage id="main" >
@@ -44,10 +45,7 @@ const Settings: React.FC = () => {
                     <IonItem>
                         <IonIcon aria-hidden="true" icon={mailOutLineIcon} slot="start" />
                         <IonLabel>Email</IonLabel>
-                        <IonLabel>Email</IonLabel>
-                    </IonItem>
-                    <IonItem>
-                        <IonInput label="Subscription"></IonInput>
+                        <IonLabel>{user?.email}</IonLabel>
                     </IonItem>
                 </IonList>
 

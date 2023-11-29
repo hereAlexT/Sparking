@@ -10,15 +10,13 @@ import {
 } from "@ionic/react"
 
 import {
-    personOutline as personIcon,
-    flaskOutline as flaskIcon,
     addOutline as addIcon,
     logInOutline as logInIcon,
-    logOutOutline as logOutIcon,
     prismOutline as prismOutlineIcon,
+    cogOutline as cogOutlineIcon,
 } from 'ionicons/icons';
 import { useAuth } from "../contexts/AuthContext";
-import { useMeta } from "../contexts/MetaContext";
+
 
 
 const routes = {
@@ -27,9 +25,9 @@ const routes = {
         { title: 'Signup', path: '/signup', icon: addIcon },
     ],
     loggedInPages: [
-        { title: 'Timeline', path: '/timeline', icon: prismOutlineIcon },
+        // { title: 'Timeline', path: '/timeline', icon: prismOutlineIcon },
         // { title: 'Logout', path: '/logout', icon: logInIcon },
-        { title: 'Settings', path: '/settings', icon: logInIcon}
+        { title: 'Settings', path: '/settings', icon: cogOutlineIcon}
     ],
     loggedOutPages: [
         { title: 'Login', path: '/login', icon: logInIcon },

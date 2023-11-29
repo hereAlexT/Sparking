@@ -71,11 +71,14 @@ const Routes: React.FC = () => {
     <IonRouterOutlet id="main">
 
       <Redirect exact path="/" to="/login" />
-      <Route path="/settings" component={Settings} />
+
       <Route path="/tabs" render={() => <MainTabs />} />
       <Route path="/signup" component={Signup} />
       <Route path="/login" component={Login} />
       <Route path="/comlab" component={ComponentLab} />
+      <Route 
+      path="/settings" 
+      component={isAuthenticated ? Settings : Login} />
       <Route
         path="/timeline"
         component={isAuthenticated ? TimeLine : Login}
