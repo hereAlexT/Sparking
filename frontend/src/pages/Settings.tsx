@@ -1,29 +1,24 @@
 import {
     IonContent,
     IonHeader,
-    IonInput,
     IonItem,
     IonLabel,
     IonList,
     IonNote,
-    IonTextarea,
     IonToggle,
     IonToolbar,
     IonTitle,
     IonPage,
     IonIcon,
-    IonButton,
     IonButtons,
-    IonMenuButton
+    IonMenuButton,
+    IonBackButton
 } from '@ionic/react';
-import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import {
     mailOutline as mailOutLineIcon,
     logOutOutline as logOutOutlineIcon,
 } from 'ionicons/icons';
-import { useMeta } from '../contexts/MetaContext';
-import { settings } from 'ionicons/icons';
 
 
 const Settings: React.FC = () => {
@@ -36,7 +31,7 @@ const Settings: React.FC = () => {
                 <IonToolbar>
                     <IonTitle>Settings</IonTitle>
                     <IonButtons slot="start">
-                        <IonMenuButton />
+                        <IonBackButton></IonBackButton>
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>

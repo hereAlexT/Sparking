@@ -2,8 +2,10 @@ import {
   IonApp,
   IonRouterOutlet,
   setupIonicReact,
-  IonSplitPane
+  IonSplitPane,
+  isPlatform,
 } from '@ionic/react';
+import { useState } from 'react'
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 
@@ -45,7 +47,8 @@ import { MetaProvider } from './contexts/MetaContext';
 setupIonicReact();
 
 const App: React.FC = () => {
-  const { logout } = useAuth();
+  const [isSplitPaneOn, setIsSplitPaneOn] = useState<boolean>(false);
+  console.log("isSplitPaneOn", isSplitPaneOn)
 
   return (
     <MetaProvider>
@@ -53,9 +56,9 @@ const App: React.FC = () => {
         <NotesProvider>
           <IonApp className='max-w-3xl mx-auto w-full app-background'>
             <IonReactRouter>
-              <IonSplitPane contentId="main">
+              <IonSplitPane onIonSplitPaneVisible={(event) => setIsSplitPaneOn(event.detail.visible)} contentId="main">
                 <Menu />
-                <Routes />
+                <Routes isSplitPaneOn={isSplitPaneOn} />
               </IonSplitPane>
             </IonReactRouter>
           </IonApp>
@@ -64,11 +67,14 @@ const App: React.FC = () => {
     </MetaProvider>)
 };
 
-const Routes: React.FC = () => {
+interface RoutesProps {
+  isSplitPaneOn: boolean;
+}
+const Routes: React.FC<RoutesProps> = ({isSplitPaneOn}) => {
   const { isAuthenticated, logout } = useAuth();
 
   return (
-    <IonRouterOutlet id="main">
+    <IonRouterOutlet id="main" animated={!isSplitPaneOn}>
 
       <Redirect exact path="/" to="/login" />
       <Route path="/signup" component={Signup} />
