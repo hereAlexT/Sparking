@@ -17,8 +17,8 @@
 .env.development.local
 .env.test.local
 .env.production.local
-/.vscode/*
-!/.vscode/extensions.json
+# /.vscode/*
+# !/.vscode/extensions.json
 .idea
 
 npm-debug.log*
