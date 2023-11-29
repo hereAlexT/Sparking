@@ -92,7 +92,7 @@ function AuthProvider({ children }: AuthProviderProps) {
         initialState);
 
     const login = async (email: string, password: string) => {
-        console.log("AuthContext " + email + " + " + password)
+        console.log("AuthContext - Signin")
         try {
             const { user, session } = await ApiLogin(email, password);
             dispatch({ type: "login", payload: { user, session } })
@@ -100,7 +100,17 @@ function AuthProvider({ children }: AuthProviderProps) {
             console.error(error)
             throw error;
         }
+    }
 
+    const signup = async (email: string, password: string) => {
+        console.log("AuthenContext - signup")
+        try {
+            const { user, session } = await ApiSignup(email, password)
+            dispatch({ type: "signup", payload: { email, password } })
+        } catch (error) {
+            console.error(error)
+            throw error;
+        }
     }
     const getSession = async () => {
         console.log("AuthenContext - getSession")
@@ -129,23 +139,7 @@ function AuthProvider({ children }: AuthProviderProps) {
         }
     }
 
-    const signup = async (email: string, password: string) => {
-        console.log("AuthenContext - signup")
-        try {
-            const { user, session } = await ApiSignup(email, password)
-                .catch(error => {
-                    console.error('Error during signup:', error);
-                    throw error;
-                });;
-            console.log(user)
-            console.log(session)
-            dispatch({ type: "signup", payload: { email, password } })
-        } catch (error) {
-            console.error(error)
-            throw error;
-        }
 
-    }
 
     useEffect(() => {
         const fetchSession = async () => {

@@ -23,15 +23,18 @@ const routes = {
     appPages: [
         { title: 'Login', path: '/login', icon: logInIcon },
         { title: 'Signup', path: '/signup', icon: addIcon },
+        { title: 'ComLab', path: '/comlab', icon: prismOutlineIcon },
     ],
     loggedInPages: [
         // { title: 'Timeline', path: '/timeline', icon: prismOutlineIcon },
         // { title: 'Logout', path: '/logout', icon: logInIcon },
-        { title: 'Settings', path: '/settings', icon: cogOutlineIcon}
+        { title: 'Settings', path: '/settings', icon: cogOutlineIcon },
+        { title: 'ComLab', path: '/comlab', icon: prismOutlineIcon },
     ],
     loggedOutPages: [
         { title: 'Login', path: '/login', icon: logInIcon },
         { title: 'Signup', path: '/signup', icon: logInIcon },
+        { title: 'ComLab', path: '/comlab', icon: prismOutlineIcon },
     ]
 }
 

@@ -37,6 +37,7 @@ const Login: React.FC = () => {
                 history.push('/timeline', { direction: 'none' });
                 console.log("push done")
             } catch (error) {
+                alert("Login failed: \n " + error)
                 console.error(error);
             }
         }
@@ -145,26 +146,7 @@ const Login: React.FC = () => {
                             </IonCol>
                         </IonRow>
                     </form>
-                    <IonRow>
-                        {/** use a button Get session and print in console*/}
-                        <IonButton
-                            onClick={() => {
-                                console.log("Login- button")
-                                console.log({
-                                    session: session,
-                                    user: user
-                                })
-                                console.log("isAuthenticated", isAuthenticated)
 
-                            }}
-                            color="primary"
-                            fill="outline"
-                            expand="block"
-                        >
-                            Get Session
-                        </IonButton>
-
-                    </IonRow>
                     <IonRow>
                         <IonCol>
                             <IonButton

@@ -54,12 +54,11 @@ const Signup: React.FC = () => {
             return;
         }
 
-
         try {
             await signup(email, password);
         } catch (error) {
-            alert(error)
-            console.log(error);
+            alert("Signup failed: \n " + error)
+            console.error(error);
         }
 
     };
