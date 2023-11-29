@@ -28,7 +28,8 @@ const routes = {
     ],
     loggedInPages: [
         { title: 'Timeline', path: '/timeline', icon: prismOutlineIcon },
-        { title: 'Logout', path: '/logout', icon: logInIcon },
+        // { title: 'Logout', path: '/logout', icon: logInIcon },
+        { title: 'Settings', path: '/settings', icon: logInIcon}
     ],
     loggedOutPages: [
         { title: 'Login', path: '/login', icon: logInIcon },

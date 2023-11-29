@@ -1,4 +1,3 @@
-import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
   IonRouterOutlet,
@@ -6,8 +5,7 @@ import {
   IonSplitPane
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-
-
+import { Redirect, Route } from 'react-router-dom';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -25,7 +23,6 @@ import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
-
 /* Theme variables */
 import './theme/variables.css';
 import './theme/global.css'
@@ -37,7 +34,9 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import TimeLine from './pages/Timeline';
 import ComponentLab from './pages/ComponentLab'
+import Settings from './pages/Settings';
 import Menu from './components/Menu';
+import Logout from './components/Logout';
 import { AuthProvider } from './contexts/AuthContext';
 import { useAuth } from './contexts/AuthContext';
 import { NotesProvider } from './contexts/NotesContext';
@@ -47,12 +46,12 @@ setupIonicReact();
 
 const App: React.FC = () => {
   const { logout } = useAuth();
+
   return (
     <MetaProvider>
       < AuthProvider >
         <NotesProvider>
           <IonApp className='max-w-3xl mx-auto w-full app-background'>
-            {/* <IonApp className=''> */}
             <IonReactRouter>
               <IonSplitPane contentId="main">
                 <Menu />
@@ -70,7 +69,9 @@ const Routes: React.FC = () => {
 
   return (
     <IonRouterOutlet id="main">
-      <Route path="/" component={Login} exact={true} />
+
+      <Redirect exact path="/" to="/login" />
+      <Route path="/settings" component={Settings} />
       <Route path="/tabs" render={() => <MainTabs />} />
       <Route path="/signup" component={Signup} />
       <Route path="/login" component={Login} />
@@ -79,10 +80,7 @@ const Routes: React.FC = () => {
         path="/timeline"
         component={isAuthenticated ? TimeLine : Login}
       />
-      <Route exact path="/logout" render={() => {
-        logout();
-        return <Redirect to="/" />
-      }} />
+      <Route exact path="/logout" component={Logout} />
     </IonRouterOutlet>
   );
 };

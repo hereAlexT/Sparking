@@ -29,21 +29,25 @@ const Login: React.FC = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        console.log("Login handleSubmit: isAuthenticated = ", isAuthenticated)
         if (email && password) {
             try {
                 await login(email, password);
+                console.log("try to history.push")
+                history.push('/timeline', { direction: 'none' });
+                console.log("push done")
             } catch (error) {
                 console.error(error);
-                setLoginFailed(true);
             }
         }
     }
 
-    useEffect(() => {
-        if (isAuthenticated) {
-            history.push("/timeline");
-        }
-    }, [isAuthenticated]);
+    // useEffect(() => {
+    //     console.log("Login useEffect: isAuthenticated = ", isAuthenticated)
+    //     if (isAuthenticated) {
+    //         history.push("/timeline",);
+    //     }
+    // }, [isAuthenticated]);
 
 
     /* Email Address Validation 
@@ -76,22 +80,14 @@ const Login: React.FC = () => {
     };
     /* Email Validation Done */
 
-
-
-
-
-
     return (
         <IonPage id="main">
-
-
             <IonContent>
                 <IonHeader collapse="condense">
                     <IonToolbar>
                         <IonButtons slot="start">
                             <IonMenuButton />
                         </IonButtons>
-
                     </IonToolbar>
                 </IonHeader>
                 <IonGrid className='ion-padding'>
@@ -148,7 +144,6 @@ const Login: React.FC = () => {
                                 </IonButton>
                             </IonCol>
                         </IonRow>
-
                     </form>
                     <IonRow>
                         <IonCol>
@@ -171,7 +166,6 @@ const Login: React.FC = () => {
                             </IonCol>
                         </IonRow>
                     </IonRow>
-
                 </IonGrid>
                 <IonAlert
                     isOpen={isLoginFailed}
@@ -181,7 +175,6 @@ const Login: React.FC = () => {
                     buttons={['Action']}
                     onDidDismiss={() => setLoginFailed(false)}
                 ></IonAlert>
-
             </IonContent>
         </IonPage>
     );

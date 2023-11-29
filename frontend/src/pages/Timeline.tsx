@@ -27,6 +27,7 @@ import { getPlatforms } from '@ionic/react';
 import { v4 as uuidv4 } from 'uuid';
 
 const TimeLine: React.FC = () => {
+    console.log("timeline render")
 
     const { notes, createNote, deleteNote, updateNote, getNotes } = useNotes();
     const [isLoading, setIsLoading] = useState(true);
