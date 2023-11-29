@@ -42,7 +42,7 @@ const BasicNoteCard: React.FC<ContainerProps> = ({ note, onDeleteNote, onEditNot
                                     hour: '2-digit',
                                     minute: '2-digit',
                                     timeZone: 'UTC'
-                                }).replace(',', '')} · Summer Hill, Syndey
+                                }).replace(',', '')}
                             </IonCol>
                             <IonCol size="auto" className='m-0 p-0 align-top'>
                                 <IonButton

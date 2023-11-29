@@ -42,34 +42,37 @@ const CardEditor: React.FC<ContainerProps> = ({ onProcessNote: onProcessNote, no
 
     return (
         <IonCard className={className} >
-            <IonCardContent className='p-1'>
-                <IonGrid>
-                    <IonRow>
-                        <IonTextarea
-                            disabled={!isOnline}
-                            value={isOnline ? content : "We are working on offline editing!"}
-                            onIonInput={handleInput}
-                            rows={5}
-                            autoGrow={true}
-                            placeholder="You got a good idea💡, right?"
-                            onKeyDown={(e) => {
-                                if (e.key === 'Enter' && !(e.metaKey || e.ctrlKey)) {
-                                    HandleOnSubmitNote();
-                                } else if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
-                                    console.log('Ctrl + Enter');
-                                    const textareaElement = e.currentTarget.querySelector('textarea');
-                                    if (textareaElement) {
-                                        const cursorPosition = textareaElement.selectionStart;
-                                        const newContent = content.slice(0, cursorPosition) + '\n' + content.slice(cursorPosition);
-                                        setContent(newContent);
+            <IonCardContent className='p-0 m-0'>
+                <IonGrid className='p-0 m-0'>
+                    <IonRow >
+                        <IonCol>
+                            <IonTextarea
+                                className='ion-no-padding pt-1 px-1 text-black'
+                                disabled={!isOnline}
+                                value={isOnline ? content : "We are working on offline editing!"}
+                                onIonInput={handleInput}
+                                rows={2}
+                                autoGrow={true}
+                                color="primary"
+                                placeholder="You got a good idea💡, right?"
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter' && !(e.metaKey || e.ctrlKey)) {
+                                        HandleOnSubmitNote();
+                                    } else if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+                                        console.log('Ctrl + Enter');
+                                        const textareaElement = e.currentTarget.querySelector('textarea');
+                                        if (textareaElement) {
+                                            const cursorPosition = textareaElement.selectionStart;
+                                            const newContent = content.slice(0, cursorPosition) + '\n' + content.slice(cursorPosition);
+                                            setContent(newContent);
+                                        }
                                     }
-                                }
-                            }}
-
-                        />
+                                }}
+                            />
+                        </IonCol>
                     </IonRow>
-                    <IonRow class="ion-justify-content-end">
-                        <IonCol size="auto" className="m-0 p-0">
+                    <IonRow className="ion-justify-content-end border-t border-slate-400 p-0 m-0">
+                        <IonCol size="auto" className="m-0 p-0 ion-no-padding">
                             <IonButton
                                 disabled={!isOnline}
                                 color="primary"

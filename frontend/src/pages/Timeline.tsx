@@ -108,11 +108,14 @@ const TimeLine: React.FC = () => {
                         <IonTitle>Timeline {isOnline ? '' : '[Offline]'}</IonTitle>
                     </IonToolbar>
                 </IonHeader>
-            ) : <div className='m-5'/>}
+            ) : <div className='m-5' />}
             <IonContent >
                 <IonList lines="none">
                     <IonItem>
-                        <CardEditor isOnline={isOnline} className='w-full p-0 my-1.5 mx-1 shadow-md border border-gray-500' onProcessNote={handleOnCreateNote} />
+                        <CardEditor
+                            isOnline={isOnline}
+                            className='w-full p-0 my-1.5 mx-1 shadow-md border border-gray-500'
+                            onProcessNote={handleOnCreateNote} />
                     </IonItem>
                     {isLoading ? <IonItem>Loading...</IonItem> :
                         notes.map((note: Note) => (
