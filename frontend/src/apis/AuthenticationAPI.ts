@@ -44,7 +44,7 @@ const getSession = async () => {
         if (error) {
             throw error
         } else {
-            return { session}
+            return {session}
         }
     } catch (error) {
         console.error(error)

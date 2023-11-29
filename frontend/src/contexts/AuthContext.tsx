@@ -106,10 +106,14 @@ function AuthProvider({ children }: AuthProviderProps) {
         console.log("AuthenContext - getSession")
         try {
             const session = await ApiGetSession();
-            dispatch({ type: "getSession", payload: { session } })
+            console.log("isSession?", session)
+            if (session.session) {
+                dispatch({ type: "getSession", payload: { session } })
+            }
         } catch (error) {
             console.error(error)
             throw error;
+
         }
     }
 
@@ -128,7 +132,6 @@ function AuthProvider({ children }: AuthProviderProps) {
     const signup = async (email: string, password: string) => {
         console.log("AuthenContext - signup")
         try {
-            console.log("hehh")
             const { user, session } = await ApiSignup(email, password)
                 .catch(error => {
                     console.error('Error during signup:', error);
