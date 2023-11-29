@@ -52,6 +52,7 @@ const CardEditor: React.FC<ContainerProps> = ({ onProcessNote: onProcessNote, no
                             onIonInput={handleInput}
                             rows={5}
                             autoGrow={true}
+                            placeholder="You got a good idea💡, right?"
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter' && !(e.metaKey || e.ctrlKey)) {
                                     HandleOnSubmitNote();

@@ -9,7 +9,8 @@ import {
     IonList,
     IonPopover,
     IonContent,
-    IonIcon
+    IonIcon,
+    IonText
 } from '@ionic/react';
 import { menuOutline as meanuOutlineIcon } from 'ionicons/icons';
 import { Note, NoteId } from '../shared/types';
@@ -20,23 +21,26 @@ interface ContainerProps {
     onDeleteNote(noteId: NoteId): void;
     onEditNote(noteId: NoteId): void;
     isOnline: boolean;
+    className?: string;
 }
 
-const BasicNoteCard: React.FC<ContainerProps> = ({ note, onDeleteNote, onEditNote, isOnline }) => {
+const BasicNoteCard: React.FC<ContainerProps> = ({ note, onDeleteNote, onEditNote, isOnline, className }) => {
     return (
         <>
             <div className="m-0 p-0 w-full">
-                <IonCard >
+                <IonCard className={className}>
                     <IonCardContent className="p-2">
                         <IonRow className="p-0 m-0">
-                            <IonCol 
-                            className='m-0 p-0 font-bold text-[13px]'
-                            style={{ color: '#71717A' }}
+                            <IonCol
+                                className='m-0 p-0 font-bold text-[13px]'
+                                style={{ color: '#71717A' }}
                             >
                                 {note.createdAt.toLocaleString('en-GB', {
                                     day: '2-digit',
                                     month: 'short',
                                     year: '2-digit',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
                                     timeZone: 'UTC'
                                 }).replace(',', '')} · Summer Hill, Syndey
                             </IonCol>
@@ -52,7 +56,12 @@ const BasicNoteCard: React.FC<ContainerProps> = ({ note, onDeleteNote, onEditNot
                                 </IonButton>
                             </IonCol>
                         </IonRow>
-                        <IonRow> {note.body}</IonRow>
+                        <IonRow>
+                            <IonText color="primary">
+                                <p>{note.body}</p>
+                            </IonText>
+
+                        </IonRow>
 
 
                     </IonCardContent>

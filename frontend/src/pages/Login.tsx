@@ -25,7 +25,7 @@ const Login: React.FC = () => {
     const [isLoginFailed, setLoginFailed] = useState(false);
 
     const { login, isAuthenticated } = useAuth();
-    const {isOnline} = useMeta();
+    const { isOnline } = useMeta();
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -137,22 +137,40 @@ const Login: React.FC = () => {
                         </IonRow>
                         <IonRow>
                             <IonCol>
-                                <IonButton disabled={!isOnline} color="primary" type="submit" expand="block" >
+                                <IonButton
+                                    disabled={!isOnline}
+                                    color="primary"
+                                    type="submit"
+                                    expand="block"
+                                    className='rounded-full'
+                                >
                                     {isOnline ? "Login" : "Cannot login: You are Offline"}
-                                    </IonButton>
+                                </IonButton>
                             </IonCol>
-                        </IonRow>
-                        <IonRow>
-                            <IonRow>
-                                <IonCol>
-                                    <IonText color="medium">
-                                        <a>Forgot password?</a>
-                                    </IonText>
-                                </IonCol>
-                            </IonRow>
                         </IonRow>
 
                     </form>
+                    <IonRow>
+                        <IonCol>
+                            <IonButton
+                                disabled={true}
+                                color="primary"
+                                fill="outline"
+                                expand="block"
+                            >
+                                {isOnline ? "Login with Google (developing)" : "Cannot login: You are Offline"}
+                            </IonButton>
+                        </IonCol>
+                    </IonRow>
+                    <IonRow>
+                        <IonRow>
+                            <IonCol>
+                                <IonText color="medium">
+                                    <a>Forgot password?</a>
+                                </IonText>
+                            </IonCol>
+                        </IonRow>
+                    </IonRow>
 
                 </IonGrid>
                 <IonAlert

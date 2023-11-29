@@ -22,6 +22,8 @@ import {
     UnSyncedNote,
     NoteId,
 } from '../shared/types';
+import { isPlatform } from '@ionic/react';
+import { getPlatforms } from '@ionic/react';
 import { v4 as uuidv4 } from 'uuid';
 
 const TimeLine: React.FC = () => {
@@ -32,6 +34,7 @@ const TimeLine: React.FC = () => {
     const { isAuthenticated } = useAuth();
 
     useEffect(() => {
+        console.log(getPlatforms())
         setIsLoading(true);
         console.log("i fire once. isAuthenticated:" + isAuthenticated)
         getNotes().then(() => {
@@ -95,28 +98,30 @@ const TimeLine: React.FC = () => {
 
     return (
         <IonPage id="main" >
-            <IonHeader>
-                <IonToolbar>
-                    <IonButtons slot="start">
-                        <IonMenuButton />
-                    </IonButtons>
-                    <IonTitle>Timeline {isOnline ? '' : '[Offline]'}</IonTitle>
-                    {/* <IonSearchbar disabled={true} placeholder="Search function under developing"></IonSearchbar> */}
-                </IonToolbar>
-            </IonHeader>
+            {isPlatform("mobile") ? (
+                <IonHeader>
+                    <IonToolbar>
+                        <IonButtons slot="start">
+                            <IonMenuButton />
+                        </IonButtons>
+                        <IonTitle>Timeline {isOnline ? '' : '[Offline]'}</IonTitle>
+                    </IonToolbar>
+                </IonHeader>
+            ) : <div className='m-5'/>}
             <IonContent >
-                <IonList >
+                <IonList lines="none">
                     <IonItem>
-                        <CardEditor isOnline={isOnline} className='w-full p-0' onProcessNote={handleOnCreateNote} />
+                        <CardEditor isOnline={isOnline} className='w-full p-0 my-1.5 mx-1 shadow-md border border-gray-500' onProcessNote={handleOnCreateNote} />
                     </IonItem>
                     {isLoading ? <IonItem>Loading...</IonItem> :
                         notes.map((note: Note) => (
-                            <IonItem key={note.id} button={true} detail={false}>
+                            <IonItem key={note.id} button={false} detail={false}>
                                 <BasicNoteCard
                                     isOnline={isOnline}
                                     note={note}
                                     onDeleteNote={handleOnDeleteNote}
                                     onEditNote={handleOnEditNote}
+                                    className='my-2 mx-1 shadow-md border border-gray-200'
                                 />
                             </IonItem>
                         ))}
