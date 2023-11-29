@@ -1,3 +1,12 @@
 ion-button {
     --border-radius: 10px;
 }
+
+.circular-button {
+    --border-radius: 50%;
+    width: 30px; /* adjust as needed */
+    height: 30px; /* adjust as needed */
+    --padding-start: 0; /* remove padding */
+    --padding-end: 0; /* remove padding */
+
+}

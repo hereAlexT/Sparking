@@ -1,7 +1,6 @@
 import {
     IonCardContent,
     IonCard,
-    IonCardHeader,
     IonButton,
     IonCol,
     IonRow,
@@ -10,11 +9,11 @@ import {
     IonIcon
 
 } from '@ionic/react';
-import { useState, ChangeEvent } from 'react';
+import { useState } from 'react';
 import './BasicNoteCard.css';
-import { Note, SyncedNote, UnSyncedNote } from '../shared/types';
+import { Note } from '../shared/types';
 import { v4 as uuidv4 } from 'uuid';
-import { sendOutline as sendOutLineIcon } from 'ionicons/icons';
+import { arrowDownOutline as arrowDownOutlineIcon } from 'ionicons/icons';
 
 interface ContainerProps {
     onProcessNote: (noteContent: Note) => void;
@@ -73,13 +72,12 @@ const CardEditor: React.FC<ContainerProps> = ({ onProcessNote: onProcessNote, no
                         <IonCol size="auto" className="m-0 p-0">
                             <IonButton
                                 disabled={!isOnline}
-
-                                color="tertiary"
-                                item-end size="small"
+                                color="primary"
+                                size="small"
+                                fill="outline"
                                 onClick={HandleOnSubmitNote}
-                                className='m-0'
-                            >
-                                <IonIcon slot="icon-only" icon={sendOutLineIcon}></IonIcon>
+                                className='circular-button'>
+                                <IonIcon className="m-0 p-0" size="small" slot="icon-only" icon={arrowDownOutlineIcon}></IonIcon>
                             </IonButton>
                         </IonCol>
                     </IonRow>
