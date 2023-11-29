@@ -24,7 +24,7 @@ const Login: React.FC = () => {
     const [password, setPassword] = useState("Password1@");
     const [isLoginFailed, setLoginFailed] = useState(false);
 
-    const { login, isAuthenticated } = useAuth();
+    const { login, isAuthenticated, session, user } = useAuth();
     const { isOnline } = useMeta();
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -45,9 +45,9 @@ const Login: React.FC = () => {
     // useEffect(() => {
     //     console.log("Login useEffect: isAuthenticated = ", isAuthenticated)
     //     if (isAuthenticated) {
-    //         history.push("/timeline",);
+    //         history.push("/timeline", {direction: 'none'});
     //     }
-    // }, [isAuthenticated]);
+    // }, [isAuthenticated, history]);
 
 
     /* Email Address Validation 
@@ -145,6 +145,26 @@ const Login: React.FC = () => {
                             </IonCol>
                         </IonRow>
                     </form>
+                    <IonRow>
+                        {/** use a button Get session and print in console*/}
+                        <IonButton
+                            onClick={() => {
+                                console.log("Login- button")
+                                console.log({
+                                    session: session,
+                                    user: user
+                                })
+                                console.log("isAuthenticated", isAuthenticated)
+
+                            }}
+                            color="primary"
+                            fill="outline"
+                            expand="block"
+                        >
+                            Get Session
+                        </IonButton>
+
+                    </IonRow>
                     <IonRow>
                         <IonCol>
                             <IonButton

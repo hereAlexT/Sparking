@@ -38,6 +38,21 @@ const Login = async (email: string, password: string) => {
     }
 };
 
+const getSession = async () => {
+    try {
+        const { data: { session }, error} = await supabase.auth.getSession()
+        if (error) {
+            throw error
+        } else {
+            return { session}
+        }
+    } catch (error) {
+        console.error(error)
+        throw error
+    }
+}
+
+
 const Logout = async() => {
     try {
         const { error } = await supabase.auth.signOut()
@@ -51,5 +66,6 @@ const Logout = async() => {
 }
 
 
-export { Signup, Login, Logout };
+
+export { Signup, Login, Logout, getSession };
 

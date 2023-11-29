@@ -1,16 +1,22 @@
-import { createContext, useContext, useReducer, ReactNode } from "react"
-import { 
-    Login as ApiLogin, 
+import {
+    createContext,
+    useContext,
+    useReducer,
+    ReactNode,
+    useEffect
+} from "react"
+
+import {
+    Login as ApiLogin,
     Signup as ApiSignup,
-    Logout as ApiLogout
- } from '../apis/AuthenticationAPI';
+    Logout as ApiLogout,
+    getSession as ApiGetSession
+} from '../apis/AuthenticationAPI';
+
 import type {
     User,
     Session
 } from '@supabase/gotrue-js/src/lib/types'
-
-
-
 
 
 interface State {
@@ -24,7 +30,6 @@ interface Action {
     payload?: any;
 }
 
-
 function reducer(state: State, action: Action) {
     switch (action.type) {
         case "login":
@@ -35,6 +40,16 @@ function reducer(state: State, action: Action) {
         case "signup":
             console.log("reducer : signup")
             return { ...state, user: null, isAuthenticated: false, session: null };
+        case "getSession":
+            console.log("reducer : getSession")
+            console.log("reducer : getSession session ", action.payload.session.session)
+            console.log("reducer : getSession user", action.payload.session.session.user)
+            return {
+                ...state,
+                user: action.payload.session.session.user,
+                session: action.payload.session.session,
+                isAuthenticated: true
+            };
         default:
             throw new Error("Unknown action type");
     }
@@ -47,6 +62,7 @@ type AuthContextType = {
     login: (email: string, password: string) => void,
     logout: () => void,
     signup: (email: string, password: string) => void,
+    getSession: () => void,
 };
 
 const AuthContext = createContext<AuthContextType>({
@@ -56,6 +72,7 @@ const AuthContext = createContext<AuthContextType>({
     login: (email: string, password: string) => { },
     logout: () => { },
     signup: (email: string, password: string) => { },
+    getSession: () => { },
 });
 
 const initialState = {
@@ -84,6 +101,16 @@ function AuthProvider({ children }: AuthProviderProps) {
             throw error;
         }
 
+    }
+    const getSession = async () => {
+        console.log("AuthenContext - getSession")
+        try {
+            const session = await ApiGetSession();
+            dispatch({ type: "getSession", payload: { session } })
+        } catch (error) {
+            console.error(error)
+            throw error;
+        }
     }
 
 
@@ -117,9 +144,16 @@ function AuthProvider({ children }: AuthProviderProps) {
 
     }
 
+    useEffect(() => {
+        const fetchSession = async () => {
+            await getSession();
+        };
+        fetchSession();
+    }, []);
+
 
     return (
-        <AuthContext.Provider value={{ user, session, isAuthenticated, login, logout, signup }}>
+        <AuthContext.Provider value={{ user, session, isAuthenticated, login, logout, signup, getSession }}>
             {children}
         </AuthContext.Provider>
     )

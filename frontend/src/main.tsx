@@ -4,14 +4,16 @@ import App from './App';
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
+
+
+/* Sometime, router doesn't work under StrictMode */
 // root.render(
 //   <React.StrictMode>
 //     <App />
 //   </React.StrictMode>
 // );
+
 root.render(
-
     <App />
-
 );
 
