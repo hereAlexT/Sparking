@@ -9,3 +9,15 @@ npx cap sync
 
 #### iOS workflow
 [iOS Support](https://capacitorjs.com/docs/ios)
+
+```bash
+# Build your web code
+npm run build
+
+# Sync your web code to your native project
+npx cap sync ios
+
+# Open the iOS platform in Xcode
+npx cap open ios
+
+```
