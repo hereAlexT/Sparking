@@ -144,6 +144,8 @@ const TimeLine: React.FC = () => {
                 setIsEditorOpen={setIsEditorOpen}
                 selectedNote={selectedNote}
                 handleOnUpdateNote={handleOnUpdateNote}
+                isSecondModalOpen={false}
+                setIsSecondModalOpen={setIsEditorOpen}
                  />
         </IonPage >
 
