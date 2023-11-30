@@ -43,7 +43,7 @@ const Signup: React.FC = () => {
 
     useEffect(() => {
         if (isAuthenticated) {
-            history.push("/timeline");
+            history.push("/timeline/pri", { direction: 'none' });
         }
     }, [isAuthenticated]);
 

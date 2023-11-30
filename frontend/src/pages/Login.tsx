@@ -34,7 +34,7 @@ const Login: React.FC = () => {
             try {
                 await login(email, password);
                 console.log("try to history.push")
-                history.push('/timeline', { direction: 'none' });
+                history.push('/timeline/pri', { direction: 'none' });
                 console.log("push done")
             } catch (error) {
                 alert("Login failed: \n " + error)

@@ -76,6 +76,11 @@ const AppContent: React.FC = () => {
 
 
 
+/**
+ * /timeline/pri -> private timeline
+ * /timeline/pub -> public timeline
+ * /timeline/wor -> workspace timeline
+ */
 const Routes: React.FC = ({ }) => {
   const { isAuthenticated, logout } = useAuth();
   const { isSplitPaneOn } = useMeta();
@@ -99,7 +104,7 @@ const Routes: React.FC = ({ }) => {
         component={isAuthenticated ? Settings : Login} />
       <Route
         exact
-        path="/p/timeline"
+        path="/timeline/pri"
         component={isAuthenticated ? TimeLine : Login}
       />
       <Route exact path="/logout" component={Logout} />

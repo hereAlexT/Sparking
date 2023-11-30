@@ -49,7 +49,7 @@ const Settings: React.FC = () => {
                     <IonToolbar>
                         <IonTitle>Settings</IonTitle>
                         <IonButtons slot="start">
-                            <IonBackButton defaultHref="/p/timeline"></IonBackButton>
+                            <IonBackButton defaultHref="/timeline/pri"></IonBackButton>
                         </IonButtons>
                     </IonToolbar>
 

@@ -31,7 +31,7 @@ const MainTabs: React.FC<MainTabsProps> = () => {
                     render={() => <Signup />}
                     exact={true}/>
                 <Route
-                    path="/tabs/timeline"
+                    path="/tabs/timeline/pri"
                     render={() => <TimeLine />}
                     exact={true}/>
                 <Route 
@@ -53,7 +53,7 @@ const MainTabs: React.FC<MainTabsProps> = () => {
                     <IonIcon aria-hidden="true" icon={ellipse} />
                     <IonLabel>Login</IonLabel>
                 </IonTabButton>
-                <IonTabButton tab="timeline" href="/tabs/p/timeline">
+                <IonTabButton tab="timeline" href="/tabs/timeline/pri">
                     <IonIcon aria-hidden="true" icon={square} />
                     <IonLabel>Tab 3</IonLabel>
                 </IonTabButton>
