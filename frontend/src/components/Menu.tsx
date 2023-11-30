@@ -38,6 +38,8 @@ const routes = {
     ]
 }
 
+const doNotRenderInProduction = ['comlab']
+
 interface Pages {
     title: string;
     path: string;
@@ -55,7 +57,7 @@ const Menu: React.FC<MenuProps> = ({ }) => {
     function renderlistItems(list: Pages[]) {
         // Ensure only pages with a path are rendered
         return list
-            .filter((route) => !!route.path)
+            .filter((route) => !!route.path && !(process.env.NODE_ENV === 'production' && doNotRenderInProduction.includes(route.title.toLowerCase())))
             .map((p) => (
                 <IonMenuToggle key={p.title} autoHide={false}>
                     <IonItem routerLink={p.path} routerDirection="forward">
@@ -64,7 +66,6 @@ const Menu: React.FC<MenuProps> = ({ }) => {
                     </IonItem>
                 </IonMenuToggle>
             ))
-
     }
     return (
         <IonMenu contentId="main">

@@ -18,6 +18,7 @@ import { useAuth } from '../contexts/AuthContext';
 import {
     mailOutline as mailOutLineIcon,
     logOutOutline as logOutOutlineIcon,
+    bugOutline as bugOutlineIcon
 } from 'ionicons/icons';
 
 
@@ -59,7 +60,14 @@ const Settings: React.FC = () => {
                         <IonIcon color="danger" areia-hidden={true} icon={logOutOutlineIcon} slot="start" ></IonIcon>
                         <IonLabel color="danger">Logout</IonLabel>
                     </IonItem>
+                </IonList>
 
+                <IonList inset={true} >
+                    {/* routerlink is causing bug */}
+                    <IonItem routerLink="/comlab">
+                        <IonIcon color="danger" areia-hidden={true} icon={bugOutlineIcon} slot="start" ></IonIcon>
+                        <IonLabel color="danger">Developer Tool</IonLabel>
+                    </IonItem>
                 </IonList>
             </IonContent>
         </IonPage>)
