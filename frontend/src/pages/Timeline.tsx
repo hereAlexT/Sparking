@@ -33,6 +33,7 @@ const TimeLine: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
     const { isOnline } = useMeta();
     const { isAuthenticated } = useAuth();
+    const { isSplitPaneOn } = useMeta();
 
     useEffect(() => {
         console.log(getPlatforms())
@@ -99,7 +100,7 @@ const TimeLine: React.FC = () => {
 
     return (
         <IonPage id="main" >
-            {isPlatform("mobile") ? (
+            {!isSplitPaneOn ? (
                 <IonHeader>
                     <IonToolbar>
                         <IonButtons slot="start">

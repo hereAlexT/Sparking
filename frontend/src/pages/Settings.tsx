@@ -11,17 +11,18 @@ import {
     IonPage,
     IonIcon,
     IonButtons,
-    IonMenuButton,
     IonBackButton
 } from '@ionic/react';
 import React, { ReactNode } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { useMeta } from '../contexts/MetaContext';
 import {
     mailOutline as mailOutLineIcon,
     logOutOutline as logOutOutlineIcon,
     hammerOutline as hammerOutlineIcon,
 } from 'ionicons/icons';
 import "./Settings.css"
+
 
 
 interface StyledIonListProps {
@@ -39,18 +40,24 @@ const StyledIonList: React.FC<StyledIonListProps> = ({ children, inset, customCl
 const Settings: React.FC = () => {
     console.log("Settings.tsx: Settings")
     const { user } = useAuth();
+    const { isSplitPaneOn } = useMeta();
 
     return (
         <IonPage id="main" >
             <IonHeader>
-                <IonToolbar>
-                    <IonTitle>Settings</IonTitle>
-                    <IonButtons slot="start">
-                        <IonBackButton defaultHref="/timeline"></IonBackButton>
-                    </IonButtons>
-                </IonToolbar>
+                {!isSplitPaneOn ? (
+                    <IonToolbar>
+                        <IonTitle>Settings</IonTitle>
+                        <IonButtons slot="start">
+                            <IonBackButton defaultHref="/timeline"></IonBackButton>
+                        </IonButtons>
+                    </IonToolbar>
+
+                ) :<div className='mt-5' />}
             </IonHeader>
-            <IonContent className='settings-ion-content'>
+
+
+            <IonContent>
                 <StyledIonList inset={true}>
                     <IonItem>
                         <IonIcon aria-hidden="true" icon={mailOutLineIcon} slot="start" />

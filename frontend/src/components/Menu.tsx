@@ -6,7 +6,7 @@ import {
     IonMenuToggle,
     IonItem,
     IonLabel,
-    IonIcon
+    IonIcon,
 } from "@ionic/react"
 
 import {
@@ -14,8 +14,10 @@ import {
     logInOutline as logInIcon,
     prismOutline as prismOutlineIcon,
     cogOutline as cogOutlineIcon,
+    flaskOutline as flaskOutlineIcon,
 } from 'ionicons/icons';
 import { useAuth } from "../contexts/AuthContext";
+import { useMeta } from "../contexts/MetaContext";
 
 
 
@@ -23,18 +25,18 @@ const routes = {
     appPages: [
         { title: 'Login', path: '/login', icon: logInIcon },
         { title: 'Signup', path: '/signup', icon: addIcon },
-        { title: 'ComLab', path: '/comlab', icon: prismOutlineIcon },
+        { title: 'ComLab', path: '/comlab', icon: flaskOutlineIcon },
     ],
     loggedInPages: [
         // { title: 'Timeline', path: '/timeline', icon: prismOutlineIcon },
         // { title: 'Logout', path: '/logout', icon: logInIcon },
         { title: 'Settings', path: '/settings', icon: cogOutlineIcon },
-        { title: 'ComLab', path: '/comlab', icon: prismOutlineIcon },
+        { title: 'ComLab', path: '/comlab', icon: flaskOutlineIcon },
     ],
     loggedOutPages: [
         { title: 'Login', path: '/login', icon: logInIcon },
-        { title: 'Signup', path: '/signup', icon: logInIcon },
-        { title: 'ComLab', path: '/comlab', icon: prismOutlineIcon },
+        { title: 'Signup', path: '/signup', icon: addIcon },
+        { title: 'ComLab', path: '/comlab', icon: flaskOutlineIcon },
     ]
 }
 
@@ -52,7 +54,7 @@ interface MenuProps {
 
 const Menu: React.FC<MenuProps> = ({ }) => {
     const { isAuthenticated } = useAuth();
-    // const { isOnline } = useMeta();
+    const { isSplitPaneOn } = useMeta();
 
     function renderlistItems(list: Pages[]) {
         // Ensure only pages with a path are rendered
@@ -70,21 +72,20 @@ const Menu: React.FC<MenuProps> = ({ }) => {
     return (
         <IonMenu contentId="main">
             <IonContent>
+                {isSplitPaneOn &&
+                    <IonList>
+                        <IonListHeader>Timeline</IonListHeader>
+                        <IonMenuToggle key="timeline" autoHide={false}>
+                            <IonItem routerLink="/timeline" routerDirection="none">
+                                <IonIcon slot="start" icon={prismOutlineIcon} />
+                                <IonLabel>Timeline</IonLabel>
+                            </IonItem>
+                        </IonMenuToggle>
+                    </IonList>}
                 <IonList>
                     <IonListHeader>Account</IonListHeader>
                     {isAuthenticated ? renderlistItems(routes.loggedInPages) : renderlistItems(routes.appPages)}
                 </IonList>
-                {/* <IonList>
-                    {isOnline ? 'You are online' : 'You are offline'}
-                </IonList> */}
-                {/* <IonList>
-                    <IonListHeader>Account</IonListHeader>
-                    {renderlistItems(routes.loggedInPages)}
-                </IonList> */}
-                {/* <IonList>
-                    <IonListHeader>Account</IonListHeader>
-                    {renderlistItems(routes.loggedOutPages)}
-                </IonList> */}
             </IonContent>
 
 
