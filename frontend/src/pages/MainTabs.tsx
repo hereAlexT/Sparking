@@ -53,7 +53,7 @@ const MainTabs: React.FC<MainTabsProps> = () => {
                     <IonIcon aria-hidden="true" icon={ellipse} />
                     <IonLabel>Login</IonLabel>
                 </IonTabButton>
-                <IonTabButton tab="timeline" href="/tabs/timeline">
+                <IonTabButton tab="timeline" href="/tabs/p/timeline">
                     <IonIcon aria-hidden="true" icon={square} />
                     <IonLabel>Tab 3</IonLabel>
                 </IonTabButton>

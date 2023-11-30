@@ -92,7 +92,6 @@ const Routes: React.FC = ({ }) => {
       <Route
         exact
         path="/login"
-
         component={isAuthenticated ? TimeLine : Login} />
       <Route
         exact
@@ -100,7 +99,7 @@ const Routes: React.FC = ({ }) => {
         component={isAuthenticated ? Settings : Login} />
       <Route
         exact
-        path="/timeline"
+        path="/p/timeline"
         component={isAuthenticated ? TimeLine : Login}
       />
       <Route exact path="/logout" component={Logout} />

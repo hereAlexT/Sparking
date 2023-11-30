@@ -40,7 +40,7 @@ const routes = {
 
     ],
     loggedInPages: [
-        // { title: 'Timeline', path: '/timeline', icon: prismOutlineIcon },
+        // { title: 'Timeline', path: '/p/timeline', icon: prismOutlineIcon },
         // { title: 'Logout', path: '/logout', icon: logInIcon },
         { title: 'Settings', path: '/settings', icon: cogOutlineIcon },
         { title: 'ComLab', path: '/comlab', icon: flaskOutlineIcon },
@@ -114,7 +114,7 @@ const Menu: React.FC<MenuProps> = ({ }) => {
                     <IonList>
                         <IonListHeader>Timeline</IonListHeader>
                         <IonMenuToggle key="timeline" autoHide={false}>
-                            <IonItem routerLink="/timeline" routerDirection="none">
+                            <IonItem routerLink="/p/timeline" routerDirection="none">
                                 <IonIcon slot="start" icon={prismOutlineIcon} />
                                 <IonLabel>Timeline</IonLabel>
                             </IonItem>

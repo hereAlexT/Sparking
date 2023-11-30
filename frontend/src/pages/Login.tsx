@@ -46,7 +46,7 @@ const Login: React.FC = () => {
     // useEffect(() => {
     //     console.log("Login useEffect: isAuthenticated = ", isAuthenticated)
     //     if (isAuthenticated) {
-    //         history.push("/timeline", {direction: 'none'});
+    //         history.push("/p/timeline", {direction: 'none'});
     //     }
     // }, [isAuthenticated, history]);
 
