@@ -1,0 +1,4 @@
+.modal-with-backdrop {
+    background-color: rgba(0, 0, 0, 0.4); /* Adjust as needed */
+    transition: background-color 0.3s ease-in-out;
+}

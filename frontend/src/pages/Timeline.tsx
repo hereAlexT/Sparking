@@ -9,10 +9,13 @@ import {
     IonButton,
     IonModal,
     IonButtons,
-    IonMenuButton
+    IonMenuButton,
+    IonCard,
+    IonCardContent
 } from '@ionic/react';
 import BasicNoteCard from '../components/BasicNoteCard';
 import CardEditor from '../components/CardEditor';
+import CardEditorModal from '../components/CardEditorModal';
 import { useState, useEffect } from 'react';
 import { useNotes } from '../contexts/NotesContext';
 import { useMeta } from '../contexts/MetaContext';
@@ -109,10 +112,15 @@ const TimeLine: React.FC = () => {
             <IonContent >
                 <IonList lines="none">
                     <IonItem>
-                        <CardEditor
-                            isOnline={isOnline}
-                            className='w-full p-0 my-1 mx-1 shadow-md border border-gray-500'
-                            onProcessNote={handleOnCreateNote} />
+                        <IonCard className='w-full p-0 my-1 mx-1 shadow-md border border-gray-500'>
+                            <IonCardContent className='p-0 m-0'>
+                                <CardEditor
+                                    isOnline={isOnline}
+                                    className=''
+                                    onProcessNote={handleOnCreateNote} />
+                            </IonCardContent>
+                        </IonCard>
+
                     </IonItem>
                     {isLoading ? <IonItem>Loading...</IonItem> :
                         notes.map((note: Note) => (
@@ -130,20 +138,13 @@ const TimeLine: React.FC = () => {
                 </IonList>
 
             </IonContent>
-            <IonModal isOpen={isEditorOpen} className='p-5'>
-                <IonHeader>
-                    <IonToolbar>
-                        <IonButtons slot="end">
-                            <IonButton onClick={() => setIsEditorOpen(false)}>Close</IonButton>
-                        </IonButtons>
-                    </IonToolbar>
-                </IonHeader>
-                <IonContent className="p-0 m-0 w-full h-full">
-                    <div>
-                        <CardEditor isOnline={isOnline} onProcessNote={handleOnUpdateNote} note={selectedNote} />
-                    </div>
-                </IonContent>
-            </IonModal>
+            <CardEditorModal
+                isOnline={isOnline}
+                isEditorOpen={isEditorOpen}
+                setIsEditorOpen={setIsEditorOpen}
+                selectedNote={selectedNote}
+                handleOnUpdateNote={handleOnUpdateNote}
+                 />
         </IonPage >
 
     );

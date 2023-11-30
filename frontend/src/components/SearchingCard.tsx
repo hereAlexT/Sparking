@@ -9,9 +9,11 @@ import {
 import { useState, useRef } from 'react';
 import { useNotes } from '../contexts/NotesContext';
 import { useMeta } from '../contexts/MetaContext';
-import { Note } from '../shared/types';
+import { Note, UnSyncedNote } from '../shared/types';
 import { NoteId } from '../shared/types';
 import BasicNoteCard from './BasicNoteCard';
+import CardEditorModal from './CardEditorModal';
+import './SearchingCard.css';
 
 interface ContainerProps { }
 
@@ -20,6 +22,7 @@ const SearchingCard: React.FC<ContainerProps> = ({ }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const { notes, createNote, deleteNote, updateNote, getNotes } = useNotes();
     const { isOnline } = useMeta();
+    const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
 
 
     const filteredNotes = notes.filter((note: Note) =>
@@ -36,12 +39,32 @@ const SearchingCard: React.FC<ContainerProps> = ({ }) => {
         }
     }
 
+    const handleOnUpdateNote = async (note: UnSyncedNote) => {
+        try {
+            await updateNote({
+                id: note.id,
+                createdAt: note.createdAt,
+                updatedAt: new Date(),
+                body: note.body
+            });
+        } catch (error) {
+            console.log("error")
+            console.log(error)
+            alert((error as Error).message);
+        }
+    }
+
     const [isEditorOpen, setIsEditorOpen] = useState(false);
     const [selectedNote, setSelectedNote] = useState<Note | undefined>(undefined);
     const handleOnEditNote = (noteId: NoteId) => {
         const foundNote = notes.find((n: Note) => n.id === noteId);
         setSelectedNote(foundNote || undefined);
         setIsEditorOpen(true);
+        console.debug("try to close Searching modal")
+
+        if (modal.current) {
+            modal.current.dismiss();
+        }
     };
 
     return (
@@ -73,6 +96,15 @@ const SearchingCard: React.FC<ContainerProps> = ({ }) => {
                     </IonItem>
                 ))}
             </IonList>
+            <CardEditorModal
+                isOnline={isOnline}
+                isEditorOpen={isEditorOpen}
+                setIsEditorOpen={setIsEditorOpen}
+                selectedNote={selectedNote}
+                handleOnUpdateNote={handleOnUpdateNote}
+                isSecondModalOpen={isSecondModalOpen}
+                setIsSecondModalOpen={setIsSecondModalOpen}
+            />
         </IonContent>
     );
 };
