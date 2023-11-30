@@ -12,7 +12,11 @@ import {
     IonIcon,
     IonText
 } from '@ionic/react';
-import { menuOutline as meanuOutlineIcon } from 'ionicons/icons';
+import {
+    menuOutline as meanuOutlineIcon,
+    createOutline as CreateOutlineIcon,
+    trashOutline as TrashOutlineIcon
+} from 'ionicons/icons';
 import { Note, NoteId } from '../shared/types';
 import './BasicNoteCard.css'
 
@@ -76,13 +80,16 @@ const BasicNoteCard: React.FC<ContainerProps> = ({ note, onDeleteNote, onEditNot
                 alignment='end'
                 showBackdrop={false}
                 arrow={false}
+                className='basic-note-card '
             >
                 <IonContent>
-                    <IonList>
+                    <IonList className="" lines='none'>
                         <IonItem button={true} detail={false} onClick={((e) => onEditNote(note.id))}>
+                            <IonIcon slot="start" size="small" icon={CreateOutlineIcon}></IonIcon>
                             Edit
                         </IonItem>
                         <IonItem disabled={!isOnline} button={true} detail={false} onClick={(e) => onDeleteNote(note.id)}>
+                            <IonIcon slot="start" size="small" icon={TrashOutlineIcon}></IonIcon>
                             Delete
                         </IonItem>
                     </IonList>

@@ -114,7 +114,7 @@ const TimeLine: React.FC = () => {
                     <IonItem>
                         <CardEditor
                             isOnline={isOnline}
-                            className='w-full p-0 my-1.5 mx-1 shadow-md border border-gray-500'
+                            className='w-full p-0 my-1 mx-1 shadow-md border border-gray-500'
                             onProcessNote={handleOnCreateNote} />
                     </IonItem>
                     {isLoading ? <IonItem>Loading...</IonItem> :
@@ -125,7 +125,7 @@ const TimeLine: React.FC = () => {
                                     note={note}
                                     onDeleteNote={handleOnDeleteNote}
                                     onEditNote={handleOnEditNote}
-                                    className='my-2 mx-1 shadow-md border border-gray-200'
+                                    className='my-1 mx-1 shadow-sm border border-gray-300'
                                 />
                             </IonItem>
                         ))}
