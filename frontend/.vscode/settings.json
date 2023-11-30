@@ -9,5 +9,6 @@
   },
   "editor.quickSuggestions": {
     "strings": true
-  }
+  },
+  "java.configuration.updateBuildConfiguration": "interactive"
 }
