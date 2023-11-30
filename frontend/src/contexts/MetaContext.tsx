@@ -8,19 +8,25 @@ interface MetaProviderProps {
 
 type MetaContextType = {
     isOnline: boolean;
+    isSplitPaneOn: boolean;
+    setIsSplitPaneOn: (value: boolean) => void;
 };
 
 const MetaContext = createContext<MetaContextType>({
     isOnline: true,
+    isSplitPaneOn: false,
+    setIsSplitPaneOn: () => { },
 });
-
-const initialState = {
-    isOnline: true,
-}
 
 
 const MetaProvider: React.FC<MetaProviderProps> = ({ children }) => {
     const [isOnline, setIsOnline] = useState(navigator.onLine);
+    const [isSplitPaneOn, setIsSplitPaneOn] = useState<boolean>(false);
+
+
+    useEffect(() => {
+        console.log(isSplitPaneOn); // Print the isSplitPaneOn state whenever it changes
+    }, [isSplitPaneOn]);
 
     useEffect(() => {
         const handleStatusChange = () => {
@@ -39,14 +45,14 @@ const MetaProvider: React.FC<MetaProviderProps> = ({ children }) => {
 
 
     return (
-        <MetaContext.Provider value={{ isOnline }}>
+        <MetaContext.Provider value={{ isOnline, isSplitPaneOn, setIsSplitPaneOn }}>
             {children}
         </MetaContext.Provider>
     )
 }
 
 
-const useMeta = () => { 
+const useMeta = () => {
     const context = useContext(MetaContext);
     if (context === undefined) {
         throw new Error('useMeta must be used within a MetaProvider')
@@ -54,4 +60,4 @@ const useMeta = () => {
     return context;
 }
 
-export {MetaProvider, useMeta}
+export { MetaProvider, useMeta }

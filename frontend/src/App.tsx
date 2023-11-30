@@ -42,24 +42,18 @@ import Logout from './components/Logout';
 import { AuthProvider } from './contexts/AuthContext';
 import { useAuth } from './contexts/AuthContext';
 import { NotesProvider } from './contexts/NotesContext';
-import { MetaProvider } from './contexts/MetaContext';
+import { MetaProvider, useMeta } from './contexts/MetaContext';
 
 setupIonicReact();
 
 const App: React.FC = () => {
-  const [isSplitPaneOn, setIsSplitPaneOn] = useState<boolean>(false);
-  console.log("isSplitPaneOn", isSplitPaneOn)
-
   return (
     <MetaProvider>
       < AuthProvider >
         <NotesProvider>
           <IonApp className=' app-background'>
             <IonReactRouter>
-              <IonSplitPane className="max-w-3xl mx-auto" onIonSplitPaneVisible={(event) => setIsSplitPaneOn(event.detail.visible)} contentId="main">
-                <Menu />
-                <Routes isSplitPaneOn={isSplitPaneOn} />
-              </IonSplitPane>
+              <AppContent />
             </IonReactRouter>
           </IonApp>
         </NotesProvider>
@@ -67,11 +61,24 @@ const App: React.FC = () => {
     </MetaProvider>)
 };
 
-interface RoutesProps {
-  isSplitPaneOn: boolean;
-}
-const Routes: React.FC<RoutesProps> = ({isSplitPaneOn}) => {
+const AppContent: React.FC = () => {
+  const { isSplitPaneOn, setIsSplitPaneOn } = useMeta();
+  console.log("isSplitPaneOn", isSplitPaneOn)
+
+  return (
+    <IonSplitPane className="max-w-3xl mx-auto" onIonSplitPaneVisible={(event) => setIsSplitPaneOn(event.detail.visible)} contentId="main">
+      <Menu />
+      <Routes />
+    </IonSplitPane>
+  );
+};
+
+
+
+
+const Routes: React.FC = ({}) => {
   const { isAuthenticated, logout } = useAuth();
+  const { isSplitPaneOn } = useMeta();
 
   return (
     <IonRouterOutlet id="main" animated={!isSplitPaneOn}>
