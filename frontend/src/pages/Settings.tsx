@@ -14,13 +14,27 @@ import {
     IonMenuButton,
     IonBackButton
 } from '@ionic/react';
+import React, { ReactNode } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import {
     mailOutline as mailOutLineIcon,
     logOutOutline as logOutOutlineIcon,
-    bugOutline as bugOutlineIcon
+    hammerOutline as hammerOutlineIcon,
 } from 'ionicons/icons';
+import "./Settings.css"
 
+
+interface StyledIonListProps {
+    inset?: boolean;
+    customClass?: string;
+    children?: ReactNode;
+}
+
+const StyledIonList: React.FC<StyledIonListProps> = ({ children, inset, customClass }) => (
+    <IonList inset={inset} className={`border border-slate-300 ${customClass}`}>
+        {children}
+    </IonList>
+);
 
 const Settings: React.FC = () => {
     console.log("Settings.tsx: Settings")
@@ -36,41 +50,41 @@ const Settings: React.FC = () => {
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>
-            <IonContent color="light">
-                <IonList inset={true}>
+            <IonContent className='settings-ion-content'>
+                <StyledIonList inset={true}>
                     <IonItem>
                         <IonIcon aria-hidden="true" icon={mailOutLineIcon} slot="start" />
                         <IonLabel>Email</IonLabel>
                         <IonLabel>{user?.email}</IonLabel>
                     </IonItem>
-                </IonList>
+                </StyledIonList>
 
-                <IonList inset={true}>
+                <StyledIonList inset={true}>
                     <IonItem>
                         <IonToggle disabled={true}>
                             <IonLabel>Location Service (Developing)</IonLabel>
                             <IonNote color="medium">Add your location data to every note.</IonNote>
                         </IonToggle>
                     </IonItem>
-                </IonList>
+                </StyledIonList>
 
-                <IonList inset={true} >
-                    {/* routerlink is causing bug */}
+                <StyledIonList inset={true} >
                     <IonItem routerLink="/logout" routerDirection="none">
                         <IonIcon color="danger" areia-hidden={true} icon={logOutOutlineIcon} slot="start" ></IonIcon>
                         <IonLabel color="danger">Logout</IonLabel>
                     </IonItem>
-                </IonList>
+                </StyledIonList>
 
-                <IonList inset={true} >
-                    {/* routerlink is causing bug */}
-                    <IonItem routerLink="/comlab">
-                        <IonIcon color="danger" areia-hidden={true} icon={bugOutlineIcon} slot="start" ></IonIcon>
-                        <IonLabel color="danger">Developer Tool</IonLabel>
+                <StyledIonList inset={true} >
+                    <IonItem routerLink="/comlab" routerDirection="none">
+                        <IonIcon color="" areia-hidden={true} icon={hammerOutlineIcon} slot="start" ></IonIcon>
+                        <IonLabel color="">Developer Tool</IonLabel>
                     </IonItem>
-                </IonList>
+                </StyledIonList>
+
             </IonContent>
-        </IonPage>)
-}
+        </IonPage>
+    );
+};
 
 export default Settings;
