@@ -1,0 +1,13 @@
+{
+    "apps":
+    [
+        {
+            "appId": "c5e12def",
+            "root": "frontend",
+            "dependencyInstallCommand": "npm install",
+            "webBuildCommand": "npm run build",
+            "iosPath": "frontend/ios",
+            "androidPath": "frontend/android"
+        }
+    ]
+}
