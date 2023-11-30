@@ -54,9 +54,9 @@ const App: React.FC = () => {
     <MetaProvider>
       < AuthProvider >
         <NotesProvider>
-          <IonApp className='max-w-3xl mx-auto w-full app-background'>
+          <IonApp className=' app-background'>
             <IonReactRouter>
-              <IonSplitPane onIonSplitPaneVisible={(event) => setIsSplitPaneOn(event.detail.visible)} contentId="main">
+              <IonSplitPane className="max-w-3xl mx-auto" onIonSplitPaneVisible={(event) => setIsSplitPaneOn(event.detail.visible)} contentId="main">
                 <Menu />
                 <Routes isSplitPaneOn={isSplitPaneOn} />
               </IonSplitPane>
