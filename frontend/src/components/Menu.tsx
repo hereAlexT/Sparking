@@ -10,7 +10,6 @@ import {
     IonTitle,
     IonToolbar,
     IonHeader,
-    IonMenuButton,
     IonModal,
     IonButton,
     IonButtons,
@@ -67,7 +66,7 @@ interface MenuProps {
 const Menu: React.FC<MenuProps> = ({ }) => {
     const { isAuthenticated } = useAuth();
     const { isSplitPaneOn } = useMeta();
-    const modal = useRef<HTMLIonModalElement>(null);
+    const searchModal = useRef<HTMLIonModalElement>(null);
 
     function renderlistItems(list: Pages[]) {
         // Ensure only pages with a path are rendered
@@ -97,11 +96,11 @@ const Menu: React.FC<MenuProps> = ({ }) => {
                         </IonItem>
                     </IonMenuToggle>
 
-                    <IonModal ref={modal} trigger="open-modal">
+                    <IonModal ref={searchModal} trigger="open-modal">
                         <IonHeader>
                             <IonToolbar>
                                 <IonButtons slot="start">
-                                    <IonButton onClick={() => modal.current?.dismiss()}>Cancel</IonButton>
+                                    <IonButton onClick={() => searchModal.current?.dismiss()}>Cancel</IonButton>
                                 </IonButtons>
                                 <IonTitle></IonTitle>
                             </IonToolbar>
