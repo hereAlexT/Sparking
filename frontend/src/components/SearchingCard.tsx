@@ -54,11 +54,12 @@ const SearchingCard: React.FC<ContainerProps> = ({ }) => {
                 {filteredNotes.map((note: Note) => (
                     <IonItem key={note.id}>
                         <BasicNoteCard
-                            isOnline={isOnline}
+                            isOnline={true}
                             note={note}
                             onDeleteNote={handleOnDeleteNote}
                             onEditNote={handleOnEditNote}
                             className='my-1 mx-1 shadow-sm border border-gray-300'
+                            cardSetId='SearchingCard'
                         />
                         <IonLabel>{note.createdAt.toLocaleString('en-GB', {
                             day: '2-digit',

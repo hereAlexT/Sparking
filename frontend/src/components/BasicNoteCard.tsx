@@ -1,7 +1,6 @@
 import {
     IonCardContent,
     IonCard,
-    IonCardSubtitle,
     IonButton,
     IonCol,
     IonRow,
@@ -17,6 +16,7 @@ import {
     createOutline as CreateOutlineIcon,
     trashOutline as TrashOutlineIcon
 } from 'ionicons/icons';
+import { useRef } from 'react';
 import { Note, NoteId } from '../shared/types';
 import './BasicNoteCard.css'
 
@@ -26,9 +26,20 @@ interface ContainerProps {
     onEditNote(noteId: NoteId): void;
     isOnline: boolean;
     className?: string;
+    /**
+     * An identifier indicating where this BasicNoteCard is used.
+     * If used in the timeline, you can assign it a cardSetId such as "timeline".
+     * This is used to ensure that the same id is not issued to cards requested from different components.
+     * For example, a searching card and a timeline card may both request the basic notecard and may need access to the same card.
+     */
+    cardSetId: string;
 }
 
-const BasicNoteCard: React.FC<ContainerProps> = ({ note, onDeleteNote, onEditNote, isOnline, className }) => {
+const BasicNoteCard: React.FC<ContainerProps> = ({ note, onDeleteNote, onEditNote, isOnline, className, cardSetId }) => {
+    
+
+
+
     return (
         <>
             <div className="m-0 p-0 w-full">
@@ -55,7 +66,7 @@ const BasicNoteCard: React.FC<ContainerProps> = ({ note, onDeleteNote, onEditNot
                                     className='pr-1 m-0 align-top'
                                     item-end size="small"
                                     fill="clear"
-                                    id={`note-popover-${note.id}`}>
+                                    id={`${cardSetId}-${note.id}`}>
                                     <IonIcon slot="icon-only" size="small" icon={meanuOutlineIcon}></IonIcon>
                                 </IonButton>
                             </IonCol>
@@ -73,7 +84,7 @@ const BasicNoteCard: React.FC<ContainerProps> = ({ note, onDeleteNote, onEditNot
 
             </div>
             <IonPopover
-                trigger={`note-popover-${note.id}`}
+                trigger={`${cardSetId}-${note.id}`}
                 dismissOnSelect={true}
                 keyboardClose={true}
                 side="bottom"

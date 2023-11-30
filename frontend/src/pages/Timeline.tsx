@@ -28,11 +28,12 @@ import { v4 as uuidv4 } from 'uuid';
 const TimeLine: React.FC = () => {
     console.log("timeline render")
 
-    const { notes, createNote, deleteNote, updateNote, getNotes } = useNotes();
+    const [isEditorOpen, setIsEditorOpen] = useState(false);
+    const [selectedNote, setSelectedNote] = useState<Note | undefined>(undefined);
     const [isLoading, setIsLoading] = useState(true);
-    const { isOnline } = useMeta();
+    const { notes, createNote, deleteNote, updateNote, getNotes } = useNotes();
+    const { isOnline, isSplitPaneOn } = useMeta();
     const { isAuthenticated } = useAuth();
-    const { isSplitPaneOn } = useMeta();
 
     useEffect(() => {
         console.log(getPlatforms())
@@ -86,10 +87,6 @@ const TimeLine: React.FC = () => {
     }
 
 
-    const [isEditorOpen, setIsEditorOpen] = useState(false);
-    const [selectedNote, setSelectedNote] = useState<Note | undefined>(undefined);
-
-
     const handleOnEditNote = (noteId: NoteId) => {
         const foundNote = notes.find((n: Note) => n.id === noteId);
         setSelectedNote(foundNote || undefined);
@@ -126,6 +123,7 @@ const TimeLine: React.FC = () => {
                                     onDeleteNote={handleOnDeleteNote}
                                     onEditNote={handleOnEditNote}
                                     className='my-1 mx-1 shadow-sm border border-gray-300'
+                                    cardSetId='TimeLine'
                                 />
                             </IonItem>
                         ))}
@@ -135,7 +133,6 @@ const TimeLine: React.FC = () => {
             <IonModal isOpen={isEditorOpen} className='p-5'>
                 <IonHeader>
                     <IonToolbar>
-                        {/* <IonTitle>Edit Memo</IonTitle> */}
                         <IonButtons slot="end">
                             <IonButton onClick={() => setIsEditorOpen(false)}>Close</IonButton>
                         </IonButtons>
