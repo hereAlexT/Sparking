@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer, ReactNode } from "react"
+import { createContext, useContext, useReducer, ReactNode, useState } from "react"
 import {
     NOTE_ACTION,
     Note,
@@ -10,6 +10,7 @@ import {
     NoteId,
     SyncedNote,
     UnSyncedNote,
+    SearchNotesAction,
 } from '../shared/types';
 import {
     getNotes as getNotesApi,
@@ -26,10 +27,11 @@ interface NotesProviderProps {
 }
 
 
-type NoteAction = GetNoteAction | GetNotesAction | CreateNoteAction | DeleteNoteAction | UpdateNoteAction;
+type NoteAction = GetNoteAction | GetNotesAction | CreateNoteAction | DeleteNoteAction | UpdateNoteAction | SearchNotesAction ;
 
 
 const reducer = (state: Note[], action: NoteAction): Note[] => {
+    console.log("reducer called")
     switch (action.type) {
         case NOTE_ACTION.CREATE_NOTE:
             return [action.payload, ...state];
@@ -39,6 +41,9 @@ const reducer = (state: Note[], action: NoteAction): Note[] => {
             return state.map(note => note.id === (action.payload ? action.payload.id : null) ? action.payload : note);
         case NOTE_ACTION.GET_NOTES:
             return action.payload;
+        case NOTE_ACTION.SEARCH_NOTES:
+            console.log("searchNotes called")
+            return action.payload; // return the filtered notes
         default:
             return state;
     }
@@ -50,6 +55,7 @@ type NotesContextType = {
     deleteNote: (id: NoteId) => void;
     updateNote: (note: Note) => void;
     getNotes: () => Promise<Note[]>;
+    searchNotes: (query: string) => void;
 };
 
 const NotesContext = createContext<NotesContextType>({
@@ -58,12 +64,15 @@ const NotesContext = createContext<NotesContextType>({
     deleteNote: (id: NoteId) => { },
     updateNote: (note: Note) => { },
     getNotes: () => Promise.resolve([]),
+    searchNotes: (query: string) => { },
 });
 
 
 
 const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
     const [notes, dispatch] = useReducer(reducer, [])
+    const [searchResults, setSearchResults] = useState(notes);
+
 
     const createNote = async (unSyncedNote: UnSyncedNote) => {
         try {
@@ -116,8 +125,25 @@ const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
         return _notes;
     }
 
+    // Modify the searchNotes function
+    const searchNotes = (query: string) => {
+        console.log("triggered searchNotes");
+        console.log(query)
+
+        if (query) {
+            const _notes = notes.filter(note => note.body.includes(query));
+            setSearchResults(_notes);
+        } else {
+            // When the search query is cleared, set searchResults back to notes
+            setSearchResults(notes);
+        }
+    }
+
+
+
+
     return (
-        <NotesContext.Provider value={{ notes, createNote, deleteNote, updateNote, getNotes }}>
+        <NotesContext.Provider value={{ notes, createNote, deleteNote, updateNote, getNotes, searchNotes }}>
             {children}
         </NotesContext.Provider>
     )

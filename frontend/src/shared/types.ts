@@ -28,7 +28,8 @@ export enum NOTE_ACTION {
     DELETE_NOTE = "DELETE_NOTE",
     UPDATE_NOTE = "UPDATE_NOTE",
     GET_NOTES = "GET_NOTES",
-    GET_NOTE = "GET_NOTE"
+    GET_NOTE = "GET_NOTE",
+    SEARCH_NOTES = "SEARCH_NOTES"
 }
 
 export enum AUTH_ACTION {
@@ -58,6 +59,11 @@ export interface DeleteNoteAction {
 export interface UpdateNoteAction {
     type: NOTE_ACTION.UPDATE_NOTE,
     payload: Note
+}
+
+export interface SearchNotesAction {
+    type: NOTE_ACTION.SEARCH_NOTES,
+    payload: Note[]
 }
 
 export interface GetNotesAction {

@@ -22,7 +22,6 @@ import {
     UnSyncedNote,
     NoteId,
 } from '../shared/types';
-import { isPlatform } from '@ionic/react';
 import { getPlatforms } from '@ionic/react';
 import { v4 as uuidv4 } from 'uuid';
 

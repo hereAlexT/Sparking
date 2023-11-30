@@ -76,7 +76,7 @@ const AppContent: React.FC = () => {
 
 
 
-const Routes: React.FC = ({}) => {
+const Routes: React.FC = ({ }) => {
   const { isAuthenticated, logout } = useAuth();
   const { isSplitPaneOn } = useMeta();
 
@@ -84,14 +84,22 @@ const Routes: React.FC = ({}) => {
     <IonRouterOutlet id="main" animated={!isSplitPaneOn}>
 
       <Redirect exact path="/" to="/login" />
-      <Route path="/signup" component={Signup} />
       <Route
+        exact
+        path="/signup"
+        component={Signup}
+      />
+      <Route
+        exact
         path="/login"
+
         component={isAuthenticated ? TimeLine : Login} />
       <Route
+        exact
         path="/settings"
         component={isAuthenticated ? Settings : Login} />
       <Route
+        exact
         path="/timeline"
         component={isAuthenticated ? TimeLine : Login}
       />

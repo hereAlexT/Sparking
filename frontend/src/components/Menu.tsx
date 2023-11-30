@@ -7,6 +7,14 @@ import {
     IonItem,
     IonLabel,
     IonIcon,
+    IonTitle,
+    IonToolbar,
+    IonHeader,
+    IonMenuButton,
+    IonModal,
+    IonButton,
+    IonButtons,
+    IonInput
 } from "@ionic/react"
 
 import {
@@ -15,9 +23,12 @@ import {
     prismOutline as prismOutlineIcon,
     cogOutline as cogOutlineIcon,
     flaskOutline as flaskOutlineIcon,
+    searchOutline as searchOutlineIcon,
 } from 'ionicons/icons';
+import { useRef } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useMeta } from "../contexts/MetaContext";
+import SearchingCard from "./SearchingCard";
 
 
 
@@ -26,6 +37,7 @@ const routes = {
         { title: 'Login', path: '/login', icon: logInIcon },
         { title: 'Signup', path: '/signup', icon: addIcon },
         { title: 'ComLab', path: '/comlab', icon: flaskOutlineIcon },
+
     ],
     loggedInPages: [
         // { title: 'Timeline', path: '/timeline', icon: prismOutlineIcon },
@@ -55,6 +67,7 @@ interface MenuProps {
 const Menu: React.FC<MenuProps> = ({ }) => {
     const { isAuthenticated } = useAuth();
     const { isSplitPaneOn } = useMeta();
+    const modal = useRef<HTMLIonModalElement>(null);
 
     function renderlistItems(list: Pages[]) {
         // Ensure only pages with a path are rendered
@@ -69,9 +82,34 @@ const Menu: React.FC<MenuProps> = ({ }) => {
                 </IonMenuToggle>
             ))
     }
+
+
     return (
         <IonMenu contentId="main">
+            <IonHeader className="pt-14">
+            </IonHeader>
             <IonContent>
+                <IonList>
+                    <IonMenuToggle id="open-modal" key="search" autoHide={false}>
+                        <IonItem >
+                            <IonIcon slot="start" icon={searchOutlineIcon} />
+                            <IonLabel>Search</IonLabel>
+                        </IonItem>
+                    </IonMenuToggle>
+
+                    <IonModal ref={modal} trigger="open-modal">
+                        <IonHeader>
+                            <IonToolbar>
+                                <IonButtons slot="start">
+                                    <IonButton onClick={() => modal.current?.dismiss()}>Cancel</IonButton>
+                                </IonButtons>
+                                <IonTitle></IonTitle>
+                            </IonToolbar>
+                        </IonHeader>
+                        <SearchingCard />
+                    </IonModal>
+
+                </IonList>
                 {isSplitPaneOn &&
                     <IonList>
                         <IonListHeader>Timeline</IonListHeader>

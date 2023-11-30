@@ -78,9 +78,9 @@ const BasicNoteCard: React.FC<ContainerProps> = ({ note, onDeleteNote, onEditNot
                 keyboardClose={true}
                 side="bottom"
                 alignment='end'
-                showBackdrop={false}
+                showBackdrop={true}
                 arrow={false}
-                className='basic-note-card '
+                className='basic-note-card'
             >
                 <IonContent>
                     <IonList className="" lines='none'>
