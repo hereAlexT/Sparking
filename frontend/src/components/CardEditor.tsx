@@ -54,7 +54,7 @@ const CardEditor: React.FC<ContainerProps> = ({ onProcessNote: onProcessNote, no
                                 value={isOnline ? content : "We are working on offline editing!"}
                                 onIonInput={handleInput}
                                 rows={0}
-                                autoGrow={false}
+                                autoGrow={true}
                                 color="primary"
                                 placeholder="You got a good idea💡, right?"
                                 // onKeyDown={(e) => {
