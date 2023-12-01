@@ -38,9 +38,22 @@ const TimeLine: React.FC = () => {
     const [isEditorOpen, setIsEditorOpen] = useState(false);
     const [selectedNote, setSelectedNote] = useState<Note | undefined>(undefined);
     const [isLoading, setIsLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState('');
     const { notes, createNote, deleteNote, updateNote, getNotes } = useNotes();
     const { isOnline, isSplitPaneOn } = useMeta();
     const { isAuthenticated } = useAuth();
+    const [filteredNotes, setFilteredNotes] = useState(notes);
+
+    useEffect(() => {
+        if (searchQuery === '') {
+            setFilteredNotes(notes);
+        } else {
+            const filtered = notes.filter((note: Note) =>
+                note.body.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+            setFilteredNotes(filtered);
+        }
+    }, [searchQuery, notes]);
 
     useEffect(() => {
         console.log(getPlatforms())
@@ -114,7 +127,7 @@ const TimeLine: React.FC = () => {
                 </IonHeader>
             ) : <div className='m-5' />}
 
-            <IonSearchbar className="mb-1 pb-1" placeholder="Searching"></IonSearchbar>
+            <IonSearchbar className="mb-1 pb-1" placeholder="Search" onIonInput={(e) => setSearchQuery(e.detail.value!)} ></IonSearchbar>
             <IonCard className='my-1 px-5 pt-2 pb-1 rounded-xl border border-slate-400  shadow-none'>
                 <CardEditorV2
                     onSubmit={handleOnCreateNote}
@@ -125,7 +138,7 @@ const TimeLine: React.FC = () => {
             <IonContent >
                 <IonList lines="none">
                     {isLoading ? <IonItem>Loading...</IonItem> :
-                        notes.map((note: Note) => (
+                        filteredNotes.map((note: Note) => (
                             <IonItem key={note.id} button={false} detail={false}>
                                 <NoteCardV2
                                     isOnline={isOnline}
