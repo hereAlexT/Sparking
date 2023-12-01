@@ -12,6 +12,7 @@ import { useMeta } from '../contexts/MetaContext';
 import { Note, UnSyncedNote } from '../shared/types';
 import { NoteId } from '../shared/types';
 import BasicNoteCard from './BasicNoteCard';
+import NoteCardV2 from './NoteCardV2';
 import CardEditorModal from './CardEditorModal';
 import './SearchingCard.css';
 
@@ -76,14 +77,21 @@ const SearchingCard: React.FC<ContainerProps> = ({ }) => {
             <IonList>
                 {filteredNotes.map((note: Note) => (
                     <IonItem key={note.id}>
-                        <BasicNoteCard
+                        {/* <BasicNoteCard
                             isOnline={true}
                             note={note}
                             onDeleteNote={handleOnDeleteNote}
                             onEditNote={handleOnEditNote}
                             className='my-1 mx-1 shadow-sm border border-gray-300'
                             cardSetId='SearchingCard'
-                        />
+                        /> */}
+                        <NoteCardV2
+                            isOnline={isOnline}
+                            note={note}
+                            cardSetId='TimeLine'
+                            onDeleteNote={handleOnDeleteNote}
+                            onEditNote={handleOnEditNote}
+                        ></NoteCardV2>
                         <IonLabel>{note.createdAt.toLocaleString('en-GB', {
                             day: '2-digit',
                             month: 'short',

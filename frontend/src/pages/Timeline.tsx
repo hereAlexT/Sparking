@@ -27,6 +27,7 @@ import {
 } from '../shared/types';
 import { getPlatforms } from '@ionic/react';
 import { v4 as uuidv4 } from 'uuid';
+import NoteCardV2 from '../components/NoteCardV2';
 
 const TimeLine: React.FC = () => {
     console.log("timeline render")
@@ -125,14 +126,21 @@ const TimeLine: React.FC = () => {
                     {isLoading ? <IonItem>Loading...</IonItem> :
                         notes.map((note: Note) => (
                             <IonItem key={note.id} button={false} detail={false}>
-                                <BasicNoteCard
+                                {/* <BasicNoteCard
                                     isOnline={isOnline}
                                     note={note}
                                     onDeleteNote={handleOnDeleteNote}
                                     onEditNote={handleOnEditNote}
                                     className='my-1 mx-1 shadow-sm border border-gray-300'
                                     cardSetId='TimeLine'
-                                />
+                                /> */}
+                                <NoteCardV2
+                                    isOnline={isOnline}
+                                    note={note}
+                                    cardSetId='TimeLine'
+                                    onDeleteNote={handleOnDeleteNote}
+                                    onEditNote={handleOnEditNote}
+                                ></NoteCardV2>
                             </IonItem>
                         ))}
                 </IonList>

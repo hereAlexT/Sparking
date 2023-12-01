@@ -1,30 +1,86 @@
 import {
     IonContent,
     IonHeader,
-    IonInput,
     IonPage,
-    IonText,
     IonTitle,
     IonToolbar,
     IonButton,
     IonGrid,
     IonCol,
     IonRow,
-    IonPopover,
     IonList,
     IonItem,
     IonButtons,
-    IonMenuButton,
-    IonIcon,
     IonBackButton
 } from '@ionic/react';
 import { useAuth } from '../contexts/AuthContext';
+import NoteCardV2 from '../components/NoteCardV2';
+import { NoteId, Note, SyncedNote, UnSyncedNote } from '../shared/types';
+import { v4 as uuidv4 } from 'uuid';
+
+const notes_mock: (SyncedNote | UnSyncedNote)[] = [
+    {
+        id: uuidv4(),
+        body: "First note",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+    },
+    {
+        id: uuidv4(),
+        body: "Second note",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+    },
+    {
+        id: uuidv4(),
+        body: "Third note",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+    },
+    {
+        id: uuidv4(),
+        body: "Fourth note",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+    },
+    {
+        id: uuidv4(),
+        body: "Fifth note",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+    },
+    {
+        id: uuidv4(),
+        body: "6 note",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+    },
+    {
+        id: uuidv4(),
+        body: "7 note",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+    },
+    {
+        id: uuidv4(),
+        body: "8 note",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+    },
+];
 
 const ComponentLab: React.FC = () => {
     const { isAuthenticated, session, user } = useAuth();
 
-    return (
 
+    const handleOnEdit = (noteId: NoteId) => {
+        console.log("Edit note: " + noteId)
+    }
+    const handleOnDelete = (noteId: NoteId) => {
+        console.log("Delete note: " + noteId)
+    }
+
+    return (
         <IonPage>
             <IonHeader>
                 <IonToolbar>
@@ -36,29 +92,47 @@ const ComponentLab: React.FC = () => {
             </IonHeader>
             <IonContent>
                 <IonGrid>
-                    <IonCol>
-                        {/** use a button Get session and print in console*/}
-                        <IonButton
-                            onClick={() => {
-                                let sessionCopy = { ...session };
-                                if (sessionCopy.access_token) {
-                                    sessionCopy.access_token = '****';
-                                }
-                                alert("Sesssion info: \n" + isAuthenticated + "\n" + JSON.stringify(sessionCopy, null, 2) + "\n" + user)
-                                console.log("Sesssion info: \n" + isAuthenticated + "\n" + JSON.stringify(sessionCopy, null, 2) + "\n" + user)
-                            }}
-                            color="primary"
-                            fill="outline"
-                            expand="block"
-                        >
-                            Get Session
-                        </IonButton>
-                    </IonCol>
+                    <IonRow>
+                        <IonCol>
+                            {/** use a button Get session and print in console*/}
+                            <IonButton
+                                onClick={() => {
+                                    let sessionCopy = { ...session };
+                                    if (sessionCopy.access_token) {
+                                        sessionCopy.access_token = '****';
+                                    }
+                                    alert("Sesssion info: \n" + isAuthenticated + "\n" + JSON.stringify(sessionCopy, null, 2) + "\n" + user)
+                                    console.log("Sesssion info: \n" + isAuthenticated + "\n" + JSON.stringify(sessionCopy, null, 2) + "\n" + user)
+                                }}
+                                color="primary"
+                                fill="outline"
+                                expand="block"
+                            >
+                                Get Session
+                            </IonButton>
+                        </IonCol>
+                    </IonRow>
+                    <IonRow>
+
+                        <IonList className="w-full m-0" lines='none'>
+                            {notes_mock.map((note, index) => (
+                                <IonItem key={index}>
+                                    <NoteCardV2
+                                        cardSetId='comlab1'
+                                        note={note}
+                                        isOnline={true}
+                                        onEditNote={handleOnEdit}
+                                        onDeleteNote={handleOnDelete}
+                                    />
+                                </IonItem>
+                            ))}
+                        </IonList>
+
+
+                    </IonRow>
                 </IonGrid>
             </IonContent>
         </IonPage>
-
-
     )
 
 }
