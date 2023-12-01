@@ -89,12 +89,12 @@ const Menu: React.FC<MenuProps> = ({ }) => {
             </IonHeader>
             <IonContent>
                 <IonList>
-                    <IonMenuToggle id="open-modal" key="search" autoHide={false}>
+                    {/* <IonMenuToggle id="open-modal" key="search" autoHide={false}>
                         <IonItem >
                             <IonIcon slot="start" icon={searchOutlineIcon} />
                             <IonLabel>Search</IonLabel>
                         </IonItem>
-                    </IonMenuToggle>
+                    </IonMenuToggle> */}
 
                     <IonModal ref={searchModal} trigger="open-modal">
                         <IonHeader>
@@ -105,7 +105,7 @@ const Menu: React.FC<MenuProps> = ({ }) => {
                                 <IonTitle></IonTitle>
                             </IonToolbar>
                         </IonHeader>
-                        <SearchingCard />
+                        {/* <SearchingCard /> */}
                     </IonModal>
 
                 </IonList>
