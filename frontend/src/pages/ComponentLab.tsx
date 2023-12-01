@@ -11,12 +11,14 @@ import {
     IonList,
     IonItem,
     IonButtons,
-    IonBackButton
+    IonBackButton,
+    IonCard
 } from '@ionic/react';
 import { useAuth } from '../contexts/AuthContext';
 import NoteCardV2 from '../components/NoteCardV2';
 import { NoteId, Note, SyncedNote, UnSyncedNote } from '../shared/types';
 import { v4 as uuidv4 } from 'uuid';
+import CardEditorV2 from '../components/CardEditorV2';
 
 const notes_mock: (SyncedNote | UnSyncedNote)[] = [
     {
@@ -113,7 +115,14 @@ const ComponentLab: React.FC = () => {
                         </IonCol>
                     </IonRow>
                     <IonRow>
-
+                        <IonCard className='m-0 px-5 pt-2 pb-1 rounded-xl w-full border border-slate-400  shadow-none'>
+                            <CardEditorV2
+                                onSubmit={(note: Note) => console.log(note)}
+                                isOnline={true}
+                             />
+                        </IonCard>
+                    </IonRow>
+                    <IonRow>
                         <IonList className="w-full m-0" lines='none'>
                             {notes_mock.map((note, index) => (
                                 <IonItem key={index}>
@@ -127,8 +136,6 @@ const ComponentLab: React.FC = () => {
                                 </IonItem>
                             ))}
                         </IonList>
-
-
                     </IonRow>
                 </IonGrid>
             </IonContent>

@@ -15,6 +15,7 @@ import {
 } from '@ionic/react';
 import BasicNoteCard from '../components/BasicNoteCard';
 import CardEditor from '../components/CardEditor';
+import CardEditorV2 from '../components/CardEditorV2';
 import CardEditorModal from '../components/CardEditorModal';
 import { useState, useEffect } from 'react';
 import { useNotes } from '../contexts/NotesContext';
@@ -28,6 +29,7 @@ import {
 import { getPlatforms } from '@ionic/react';
 import { v4 as uuidv4 } from 'uuid';
 import NoteCardV2 from '../components/NoteCardV2';
+import { on } from 'events';
 
 const TimeLine: React.FC = () => {
     console.log("timeline render")
@@ -111,29 +113,28 @@ const TimeLine: React.FC = () => {
                 </IonHeader>
             ) : <div className='m-5' />}
             <IonContent >
+
                 <IonList lines="none">
                     <IonItem>
-                        <IonCard className='w-full p-0 my-1 mx-1 shadow-md border border-gray-500'>
+                        {/* <IonCard className='w-full p-0 my-1 mx-1 shadow-md border border-gray-500'>
                             <IonCardContent className='p-0 m-0'>
                                 <CardEditor
                                     isOnline={isOnline}
                                     className=''
                                     onProcessNote={handleOnCreateNote} />
                             </IonCardContent>
+                        </IonCard> */}
+                        <IonCard className='m-0 px-5 pt-2 pb-1 rounded-xl w-full border border-slate-400  shadow-none'>
+                            <CardEditorV2
+                                onSubmit={handleOnCreateNote}
+                                isOnline={true}
+                            />
                         </IonCard>
 
                     </IonItem>
                     {isLoading ? <IonItem>Loading...</IonItem> :
                         notes.map((note: Note) => (
                             <IonItem key={note.id} button={false} detail={false}>
-                                {/* <BasicNoteCard
-                                    isOnline={isOnline}
-                                    note={note}
-                                    onDeleteNote={handleOnDeleteNote}
-                                    onEditNote={handleOnEditNote}
-                                    className='my-1 mx-1 shadow-sm border border-gray-300'
-                                    cardSetId='TimeLine'
-                                /> */}
                                 <NoteCardV2
                                     isOnline={isOnline}
                                     note={note}
@@ -154,7 +155,7 @@ const TimeLine: React.FC = () => {
                 handleOnUpdateNote={handleOnUpdateNote}
                 isSecondModalOpen={false}
                 setIsSecondModalOpen={setIsEditorOpen}
-                 />
+            />
         </IonPage >
 
     );

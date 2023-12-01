@@ -47,10 +47,10 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
     return (
         <IonCard className='m-0 p-0 rounded-none w-full border-b border-slate-300  shadow-none'>
             <IonCardContent className='m-0 p-0'>
-                <IonGrid class="ion-no-padding" style={{ "--ion-grid-columns": "16" }}>
+                <IonGrid class="ion-no-padding" style={{ "--ion-grid-columns": "25" }}>
                     <IonRow className='pt-3'>
-                        <IonCol size="15" className='' id="dt-col" >
-                            <IonText className='font-light font-roboto-condensed'>{formatDate(note.createdAt)}</IonText>
+                        <IonCol size="24" className='' id="dt-col" >
+                            <IonText className='font-light font-roboto-condensed text-sm'>{formatDate(note.createdAt)}</IonText>
                             {/* <IonIcon icon={navigateOutlineIcon} />
                             <IonText className='font-roboto-condensed font-light'>Summer Hill, Sydney</IonText> */}
                         </IonCol>
@@ -61,23 +61,23 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
                         </IonCol>
                     </IonRow>
                     <IonRow className='pt-3'>
-                        <IonCol size="14" id='body-col' className=''>
+                        <IonCol size="24" id='body-col' className=''>
                             <IonText className='font-poppins font-light' color="primary" >{note.body}</IonText>
                         </IonCol>
-                        <IonCol size="2" id='link-col' className="flex items-center justify-end ">
+                        <IonCol size="1" id='link-col' className="flex items-center justify-end ">
                             {/* <IonIcon className='' icon={chevronForwardOutlineIcon} /> */}
                         </IonCol>
                     </IonRow>
                     <IonRow>
-                        <IonCol size="15">
+                        <IonCol size="24">
                         </IonCol>
-                        <IonCol size="1" id='menu-col'>
+                        <IonCol size="1" id='menu-col' className=''>
                             <IonButton
                                 id={`${cardSetId}-${note.id}`}
                                 size="small"
                                 fill="clear"
                                 className='float-right note-menu-button'>
-                                <IonIcon size="small" icon={ellipsisHorizontalSharpeIcon} />
+                                <IonIcon size="small" color="medium" className='color-' icon={ellipsisHorizontalSharpeIcon} />
                             </IonButton>
                             <IonPopover
                                 trigger={`${cardSetId}-${note.id}`}
