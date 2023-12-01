@@ -60,10 +60,10 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({onSubmit, note, isOnline}) =
                         disabled={!isOnline || content.length === 0}
                         color="primary"
                         size="small"
-                        fill="outline"
+                        fill="solid"
                         onClick={HandleOnSubmit}
                         className='circular-button'>
-                        <IonIcon  className="m-0 p-0" size="small" slot="icon-only" icon={arrowForwardOutlineIcon}></IonIcon>
+                        <IonIcon color="light" className="m-0 p-0" size="small" slot="icon-only" icon={arrowForwardOutlineIcon}></IonIcon>
                     </IonButton>
                 </IonCol>
             </IonRow>

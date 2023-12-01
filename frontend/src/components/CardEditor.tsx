@@ -61,10 +61,11 @@ const CardEditor: React.FC<ContainerProps> = ({ onProcessNote: onProcessNote, no
             <IonRow className="ion-justify-content-end p-0 m-0">
                 <IonCol size="auto" className="m-0 p-0 ion-no-padding">
                     <IonButton
-                        disabled={!isOnline}
+                        disabled={true}
                         color="primary"
                         size="small"
-                        fill="outline"
+                        fill="clear"
+
                         onClick={HandleOnSubmitNote}
                         className='circular-button'>
                         <IonIcon className="m-0 p-0" size="small" slot="icon-only" icon={arrowDownOutlineIcon}></IonIcon>
