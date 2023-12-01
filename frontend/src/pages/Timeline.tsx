@@ -11,7 +11,8 @@ import {
     IonButtons,
     IonMenuButton,
     IonCard,
-    IonCardContent
+    IonCardContent,
+    IonSearchbar
 } from '@ionic/react';
 import BasicNoteCard from '../components/BasicNoteCard';
 import CardEditor from '../components/CardEditor';
@@ -112,26 +113,17 @@ const TimeLine: React.FC = () => {
                     </IonToolbar>
                 </IonHeader>
             ) : <div className='m-5' />}
+
+            <IonSearchbar className="mb-1 pb-1" placeholder="Searching"></IonSearchbar>
+            <IonCard className='my-1 px-5 pt-2 pb-1 rounded-xl border border-slate-400  shadow-none'>
+                <CardEditorV2
+                    onSubmit={handleOnCreateNote}
+                    isOnline={true}
+                />
+            </IonCard>
+
             <IonContent >
-
                 <IonList lines="none">
-                    <IonItem>
-                        {/* <IonCard className='w-full p-0 my-1 mx-1 shadow-md border border-gray-500'>
-                            <IonCardContent className='p-0 m-0'>
-                                <CardEditor
-                                    isOnline={isOnline}
-                                    className=''
-                                    onProcessNote={handleOnCreateNote} />
-                            </IonCardContent>
-                        </IonCard> */}
-                        <IonCard className='m-0 px-5 pt-2 pb-1 rounded-xl w-full border border-slate-400  shadow-none'>
-                            <CardEditorV2
-                                onSubmit={handleOnCreateNote}
-                                isOnline={true}
-                            />
-                        </IonCard>
-
-                    </IonItem>
                     {isLoading ? <IonItem>Loading...</IonItem> :
                         notes.map((note: Note) => (
                             <IonItem key={note.id} button={false} detail={false}>
