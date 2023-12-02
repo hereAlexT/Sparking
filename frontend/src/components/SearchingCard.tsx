@@ -18,6 +18,11 @@ import './SearchingCard.css';
 
 interface ContainerProps { }
 
+/**
+ * @deprecated This component is deprecated and should not be used anymore.
+ * @param param0 
+ * @returns 
+ */
 const SearchingCard: React.FC<ContainerProps> = ({ }) => {
     const modal = useRef<HTMLIonModalElement>(null);
     const [searchQuery, setSearchQuery] = useState('');

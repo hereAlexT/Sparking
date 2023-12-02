@@ -35,6 +35,20 @@ interface ContainerProps {
     cardSetId: string;
 }
 
+
+/**
+ * Renders a basic note card component.
+ *
+ * @deprecated This component is deprecated and should not be used anymore.
+ *
+ * @param note - The note object to display.
+ * @param onDeleteNote - The function to call when the note is deleted.
+ * @param onEditNote - The function to call when the note is edited.
+ * @param isOnline - Indicates whether the user is online or offline.
+ * @param className - The CSS class name for the card.
+ * @param cardSetId - The ID of the card set.
+ * @returns The rendered basic note card component.
+ */
 const BasicNoteCard: React.FC<ContainerProps> = ({ note, onDeleteNote, onEditNote, isOnline, className, cardSetId }) => {
     
 

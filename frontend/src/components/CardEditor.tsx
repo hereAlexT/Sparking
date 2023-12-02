@@ -24,6 +24,11 @@ interface ContainerProps {
     isOnline: boolean;
 }
 
+/**
+ * @deprecated This component is deprecated and should not be used anymore.
+ * @param param0 
+ * @returns 
+ */
 const CardEditor: React.FC<ContainerProps> = ({ onProcessNote: onProcessNote, note, className, isOnline }) => {
     const [content, setContent] = useState(note?.body || '');
     const handleInput = (event: CustomEvent) => {
