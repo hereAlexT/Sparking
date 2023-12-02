@@ -95,7 +95,6 @@ const ComponentLab: React.FC = () => {
 
 
 
-    const modalRef = useRef<HTMLIonModalElement>(null);
     const pageRef = useRef(undefined);
 
 
@@ -146,7 +145,6 @@ const ComponentLab: React.FC = () => {
                                 onSubmit={(note: Note) => console.log(note)}
                                 trigger="open-mobile-editor-modal"
                                 pageRef={pageRef}
-                                modalRef={modalRef}
                             />
                            
                         </IonCol>

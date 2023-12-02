@@ -26,8 +26,6 @@ interface CardEditorMobileProps {
     isOnline?: boolean;
     trigger: string;
     pageRef: React.RefObject<undefined>;
-    modalRef: React.RefObject<HTMLIonModalElement>;
-
 }
 
 declare global {
@@ -38,7 +36,7 @@ declare global {
 }
 
 
-const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({ pageRef, modalRef, trigger, onSubmit, note, isOnline = true }) => {
+const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({ pageRef, trigger, onSubmit, note, isOnline = true }) => {
 
     const [presentingElement, setPresentingElement] = useState<HTMLElement | undefined>(undefined);
 
@@ -65,6 +63,7 @@ const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({ pageRef, modal
 
 
     const footerRef = useRef<HTMLIonFooterElement>(null);
+    const modalRef = useRef<HTMLIonModalElement>(null);
 
     useEffect(() => {
         const handleKeyboardShow = (ev: CustomEvent) => {
@@ -125,13 +124,7 @@ const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({ pageRef, modal
                         color="primary"
                         size="small"
                         fill="solid"
-                        className='circular-button'>
-                        <IonIcon color="light" className="m-0 p-0" size="small" slot="icon-only" icon={arrowUpOutlineIcon}></IonIcon>
-                    </IonButton>
-                    <IonButton
-                        color="primary"
-                        size="small"
-                        fill="solid"
+                        onClick={HandleOnSubmit}
                         className='circular-button'>
                         <IonIcon color="light" className="m-0 p-0" size="small" slot="icon-only" icon={arrowUpOutlineIcon}></IonIcon>
                     </IonButton>

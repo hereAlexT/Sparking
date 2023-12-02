@@ -12,13 +12,17 @@ import {
     IonMenuButton,
     IonCard,
     IonCardContent,
-    IonSearchbar
+    IonSearchbar,
+    IonFab,
+    IonFabButton,
+    IonIcon
 } from '@ionic/react';
 import BasicNoteCard from '../components/BasicNoteCard';
 import CardEditor from '../components/CardEditor';
 import CardEditorV2 from '../components/CardEditorV2';
 import CardEditorModal from '../components/CardEditorModal';
-import { useState, useEffect } from 'react';
+import CardEditorMobileModal from '../components/CardEditorMobileModal';
+import { useState, useEffect, useRef } from 'react';
 import { useNotes } from '../contexts/NotesContext';
 import { useMeta } from '../contexts/MetaContext';
 import { useAuth } from '../contexts/AuthContext';
@@ -30,7 +34,8 @@ import {
 import { getPlatforms } from '@ionic/react';
 import { v4 as uuidv4 } from 'uuid';
 import NoteCardV2 from '../components/NoteCardV2';
-import { on } from 'events';
+import { arrowUpOutline as arrowUpOutlineIcon } from 'ionicons/icons';
+
 
 const TimeLine: React.FC = () => {
     console.log("timeline render")
@@ -113,9 +118,23 @@ const TimeLine: React.FC = () => {
         setIsEditorOpen(true);
     };
 
+   
+    const pageRef = useRef(undefined);
+
 
     return (
-        <IonPage id="main" >
+        <IonPage id="main" ref={pageRef}>
+            <IonFab slot="fixed" vertical="bottom" horizontal="end">
+                <IonFabButton id="open-mobile-editor-modal">
+                    <IonIcon icon={arrowUpOutlineIcon}></IonIcon>
+                </IonFabButton>
+                <CardEditorMobileModal
+                    onSubmit={(note: Note) => console.log(note)}
+                    trigger="open-mobile-editor-modal"
+                    onSubmit={handleOnCreateNote}
+                    pageRef={pageRef}
+                />
+            </IonFab>
             {!isSplitPaneOn ? (
                 <IonHeader>
                     <IonToolbar>
