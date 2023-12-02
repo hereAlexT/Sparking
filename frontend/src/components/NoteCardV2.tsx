@@ -62,7 +62,12 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
                     </IonRow>
                     <IonRow className='pt-3'>
                         <IonCol size="24" id='body-col' className=''>
-                            <IonText className='font-poppins font-light' color="dark" >{note.body}</IonText>
+                            {note.body.split('\n').map((line, index) => (
+                                <IonText key={index} className='font-poppins font-light' color="dark">
+                                    {line}
+                                    <br />
+                                </IonText>
+                            ))}
                         </IonCol>
                         <IonCol size="1" id='link-col' className="flex items-center justify-end ">
                             {/* <IonIcon className='' icon={chevronForwardOutlineIcon} /> */}
@@ -77,7 +82,7 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
                                 size="small"
                                 fill="clear"
                                 className='float-right note-menu-button'>
-                                <IonIcon size="small" color="medium"  icon={ellipsisHorizontalSharpeIcon} />
+                                <IonIcon size="small" color="medium" icon={ellipsisHorizontalSharpeIcon} />
                             </IonButton>
                             <IonPopover
                                 trigger={`${cardSetId}-${note.id}`}
