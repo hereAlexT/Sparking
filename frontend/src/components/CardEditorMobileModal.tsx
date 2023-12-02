@@ -18,6 +18,7 @@ import {
 } from '@ionic/react';
 import { Note, UnSyncedNote } from '../shared/types';
 import { arrowUpOutline as arrowUpOutlineIcon } from 'ionicons/icons';
+import { arrowForwardOutline as arrowForwardOutlineIcon } from 'ionicons/icons';
 import { v4 as uuidv4 } from 'uuid';
 
 interface CardEditorMobileProps {
@@ -102,10 +103,10 @@ const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({ pageRef, trigg
                 </IonToolbar>
             </IonHeader>
             <IonGrid class="ion-no-padding" className='m-0 p-0'>
-                <IonRow>
-                    <IonCol>
+                <IonRow className='h-full'>
+                    <IonCol >
                         <IonTextarea
-                            className='font-poppins font-light pt-1 px-1 text-black native-textarea-p0-m0 border-slate-400'
+                            className='font-poppins h-full font-light pt-1 px-1 text-black native-textarea-p0-m0 border-slate-400'
                             disabled={!isOnline}
                             value={isOnline ? content : "We are working on offline editing!"}
                             onIonInput={(event: CustomEvent) => setContent(event.detail.value)}
@@ -119,15 +120,23 @@ const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({ pageRef, trigg
                 </IonRow>
             </IonGrid>
             <IonFooter ref={footerRef}>
-                <IonToolbar>
-                    <IonButton
-                        color="primary"
-                        size="small"
-                        fill="solid"
-                        onClick={HandleOnSubmit}
-                        className='circular-button'>
-                        <IonIcon color="light" className="m-0 p-0" size="small" slot="icon-only" icon={arrowUpOutlineIcon}></IonIcon>
-                    </IonButton>
+                <IonToolbar >
+                    <IonGrid class="ion-no-padding">
+                        <IonRow>
+                            <IonCol size="11" className='' />
+                            <IonCol size="1" className=''>
+                                <IonButton
+                                    disabled={!isOnline || content.length === 0}
+                                    color="primary"
+                                    size="small"
+                                    fill="solid"
+                                    onClick={HandleOnSubmit}
+                                    className='circular-button'>
+                                    <IonIcon color="light" className="m-0 p-0" size="small" slot="icon-only" icon={arrowForwardOutlineIcon}></IonIcon>
+                                </IonButton>
+                            </IonCol>
+                        </IonRow>
+                    </IonGrid>
                 </IonToolbar>
             </IonFooter>
         </IonModal>
