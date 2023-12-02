@@ -12,13 +12,23 @@ import {
     IonItem,
     IonButtons,
     IonBackButton,
-    IonCard
+    IonCard,
+    IonModal,
+    IonCheckbox,
+    IonFooter,
+    IonTextarea,
+    IonIcon
+
 } from '@ionic/react';
+import { useRef, useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import NoteCardV2 from '../components/NoteCardV2';
 import { NoteId, Note, SyncedNote, UnSyncedNote } from '../shared/types';
 import { v4 as uuidv4 } from 'uuid';
 import CardEditorV2 from '../components/CardEditorV2';
+import CardEditorMobileModal from '../components/CardEditorMobileModal';
+
+import { arrowUpOutline as arrowUpOutlineIcon } from 'ionicons/icons';
 
 const notes_mock: (SyncedNote | UnSyncedNote)[] = [
     {
@@ -75,6 +85,7 @@ const ComponentLab: React.FC = () => {
     const { isAuthenticated, session, user } = useAuth();
 
 
+
     const handleOnEdit = (noteId: NoteId) => {
         console.log("Edit note: " + noteId)
     }
@@ -82,8 +93,14 @@ const ComponentLab: React.FC = () => {
         console.log("Delete note: " + noteId)
     }
 
+
+
+    const modalRef = useRef<HTMLIonModalElement>(null);
+    const pageRef = useRef(undefined);
+
+
     return (
-        <IonPage>
+        <IonPage ref={pageRef}>
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>Settings</IonTitle>
@@ -115,11 +132,31 @@ const ComponentLab: React.FC = () => {
                         </IonCol>
                     </IonRow>
                     <IonRow>
+                        <IonCol>
+                            {/** use a button Get session and print in console*/}
+                            <IonButton
+                                color="primary"
+                                fill='outline'
+                                expand="block"
+                                id="open-mobile-editor-modal"
+                            >
+                                Open MobileEditor
+                            </IonButton>
+                            <CardEditorMobileModal
+                                onSubmit={(note: Note) => console.log(note)}
+                                trigger="open-mobile-editor-modal"
+                                pageRef={pageRef}
+                                modalRef={modalRef}
+                            />
+                           
+                        </IonCol>
+                    </IonRow>
+                    <IonRow>
                         <IonCard className='m-0 px-5 pt-2 pb-1 rounded-xl w-full border border-slate-400  shadow-none'>
                             <CardEditorV2
                                 onSubmit={(note: Note) => console.log(note)}
                                 isOnline={true}
-                             />
+                            />
                         </IonCard>
                     </IonRow>
                     <IonRow>

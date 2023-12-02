@@ -17,12 +17,12 @@ import { v4 as uuidv4 } from 'uuid';
 interface CardEditorV2Props {
     onSubmit: (noteContent: Note) => void;
     note?: Note;
-    isOnline: boolean;
+    isOnline?: boolean;
 }
 
 
 
-const CardEditorV2: React.FC<CardEditorV2Props> = ({onSubmit, note, isOnline}) => {
+const CardEditorV2: React.FC<CardEditorV2Props> = ({onSubmit, note, isOnline=true}) => {
     const [content, setContent] = useState('');
 
     const HandleOnSubmit = () => {
