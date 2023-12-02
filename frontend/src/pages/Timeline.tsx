@@ -129,7 +129,6 @@ const TimeLine: React.FC = () => {
                     <IonIcon icon={arrowUpOutlineIcon}></IonIcon>
                 </IonFabButton>
                 <CardEditorMobileModal
-                    onSubmit={(note: Note) => console.log(note)}
                     trigger="open-mobile-editor-modal"
                     onSubmit={handleOnCreateNote}
                     pageRef={pageRef}
