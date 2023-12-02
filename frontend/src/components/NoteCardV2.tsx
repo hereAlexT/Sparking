@@ -24,6 +24,8 @@ import {
 } from 'ionicons/icons';
 import { Note, NoteId } from '../shared/types';
 import './NoteCardV2.css';
+import { createRoot } from 'react-dom/client'
+import Markdown from 'react-markdown'
 
 
 const formatDate = (date: Date): string => {
@@ -62,12 +64,13 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
                     </IonRow>
                     <IonRow className='pt-3'>
                         <IonCol size="24" id='body-col' className=''>
-                            {note.body.split('\n').map((line, index) => (
+                            {/* {note.body.split('\n').map((line, index) => (
                                 <IonText key={index} className='font-poppins font-light' color="dark">
                                     {line}
                                     <br />
-                                </IonText>
-                            ))}
+                                </IonText>))} */}
+
+                            <Markdown className='font-poppins font-light' children={note.body} />
                         </IonCol>
                         <IonCol size="1" id='link-col' className="flex items-center justify-end ">
                             {/* <IonIcon className='' icon={chevronForwardOutlineIcon} /> */}
