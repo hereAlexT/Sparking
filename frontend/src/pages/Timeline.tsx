@@ -118,22 +118,23 @@ const TimeLine: React.FC = () => {
         setIsEditorOpen(true);
     };
 
-   
+
     const pageRef = useRef(undefined);
 
 
     return (
         <IonPage id="main" ref={pageRef}>
-            <IonFab slot="fixed" vertical="bottom" horizontal="end">
-                <IonFabButton id="open-mobile-editor-modal">
-                    <IonIcon icon={arrowUpOutlineIcon}></IonIcon>
-                </IonFabButton>
-                <CardEditorMobileModal
-                    trigger="open-mobile-editor-modal"
-                    onSubmit={handleOnCreateNote}
-                    pageRef={pageRef}
-                />
-            </IonFab>
+            {!isSplitPaneOn && (
+                <IonFab slot="fixed" vertical="bottom" horizontal="end">
+                    <IonFabButton id="open-mobile-editor-modal">
+                        <IonIcon icon={arrowUpOutlineIcon}></IonIcon>
+                    </IonFabButton>
+                    <CardEditorMobileModal
+                        trigger="open-mobile-editor-modal"
+                        onSubmit={handleOnCreateNote}
+                        pageRef={pageRef}
+                    />
+                </IonFab>)}
             {!isSplitPaneOn ? (
                 <IonHeader>
                     <IonToolbar>
@@ -142,16 +143,22 @@ const TimeLine: React.FC = () => {
                         </IonButtons>
                         <IonTitle>Timeline {isOnline ? '' : '[Offline]'}</IonTitle>
                     </IonToolbar>
+                    <IonToolbar>
+                        <IonSearchbar className="mb-1 pb-1" placeholder="Search" onIonInput={(e) => setSearchQuery(e.detail.value!)} ></IonSearchbar>
+                    </IonToolbar>
                 </IonHeader>
             ) : <div className='m-5' />}
 
-            <IonSearchbar className="mb-1 pb-1" placeholder="Search" onIonInput={(e) => setSearchQuery(e.detail.value!)} ></IonSearchbar>
-            <IonCard className='my-1 px-5 pt-2 pb-1 rounded-xl border border-slate-400  shadow-none'>
+            {isSplitPaneOn && (
+                <IonSearchbar className="mb-1 pb-1" placeholder="Search" onIonInput={(e) => setSearchQuery(e.detail.value!)} ></IonSearchbar>)}
+
+            {isSplitPaneOn && (<IonCard className='my-1 px-5 pt-2 pb-1 rounded-xl border border-slate-400  shadow-none'>
                 <CardEditorV2
                     onSubmit={handleOnCreateNote}
                     isOnline={true}
                 />
-            </IonCard>
+            </IonCard>)}
+
 
             <IonContent >
                 <IonList lines="none">
