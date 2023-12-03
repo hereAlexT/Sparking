@@ -27,6 +27,7 @@ import { NoteId, Note, SyncedNote, UnSyncedNote } from '../shared/types';
 import { v4 as uuidv4 } from 'uuid';
 import CardEditorV2 from '../components/CardEditorV2';
 import CardEditorMobileModal from '../components/CardEditorMobileModal';
+import Markdown from 'react-markdown'
 
 import { arrowUpOutline as arrowUpOutlineIcon } from 'ionicons/icons';
 
@@ -141,13 +142,13 @@ const ComponentLab: React.FC = () => {
                             >
                                 Open MobileEditor
                             </IonButton>
-            
-                                <CardEditorMobileModal
-                                    onSubmit={(note: Note) => console.log(note)}
-                                    trigger="open-mobile-editor-modal-comlab"
-                                    pageRef={pageRef}
-                                />
-         
+
+                            <CardEditorMobileModal
+                                onSubmit={(note: Note) => console.log(note)}
+                                trigger="open-mobile-editor-modal-comlab"
+                                pageRef={pageRef}
+                            />
+
 
                         </IonCol>
                     </IonRow>
@@ -160,6 +161,7 @@ const ComponentLab: React.FC = () => {
                         </IonCard>
                     </IonRow>
                     <IonRow>
+
                         <IonList className="w-full m-0" lines='none'>
                             {notes_mock.map((note, index) => (
                                 <IonItem key={index}>

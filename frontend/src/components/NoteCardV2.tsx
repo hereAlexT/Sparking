@@ -77,16 +77,19 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
                         </IonCol>
                     </IonRow>
                     <IonRow>
-                        <IonCol size="24">
-                        </IonCol>
+                        <IonCol size="24" />
                         <IonCol size="1" id='menu-col' className=''>
+                            <span id={`${cardSetId}-${note.id}`}>
+                                <IonIcon size="small" color="medium" icon={ellipsisHorizontalSharpeIcon} />
+                            </span>
+                            {/* IonButton or button here will cause text cannot be selected bug.
                             <IonButton
                                 id={`${cardSetId}-${note.id}`}
                                 size="small"
                                 fill="clear"
                                 className='float-right note-menu-button'>
                                 <IonIcon size="small" color="medium" icon={ellipsisHorizontalSharpeIcon} />
-                            </IonButton>
+                            </IonButton> */}
                             <IonPopover
                                 trigger={`${cardSetId}-${note.id}`}
                                 dismissOnSelect={true}
@@ -113,7 +116,6 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
                     </IonRow>
                 </IonGrid>
             </IonCardContent>
-
         </IonCard >
     );
 };
