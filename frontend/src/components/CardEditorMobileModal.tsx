@@ -13,7 +13,8 @@ import {
     IonHeader,
     IonTitle,
     IonModal,
-    IonFooter
+    IonFooter,
+    IonContent
 
 } from '@ionic/react';
 import { Note, UnSyncedNote } from '../shared/types';
@@ -140,6 +141,7 @@ const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({ pageRef, trigg
                 </IonToolbar>
             </IonFooter>
         </IonModal>
+
     );
 };
 

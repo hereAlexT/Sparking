@@ -137,16 +137,18 @@ const ComponentLab: React.FC = () => {
                                 color="primary"
                                 fill='outline'
                                 expand="block"
-                                id="open-mobile-editor-modal"
+                                id="open-mobile-editor-modal-comlab"
                             >
                                 Open MobileEditor
                             </IonButton>
-                            <CardEditorMobileModal
-                                onSubmit={(note: Note) => console.log(note)}
-                                trigger="open-mobile-editor-modal"
-                                pageRef={pageRef}
-                            />
-                           
+            
+                                <CardEditorMobileModal
+                                    onSubmit={(note: Note) => console.log(note)}
+                                    trigger="open-mobile-editor-modal-comlab"
+                                    pageRef={pageRef}
+                                />
+         
+
                         </IonCol>
                     </IonRow>
                     <IonRow>
