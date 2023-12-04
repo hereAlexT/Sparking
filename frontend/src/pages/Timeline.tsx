@@ -118,7 +118,7 @@ const TimeLine: React.FC = () => {
         setIsEditorOpen(true);
     };
 
-    
+
 
 
     const pageRef = useRef(undefined);
@@ -151,18 +151,19 @@ const TimeLine: React.FC = () => {
                 </IonHeader>
             ) : <div className='m-5' />}
 
-            {isSplitPaneOn && (
-                <IonSearchbar className="mb-1 pb-1" placeholder="Search" onIonInput={(e) => setSearchQuery(e.detail.value!)} ></IonSearchbar>)}
 
-            {isSplitPaneOn && (<IonCard className='my-1 px-5 pt-2 pb-1 rounded-xl border border-slate-400  shadow-none'>
+            {isSplitPaneOn && (<IonCard className='my-1 px-5 pt-2 pb-1 rounded-md border border-slate-400  shadow-md'>
                 <CardEditorV2
                     onSubmit={handleOnCreateNote}
                     isOnline={true}
                 />
             </IonCard>)}
+            {isSplitPaneOn && (
+                <IonSearchbar className="mb-1 pb-1" placeholder="Search" onIonInput={(e) => setSearchQuery(e.detail.value!)} ></IonSearchbar>)}
 
 
-            <IonContent >
+
+            <IonContent className='m5'>
                 <IonList lines="none">
                     {isLoading ? <IonItem>Loading...</IonItem> :
                         filteredNotes.map((note: Note) => (
