@@ -126,11 +126,11 @@ const TimeLine: React.FC = () => {
         <IonPage id="main" ref={pageRef}>
             {!isSplitPaneOn && (
                 <IonFab slot="fixed" vertical="bottom" horizontal="end">
-                    <IonFabButton id="open-mobile-editor-modal">
+                    <IonFabButton id="open-mobile-editor-modal-timeline">
                         <IonIcon icon={arrowUpOutlineIcon}></IonIcon>
                     </IonFabButton>
                     <CardEditorMobileModal
-                        trigger="open-mobile-editor-modal"
+                        trigger="open-mobile-editor-modal-timeline"
                         onSubmit={handleOnCreateNote}
                         pageRef={pageRef}
                     />
