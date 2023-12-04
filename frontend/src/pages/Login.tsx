@@ -96,7 +96,7 @@ const Login: React.FC = () => {
                         <IonRow>
                             <IonCol>
                                 <IonText>
-                                    <h1 className='text-3xl font-semibold'>Welcome to Snow Yeti.</h1>
+                                    <h1 className='text-3xl font-semibold'>Welcome to Sparking.</h1>
                                 </IonText>
                             </IonCol>
                         </IonRow>
