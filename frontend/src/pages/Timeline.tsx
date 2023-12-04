@@ -118,6 +118,8 @@ const TimeLine: React.FC = () => {
         setIsEditorOpen(true);
     };
 
+    
+
 
     const pageRef = useRef(undefined);
 
@@ -177,7 +179,7 @@ const TimeLine: React.FC = () => {
                 </IonList>
 
             </IonContent>
-            <CardEditorModal
+            {/* <CardEditorModal
                 isOnline={isOnline}
                 isEditorOpen={isEditorOpen}
                 setIsEditorOpen={setIsEditorOpen}
@@ -185,7 +187,15 @@ const TimeLine: React.FC = () => {
                 handleOnUpdateNote={handleOnUpdateNote}
                 isSecondModalOpen={false}
                 setIsSecondModalOpen={setIsEditorOpen}
+            /> */}
+            <CardEditorMobileModal
+                onSubmit={handleOnUpdateNote}
+                pageRef={pageRef}
+                setIsEditorOpen={setIsEditorOpen}
+                isEditorOpen={isEditorOpen}
+                note={selectedNote}
             />
+
         </IonPage >
 
     );

@@ -16,6 +16,9 @@ interface CardEditorModalProps {
 
 }
 
+/**
+ * @deprecated
+ */
 const CardEditorModal: React.FC<CardEditorModalProps> = ({ isEditorOpen, isOnline, selectedNote, handleOnUpdateNote, setIsEditorOpen }) => {
     const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
     const firstModalClass = isSecondModalOpen ? 'modal-with-backdrop' : '';

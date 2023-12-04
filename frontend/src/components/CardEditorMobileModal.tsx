@@ -26,8 +26,10 @@ interface CardEditorMobileProps {
     onSubmit: (noteContent: Note) => void;
     note?: Note;
     isOnline?: boolean;
-    trigger: string;
+    trigger?: string;
     pageRef: React.RefObject<undefined>;
+    isEditorOpen?: boolean;
+    setIsEditorOpen?: (isOpen: boolean) => void;
 }
 
 declare global {
@@ -38,7 +40,7 @@ declare global {
 }
 
 
-const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({ pageRef, trigger, onSubmit, note, isOnline = true }) => {
+const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({ isEditorOpen, setIsEditorOpen, pageRef, trigger, onSubmit, note, isOnline = true }) => {
 
     const [presentingElement, setPresentingElement] = useState<HTMLElement | undefined>(undefined);
 
@@ -46,11 +48,17 @@ const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({ pageRef, trigg
         setPresentingElement(pageRef.current!);
     }, []);
 
+    useEffect(() => {
+        setContent(note?.body || '');
+    }, [note]);
+
     function dismiss() {
         modalRef.current?.dismiss();
+        setIsEditorOpen?.(false);
     }
 
-    const [content, setContent] = useState('');
+    const [content, setContent] = useState(note?.body || '');
+
 
     const HandleOnSubmit = () => {
         const newNote: UnSyncedNote = {
@@ -94,7 +102,12 @@ const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({ pageRef, trigg
     }, []);
 
     return (
-        <IonModal ref={modalRef} trigger={trigger} presentingElement={presentingElement}>
+        <IonModal
+            ref={modalRef}
+            trigger={trigger}
+            presentingElement={presentingElement}
+            isOpen={isEditorOpen}
+        >
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>Modal</IonTitle>
