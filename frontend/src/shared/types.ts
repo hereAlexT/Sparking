@@ -1,5 +1,25 @@
 export type NoteId = string;
+export type UserId = string;
+export type NoteImageId = string;
 
+
+export enum NOTE_STATUS {
+    SYNCED = "SYNCED",
+    UNSYNCED = "UNSYNCED",
+    SYNCING = "SYNCING"
+}
+
+export enum NOTE_IMAGE_STATUS {
+    SYNCED = "SYNCED",
+    UNSYNCED = "UNSYNCED",
+    SYNCING = "SYNCING"
+}
+
+export interface NoteImage {
+    NoteImageId: NoteImageId;
+    url: string;
+    NOTE_IMAGE_STATUS: NOTE_IMAGE_STATUS;
+}
 
 //todo: change name to synced note
 export interface Note {
@@ -9,6 +29,9 @@ export interface Note {
     createdAt: Date;
     // updatedAt should be assigned locally.
     updatedAt: Date;
+    images?: NoteImage[];
+    status?: NOTE_STATUS; // this should be compulsary in the next version
+    userId?: UserId; // this should be compulsary in the next version
 }
 
 export interface SyncedNote extends Note {

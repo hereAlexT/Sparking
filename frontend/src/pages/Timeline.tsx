@@ -46,7 +46,7 @@ const TimeLine: React.FC = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const { notes, createNote, deleteNote, updateNote, getNotes } = useNotes();
     const { isOnline, isSplitPaneOn } = useMeta();
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, user } = useAuth();
     const [filteredNotes, setFilteredNotes] = useState(notes);
 
     useEffect(() => {
@@ -75,7 +75,9 @@ const TimeLine: React.FC = () => {
                 id: note.id || uuidv4(),
                 createdAt: note.createdAt,
                 updatedAt: note.updatedAt,
-                body: note.body
+                body: note.body,
+                userId: user?.id,
+                images: note.images,
             })
         } catch (error) {
             console.log("error")

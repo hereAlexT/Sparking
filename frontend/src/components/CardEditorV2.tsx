@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import {
     IonCardContent,
     IonCard,
@@ -15,14 +16,14 @@ import {
     IonThumbnail
 
 } from '@ionic/react';
-import { Note, UnSyncedNote } from '../shared/types';
+import { Note, UnSyncedNote, NoteImage, NOTE_IMAGE_STATUS, NOTE_STATUS } from '../shared/types';
 import {
     arrowForwardOutline as arrowForwardOutlineIcon,
     imageOutline as imageOutlineIcon,
     imageSharp
 } from 'ionicons/icons';
 import { v4 as uuidv4 } from 'uuid';
-import {Camera, CameraResultType, Photo} from '@capacitor/camera';
+import { Camera, CameraResultType, Photo } from '@capacitor/camera';
 
 interface CardEditorV2Props {
     onSubmit: (noteContent: Note) => void;
@@ -36,14 +37,17 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = 
     const [content, setContent] = useState('');
 
     const HandleOnSubmit = () => {
-        const newNote: UnSyncedNote = {
+        const newNote: Note = {
             id: note?.id || uuidv4(),
             createdAt: note?.createdAt || new Date(),
             updatedAt: new Date(),
-            body: content
+            body: content,
+            images: images,
+            status: NOTE_STATUS.UNSYNCED
         }
         onSubmit(newNote);
         setContent('');
+        setImages([]);
     }
 
     const handleImageButtonClick = async () => {
@@ -54,13 +58,16 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = 
         });
 
         if (image.webPath) {
-            setImages(prevImages => [...prevImages, image.webPath!]);
+            const newImage: NoteImage = {
+                NoteImageId: uuidv4(),
+                url: image.webPath,
+                NOTE_IMAGE_STATUS: NOTE_IMAGE_STATUS.UNSYNCED
+            };
+            setImages(prevImages => [...prevImages, newImage]);
         }
     };
 
-    const [images, setImages] = useState<string[]>([
-
-    ]);
+    const [images, setImages] = useState<NoteImage[]>([]);
 
     return (
         <IonGrid class="ion-no-padding">
@@ -82,7 +89,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = 
             <IonRow className='ion-justify-content-start'>
                 {images.map((image, index) => (
                     <IonCol key={index}>
-                        <IonImg alt={`Image ${index}`} src={image} />
+                        <IonImg alt={`Image ${index}`} src={image.url} />
                     </IonCol>
                 ))}
             </IonRow>

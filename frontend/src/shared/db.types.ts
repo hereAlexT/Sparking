@@ -34,6 +34,31 @@ export interface Database {
   }
   public: {
     Tables: {
+      note_images: {
+        Row: {
+          created_at: string
+          id: string
+          note_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          note_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          note_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "note_images_note_id_fkey"
+            columns: ["note_id"]
+            referencedRelation: "notes"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       notes: {
         Row: {
           body: string
@@ -90,6 +115,7 @@ export interface Database {
           id: string
           name: string
           owner: string | null
+          owner_id: string | null
           public: boolean | null
           updated_at: string | null
         }
@@ -101,6 +127,7 @@ export interface Database {
           id: string
           name: string
           owner?: string | null
+          owner_id?: string | null
           public?: boolean | null
           updated_at?: string | null
         }
@@ -112,17 +139,11 @@ export interface Database {
           id?: string
           name?: string
           owner?: string | null
+          owner_id?: string | null
           public?: boolean | null
           updated_at?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "buckets_owner_fkey"
-            columns: ["owner"]
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
+        Relationships: []
       }
       migrations: {
         Row: {
@@ -154,6 +175,7 @@ export interface Database {
           metadata: Json | null
           name: string | null
           owner: string | null
+          owner_id: string | null
           path_tokens: string[] | null
           updated_at: string | null
           version: string | null
@@ -166,6 +188,7 @@ export interface Database {
           metadata?: Json | null
           name?: string | null
           owner?: string | null
+          owner_id?: string | null
           path_tokens?: string[] | null
           updated_at?: string | null
           version?: string | null
@@ -178,6 +201,7 @@ export interface Database {
           metadata?: Json | null
           name?: string | null
           owner?: string | null
+          owner_id?: string | null
           path_tokens?: string[] | null
           updated_at?: string | null
           version?: string | null

@@ -16,7 +16,8 @@ import {
     getNotes as getNotesApi,
     createNote as createNoteApi,
     updateNote as updateNoteApi,
-    deleteNote as deleteNoteApi
+    deleteNote as deleteNoteApi,
+    uploadImageToStorage
 } from '../apis/NoteAPI'
 import camelcaseKeys from 'camelcase-keys';
 
@@ -27,7 +28,7 @@ interface NotesProviderProps {
 }
 
 
-type NoteAction = GetNoteAction | GetNotesAction | CreateNoteAction | DeleteNoteAction | UpdateNoteAction | SearchNotesAction ;
+type NoteAction = GetNoteAction | GetNotesAction | CreateNoteAction | DeleteNoteAction | UpdateNoteAction | SearchNotesAction;
 
 
 const reducer = (state: Note[], action: NoteAction): Note[] => {
@@ -74,10 +75,31 @@ const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
     const [searchResults, setSearchResults] = useState(notes);
 
 
+    async function blobUrlToFile(blobUrl: string, filename: string): Promise<File> {
+        const response = await fetch(blobUrl);
+        const blob = await response.blob();
+        const file = new File([blob], filename, { type: blob.type });
+        return file;
+    }
+
     const createNote = async (unSyncedNote: UnSyncedNote) => {
         try {
+            console.log("00000")
+            console.log("unSyncedNote", unSyncedNote)
+            // create file object from blob url
+            const filePromises = unSyncedNote.images!.map((image, index) => blobUrlToFile(image.url, `filename${index}`));
+
+            console.log("11111")
+            // upload pics
+            const uploadedImagesPromises = unSyncedNote.images!.map((image) =>
+                blobUrlToFile(image.url, image.NoteImageId).then(file => uploadImageToStorage(file, unSyncedNote.userId!, image.NoteImageId))
+            );
+
+            console.log("22222")
+
             let response = await createNoteApi(unSyncedNote);
             dispatch({ type: NOTE_ACTION.CREATE_NOTE, payload: unSyncedNote });
+            console.log("33333")
         } catch (err) {
             throw err;
         }
