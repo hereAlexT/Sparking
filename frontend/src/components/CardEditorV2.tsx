@@ -11,7 +11,10 @@ import {
 
 } from '@ionic/react';
 import { Note, UnSyncedNote } from '../shared/types';
-import { arrowForwardOutline as  arrowForwardOutlineIcon } from 'ionicons/icons';
+import { 
+    arrowForwardOutline as  arrowForwardOutlineIcon,
+    imageOutline as imageOutlineIcon
+ } from 'ionicons/icons';
 import { v4 as uuidv4 } from 'uuid';
 
 interface CardEditorV2Props {
@@ -54,7 +57,16 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({onSubmit, note, isOnline=tru
                 </IonCol>
             </IonRow>
             <IonRow>
-                <IonCol size="11" className='' />
+            <IonCol size="1" className='' >
+                    <IonButton
+                        color="primary"
+                        size="small"
+                        fill="clear"
+                        className='circular-button'>
+                        <IonIcon color="dark" className="m-0 p-0" size="small" slot="icon-only" icon={imageOutlineIcon} />
+                    </IonButton>
+                </IonCol>
+                <IonCol size="10" className='' />
                 <IonCol size="1" className='flex items-center justify-end'>
                     <IonButton
                         disabled={!isOnline || content.length === 0}
@@ -67,6 +79,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({onSubmit, note, isOnline=tru
                     </IonButton>
                 </IonCol>
             </IonRow>
+
 
         </IonGrid>
     )
