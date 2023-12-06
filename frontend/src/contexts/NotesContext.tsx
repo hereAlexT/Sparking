@@ -1,16 +1,9 @@
 import { createContext, useContext, useReducer, ReactNode, useState } from "react"
 import {
-    NOTE_ACTION,
     Note,
-    CreateNoteAction,
-    DeleteNoteAction,
-    UpdateNoteAction,
-    GetNoteAction,
-    GetNotesAction,
     NoteId,
     SyncedNote,
     UnSyncedNote,
-    SearchNotesAction,
 } from '../shared/types';
 import {
     getNotes as getNotesApi,
@@ -21,30 +14,43 @@ import {
 } from '../apis/NoteAPI'
 import camelcaseKeys from 'camelcase-keys';
 
-
-
 interface NotesProviderProps {
     children: ReactNode;
 }
 
+enum NOTE_ACTION {
+    CREATE_NOTE = "CREATE_NOTE",
+    DELETE_NOTE = "DELETE_NOTE",
+    UPDATE_NOTE = "UPDATE_NOTE",
+    GET_NOTES = "GET_NOTES",
+    GET_NOTE = "GET_NOTE",
+    SEARCH_NOTES = "SEARCH_NOTES"
+}
 
-type NoteAction = GetNoteAction | GetNotesAction | CreateNoteAction | DeleteNoteAction | UpdateNoteAction | SearchNotesAction;
+type NoteAction =
+    | Action<Note> // used for CREATE_NOTE, UPDATE_NOTE
+    | Action<NoteId> // used for DELETE_NOTE, GET_NOTE
+    | Action<Note[]>; // used for GET_NOTES, SEARCH_NOTES
 
+
+interface Action<T> {
+    type: NOTE_ACTION,
+    payload: T
+}
 
 const reducer = (state: Note[], action: NoteAction): Note[] => {
     console.log("reducer called")
     switch (action.type) {
         case NOTE_ACTION.CREATE_NOTE:
-            return [action.payload, ...state];
+            return [action.payload as Note, ...state];
         case NOTE_ACTION.DELETE_NOTE:
-            return state.filter(note => note.id !== action.payload);
+            return state.filter(note => note.id !== (action.payload as NoteId));
         case NOTE_ACTION.UPDATE_NOTE:
-            return state.map(note => note.id === (action.payload ? action.payload.id : null) ? action.payload : note);
+            return state.map(note => note.id === ((action.payload as Note)?.id || null) ? action.payload as Note : note);
         case NOTE_ACTION.GET_NOTES:
-            return action.payload;
         case NOTE_ACTION.SEARCH_NOTES:
             console.log("searchNotes called")
-            return action.payload; // return the filtered notes
+            return action.payload as Note[]; // return the filtered notes
         default:
             return state;
     }
@@ -84,22 +90,17 @@ const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
 
     const createNote = async (unSyncedNote: UnSyncedNote) => {
         try {
-            console.log("00000")
             console.log("unSyncedNote", unSyncedNote)
             // create file object from blob url
             const filePromises = unSyncedNote.images!.map((image, index) => blobUrlToFile(image.url, `filename${index}`));
 
-            console.log("11111")
             // upload pics
             const uploadedImagesPromises = unSyncedNote.images!.map((image) =>
                 blobUrlToFile(image.url, image.id).then(file => uploadImageToStorage(file, unSyncedNote.userId!, image.id))
             );
 
-            console.log("22222")
-
             let response = await createNoteApi(unSyncedNote);
             dispatch({ type: NOTE_ACTION.CREATE_NOTE, payload: unSyncedNote });
-            console.log("33333")
         } catch (err) {
             throw err;
         }
@@ -113,7 +114,6 @@ const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
             throw err;
         }
     }
-
 
 
     const updateNote = async (unSyncedNote: UnSyncedNote) => {

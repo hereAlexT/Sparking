@@ -49,6 +49,12 @@ export interface UnSyncedNote extends Note {
 }
 
 
+export enum AUTH_ACTION {
+    LOGIN = "LOGIN",
+    LOGOUT = "LOGOUT",
+    SIGNUP = "REGISTER"
+}
+
 export enum NOTE_ACTION {
     CREATE_NOTE = "CREATE_NOTE",
     DELETE_NOTE = "DELETE_NOTE",
@@ -58,49 +64,8 @@ export enum NOTE_ACTION {
     SEARCH_NOTES = "SEARCH_NOTES"
 }
 
-export enum AUTH_ACTION {
-    LOGIN = "LOGIN",
-    LOGOUT = "LOGOUT",
-    SIGNUP = "REGISTER"
+
+export interface Action<T> {
+    type: NOTE_ACTION,
+    payload: T
 }
-export interface CreateNoteRequest {
-    body: string;
-}
-
-export interface UpdateNoteBodyRequest {
-    id: NoteId;
-    body: string;
-}
-
-export interface CreateNoteAction {
-    type: NOTE_ACTION.CREATE_NOTE,
-    payload: Note
-}
-
-export interface DeleteNoteAction {
-    type: NOTE_ACTION.DELETE_NOTE,
-    payload: NoteId
-}
-
-export interface UpdateNoteAction {
-    type: NOTE_ACTION.UPDATE_NOTE,
-    payload: Note
-}
-
-export interface SearchNotesAction {
-    type: NOTE_ACTION.SEARCH_NOTES,
-    payload: Note[]
-}
-
-export interface GetNotesAction {
-    type: NOTE_ACTION.GET_NOTES
-    payload: Note[]
-}
-
-export interface GetNoteAction {
-    type: NOTE_ACTION.GET_NOTE,
-    payload: NoteId
-}
-
-
-
