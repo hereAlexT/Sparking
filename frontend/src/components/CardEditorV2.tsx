@@ -16,7 +16,7 @@ import {
     IonThumbnail
 
 } from '@ionic/react';
-import { Note, UnSyncedNote, NoteImage, NOTE_IMAGE_STATUS, NOTE_STATUS, NoteId } from '../shared/types';
+import { Note, NoteImage, NOTE_IMAGE_STATUS, NOTE_STATUS, NoteId } from '../shared/types';
 import {
     arrowForwardOutline as arrowForwardOutlineIcon,
     imageOutline as imageOutlineIcon,

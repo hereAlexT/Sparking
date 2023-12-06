@@ -25,7 +25,6 @@ import { useMeta } from '../contexts/MetaContext';
 import { useAuth } from '../contexts/AuthContext';
 import {
     Note,
-    UnSyncedNote,
     NoteId,
 } from '../shared/types';
 import { getPlatforms } from '@ionic/react';
@@ -66,7 +65,7 @@ const TimeLine: React.FC = () => {
         });
     }, []);
 
-    const handleOnCreateNote = async (note: UnSyncedNote) => {
+    const handleOnCreateNote = async (note: Note) => {
         try {
             await createNote({
                 id: note.id || uuidv4(),
@@ -84,7 +83,7 @@ const TimeLine: React.FC = () => {
 
     }
 
-    const handleOnUpdateNote = async (note: UnSyncedNote) => {
+    const handleOnUpdateNote = async (note: Note) => {
         try {
             await updateNote({
                 id: note.id,

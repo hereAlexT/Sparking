@@ -2,8 +2,6 @@ import { createContext, useContext, useReducer, ReactNode, useState } from "reac
 import {
     Note,
     NoteId,
-    SyncedNote,
-    UnSyncedNote,
 } from '../shared/types';
 import {
     getNotes as getNotesApi,
@@ -88,7 +86,7 @@ const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
         return file;
     }
 
-    const createNote = async (unSyncedNote: UnSyncedNote) => {
+    const createNote = async (unSyncedNote: Note) => {
         try {
             console.log("unSyncedNote", unSyncedNote)
             // create file object from blob url
@@ -116,7 +114,7 @@ const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
     }
 
 
-    const updateNote = async (unSyncedNote: UnSyncedNote) => {
+    const updateNote = async (unSyncedNote: Note) => {
         try {
             let response = await updateNoteApi(unSyncedNote);
             dispatch({ type: NOTE_ACTION.UPDATE_NOTE, payload: unSyncedNote })
@@ -132,7 +130,7 @@ const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
      */
     const getNotes = async (): Promise<Note[]> => {
         //Connect to API and fetch all notes
-        let _notes: SyncedNote[] = await getNotesApi();
+        let _notes: Note[] = await getNotesApi();
         // conert snakecase to camelcase by using camelcaseKeys
         _notes = camelcaseKeys(_notes, { deep: true });
         _notes = _notes.map(note => ({

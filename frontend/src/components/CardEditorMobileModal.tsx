@@ -17,7 +17,7 @@ import {
     IonContent
 
 } from '@ionic/react';
-import { Note, UnSyncedNote } from '../shared/types';
+import { Note } from '../shared/types';
 import { arrowUpOutline as arrowUpOutlineIcon } from 'ionicons/icons';
 import { arrowForwardOutline as arrowForwardOutlineIcon } from 'ionicons/icons';
 import { v4 as uuidv4 } from 'uuid';
@@ -61,7 +61,7 @@ const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({ isEditorOpen, 
 
 
     const HandleOnSubmit = () => {
-        const newNote: UnSyncedNote = {
+        const newNote: Note = {
             id: note?.id || uuidv4(),
             createdAt: note?.createdAt || new Date(),
             updatedAt: new Date(),

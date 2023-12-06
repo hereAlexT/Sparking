@@ -37,16 +37,6 @@ export interface Note {
     userId?: UserId; // this should be compulsary in the next version
 }
 
-export interface SyncedNote extends Note {
-    // This is a synced id with the backend
-}
-
-
-/** In unsynced id, this id should be a temporal id,
- * the true uuid should be assigned by the backend
- */
-export interface UnSyncedNote extends Note {
-}
 
 
 export enum AUTH_ACTION {

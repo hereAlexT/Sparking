@@ -1,11 +1,8 @@
 import { supabase } from '../supabaseClient'
 import {
-    SyncedNote,
-    UnSyncedNote,
     Note,
     NoteId,
     NoteImageId,
-    NoteImage,
     NOTE_IMAGE_STATUS,
     NOTE_STATUS
 } from '../shared/types'
@@ -13,10 +10,10 @@ import { Database } from '../shared/db.types'
 import { UserId } from '../shared/types'
 
 // Function to insert a new note in the "notes" table
-export async function createNote(unSyncedNote: UnSyncedNote) {
+export async function createNote(_note: Note) {
     const note: Database['public']['Tables']['notes']['Insert'] = {
-        id: unSyncedNote.id,
-        body: unSyncedNote.body,
+        id: _note.id,
+        body: _note.body,
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
     }
@@ -24,11 +21,11 @@ export async function createNote(unSyncedNote: UnSyncedNote) {
     if (error) throw error;
 
     //create a list of note_images
-    const noteImages = unSyncedNote.images?.map((image) => {
+    const noteImages = _note.images?.map((image) => {
         return {
             id: image.id,
-            note_id: unSyncedNote.id,
-            user_id: unSyncedNote.userId,
+            note_id: _note.id,
+            user_id: _note.userId,
             created_at: new Date().toISOString(),
         }
     })
@@ -40,7 +37,7 @@ export async function createNote(unSyncedNote: UnSyncedNote) {
 }
 
 // Function to update a note in the "notes" table
-export async function updateNote(unsyncedNote: UnSyncedNote) {
+export async function updateNote(unsyncedNote: Note) {
 
     const note: Database['public']['Tables']['notes']['Update'] = {
 
@@ -63,7 +60,7 @@ export async function deleteNote(noteId: NoteId) {
 }
 
 
-export const getNotes = async (): Promise<SyncedNote[]> => {
+export const getNotes = async (): Promise<Note[]> => {
 
     const { data, error } = await supabase.from('notes').select(`
         body,
@@ -99,7 +96,7 @@ export const getNotes = async (): Promise<SyncedNote[]> => {
         status: NOTE_STATUS.UNSYNCED, // or whatever default status you want
     }));
 
-    return mappedData as SyncedNote[];
+    return mappedData as Note[];
 
 }
 

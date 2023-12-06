@@ -23,7 +23,7 @@ import {
 import { useRef, useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import NoteCardV2 from '../components/NoteCardV2';
-import { NoteId, Note, SyncedNote, UnSyncedNote } from '../shared/types';
+import { NoteId, Note} from '../shared/types';
 import { v4 as uuidv4 } from 'uuid';
 import CardEditorV2 from '../components/CardEditorV2';
 import CardEditorMobileModal from '../components/CardEditorMobileModal';
@@ -31,7 +31,7 @@ import Markdown from 'react-markdown'
 
 import { arrowUpOutline as arrowUpOutlineIcon } from 'ionicons/icons';
 
-const notes_mock: (SyncedNote | UnSyncedNote)[] = [
+const notes_mock: (Note)[] = [
     {
         id: uuidv4(),
         body: "First note",
