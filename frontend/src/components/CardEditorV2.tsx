@@ -94,10 +94,10 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = 
 
                 />
             </div>
-            <div className='flex justify-start'>
+            <div className='grid grid-cols-3'>
                 {images.map((image, index) => (
                     <div key={index} className="relative">
-                        <img alt={`Image ${index}`} src={image.url} />
+                        <img alt={`Image ${index}`} src={image.url} className="w-full" />
                         <button
                             className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
                             onClick={() => handleDeleteImage(index)}
