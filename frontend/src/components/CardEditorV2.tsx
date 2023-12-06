@@ -54,6 +54,30 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = 
         setImages([]);
     }
 
+    const handleImageButtonClick = async () => {
+        const _images = await Camera.pickImages({
+            quality: 90,
+        });
+
+
+        _images.photos.forEach((image) => {
+            if (image.webPath) {
+                const newImage: NoteImage = {
+                    createdAt: new Date(),
+                    id: uuidv4(),
+                    url: image.webPath,
+                    noteId: _noteid,
+                    userId: user?.id,
+                    status: NOTE_IMAGE_STATUS.UNSYNCED
+                };
+                setImages(prevImages => [...prevImages, newImage]);
+            };
+
+        })
+    };
+
+
+
     const handleCameraButtonClick = async () => {
         const image = await Camera.getPhoto({
             quality: 90,
@@ -92,7 +116,6 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = 
                     autoGrow={true}
                     color="primary"
                     placeholder="You got a good idea💡, what's that?"
-
                 />
             </div>
             <div className='grid grid-cols-3'>
@@ -119,7 +142,17 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = 
                     <IonIcon color="dark" className="m-0 p-0" size="small" slot="icon-only" icon={cameraOutlineIcon} />
                 </IonButton>
             </div>
-            <div className="w-10/12" />
+            <div className="w-1/12">
+                <IonButton
+                    color="primary"
+                    size="small"
+                    fill="clear"
+                    onClick={handleImageButtonClick}
+                    className='circular-button'>
+                    <IonIcon color="dark" className="m-0 p-0" size="small" slot="icon-only" icon={imageOutlineIcon} />
+                </IonButton>
+            </div>
+            <div className="w-9/12" />
             <div className='w-1/12 flex items-center justify-end'>
                 <IonButton
                     disabled={!isOnline || content.length === 0}
