@@ -83,6 +83,20 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
         fetchImages();
     }, [note.images]);
 
+    function getClassesForImage(index: number, total: number) {
+        if (total === 1) {
+            return 'w-3/4';
+        } else if (total === 3 && index === 0) {
+            return 'w-1/2';
+        } else if (total === 3 && index > 0) {
+            return 'w-1/2 h-1/2';
+        } else if (total >= 4 && total <= 6) {
+            return 'w-1/2 h-1/2';
+        } else {
+            return 'w-1/3 h-1/3';
+        }
+    }
+
 
 
     return (
@@ -104,12 +118,12 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
                         <div className="w-1/25 flex items-center justify-end" id='link-col'>
                         </div>
                     </div>
-                    <div className="flex w-full">
-                        <div className="w-full">
-                            {imageUrls.map((imageUrl, index) => (
-                                <img key={index} src={imageUrl} alt={`Note ${note.id} Image ${index}`} />
-                            ))}
-                        </div>
+                    <div className="flex flex-wrap" id="image_container">
+                        {imageUrls.slice(0, 9).map((imageUrl, index) => (
+                            <div key={index} className={`${getClassesForImage(index, imageUrls.length)} p-1 rounded-2xl`}>
+                                <img src={imageUrl} alt={`Note ${note.id} Image ${index}`} className="w-full h-full object-cover" />
+                            </div>
+                        ))}
                     </div>
                     <div className="flex w-full">
                         <div className="w-full" />
