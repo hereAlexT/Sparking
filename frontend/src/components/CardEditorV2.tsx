@@ -20,6 +20,7 @@ import { Note, NoteImage, NOTE_IMAGE_STATUS, NOTE_STATUS, NoteId } from '../shar
 import {
     arrowForwardOutline as arrowForwardOutlineIcon,
     imageOutline as imageOutlineIcon,
+    cameraOutline as cameraOutlineIcon,
     imageSharp
 } from 'ionicons/icons';
 import { v4 as uuidv4 } from 'uuid';
@@ -115,7 +116,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = 
                     fill="clear"
                     onClick={handleImageButtonClick}
                     className='circular-button'>
-                    <IonIcon color="dark" className="m-0 p-0" size="small" slot="icon-only" icon={imageOutlineIcon} />
+                    <IonIcon color="dark" className="m-0 p-0" size="small" slot="icon-only" icon={cameraOutlineIcon} />
                 </IonButton>
             </div>
             <div className="w-10/12" />
