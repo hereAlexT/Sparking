@@ -75,6 +75,10 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = 
 
     const [images, setImages] = useState<NoteImage[]>([]);
 
+    function handleDeleteImage(index: number) {
+        setImages(images => images.filter((_, i) => i !== index));
+    }
+
     return (
         <div className="flex flex-wrap">
             <div className="w-full">
@@ -92,11 +96,18 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = 
             </div>
             <div className='flex justify-start'>
                 {images.map((image, index) => (
-                    <div key={index}>
+                    <div key={index} className="relative">
                         <img alt={`Image ${index}`} src={image.url} />
+                        <button
+                            className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
+                            onClick={() => handleDeleteImage(index)}
+                        >
+                            X
+                        </button>
                     </div>
                 ))}
             </div>
+
             <div className="w-1/12">
                 <IonButton
                     color="primary"
