@@ -27,7 +27,6 @@ import {
 import { useRef } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useMeta } from "../contexts/MetaContext";
-import SearchingCard from "./SearchingCard";
 
 
 
