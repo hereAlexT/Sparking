@@ -55,17 +55,3 @@ export enum AUTH_ACTION {
     SIGNUP = "REGISTER"
 }
 
-export enum NOTE_ACTION {
-    CREATE_NOTE = "CREATE_NOTE",
-    DELETE_NOTE = "DELETE_NOTE",
-    UPDATE_NOTE = "UPDATE_NOTE",
-    GET_NOTES = "GET_NOTES",
-    GET_NOTE = "GET_NOTE",
-    SEARCH_NOTES = "SEARCH_NOTES"
-}
-
-
-export interface Action<T> {
-    type: NOTE_ACTION,
-    payload: T
-}
