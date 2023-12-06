@@ -1,17 +1,9 @@
 import {
-    IonCard,
-    IonCardContent,
-    IonGrid,
-    IonRow,
-    IonCol,
-    IonText,
     IonIcon,
     IonContent,
-    IonButton,
     IonPopover,
     IonList,
     IonItem,
-    IonImg
 } from '@ionic/react';
 import {
     navigateOutline as navigateOutlineIcon,
@@ -93,60 +85,38 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
 
 
 
-
-
     return (
-        <IonCard className='m-0 p-0 rounded-none w-full border-b border-slate-300  shadow-none'>
-            <IonCardContent className='m-0 p-0'>
-                <IonGrid class="ion-no-padding" style={{ "--ion-grid-columns": "25" }}>
-                    <IonRow className='pt-3'>
-                        <IonCol size="24" className='' id="dt-col" >
-                            <IonText className='font-light font-roboto-condensed text-sm'>{formatDate(note.createdAt)}</IonText>
-                            {/* <IonIcon icon={navigateOutlineIcon} />
-                            <IonText className='font-roboto-condensed font-light'>Summer Hill, Sydney</IonText> */}
-                        </IonCol>
+        <div className='m-0 p-0 rounded-none w-full border-b border-slate-300  shadow-none'>
+            <div className='m-0 p-0'>
+                <div className="flex flex-wrap" >
+                    <div className='pt-3 flex w-full'>
+                        <div className="w-full" id="dt-col" >
+                            <p className='font-light font-roboto-condensed text-sm'>{formatDate(note.createdAt)}</p>
+                        </div>
 
-                        <IonCol size="1" className='' id='sync-col' >
-                            {/* <IonIcon className="float-right" icon={cloudOutlineIcon} /> */}
-                            {/* <IonIcon className="float-right" icon={cloudOfflineOutlineIcon} /> */}
-                        </IonCol>
-                    </IonRow>
-                    <IonRow className='pt-3'>
-                        <IonCol size="24" id='body-col' className=''>
-                            {/* {note.body.split('\n').map((line, index) => (
-                                <IonText key={index} className='font-poppins font-light' color="dark">
-                                    {line}
-                                    <br />
-                                </IonText>))} */}
-
+                        <div className="w-1/25" id='sync-col' >
+                        </div>
+                    </div>
+                    <div className='pt-3 flex w-full'>
+                        <div className="w-full" id='body-col'>
                             <Markdown className='font-poppins font-light' children={note.body} />
-                        </IonCol>
-                        <IonCol size="1" id='link-col' className="flex items-center justify-end ">
-                            {/* <IonIcon className='' icon={chevronForwardOutlineIcon} /> */}
-                        </IonCol>
-                    </IonRow>
-                    <IonRow>
-                        {/** Pic here */}
-                        <IonCol>
+                        </div>
+                        <div className="w-1/25 flex items-center justify-end" id='link-col'>
+                        </div>
+                    </div>
+                    <div className="flex w-full">
+                        <div className="w-full">
                             {imageUrls.map((imageUrl, index) => (
-                                <IonImg key={index} src={imageUrl} alt={`Note ${note.id} Image ${index}`} />
+                                <img key={index} src={imageUrl} alt={`Note ${note.id} Image ${index}`} />
                             ))}
-                        </IonCol>
-                    </IonRow>
-                    <IonRow>
-                        <IonCol size="24" />
-                        <IonCol size="1" id='menu-col' className=''>
-                            <span id={`${cardSetId}-${note.id}`}>
+                        </div>
+                    </div>
+                    <div className="flex w-full">
+                        <div className="w-full" />
+                        <div className="w-1/25" id='menu-col'>
+                            <button id={`${cardSetId}-${note.id}`}>
                                 <IonIcon size="small" color="medium" icon={ellipsisHorizontalSharpeIcon} />
-                            </span>
-                            {/* IonButton or button here will cause text cannot be selected bug.
-                            <IonButton
-                                id={`${cardSetId}-${note.id}`}
-                                size="small"
-                                fill="clear"
-                                className='float-right note-menu-button'>
-                                <IonIcon size="small" color="medium" icon={ellipsisHorizontalSharpeIcon} />
-                            </IonButton> */}
+                            </button>
                             <IonPopover
                                 trigger={`${cardSetId}-${note.id}`}
                                 dismissOnSelect={true}
@@ -169,11 +139,11 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
                                     </IonList>
                                 </IonContent>
                             </IonPopover>
-                        </IonCol>
-                    </IonRow>
-                </IonGrid>
-            </IonCardContent>
-        </IonCard >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 };
 
