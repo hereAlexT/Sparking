@@ -9,3 +9,9 @@ https://supabase.com/docs/reference/cli/supabase-db-lint
 ```supabase db diff --schema storage```
 
 
+## Bucket List
+
+---
+name: note_images
+Allowed MIME Types: image/jpeg, image/png
+
