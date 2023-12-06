@@ -1,4 +1,3 @@
-import React from 'react';
 import {
     IonCard,
     IonCardContent,
@@ -11,7 +10,8 @@ import {
     IonButton,
     IonPopover,
     IonList,
-    IonItem
+    IonItem,
+    IonImg
 } from '@ionic/react';
 import {
     navigateOutline as navigateOutlineIcon,
@@ -22,10 +22,14 @@ import {
     createOutline as CreateOutlineIcon,
     trashOutline as TrashOutlineIcon
 } from 'ionicons/icons';
-import { Note, NoteId } from '../shared/types';
+import { Note, NoteId, NoteImageId } from '../shared/types';
 import './NoteCardV2.css';
 import { createRoot } from 'react-dom/client'
+import { useAuth } from '../contexts/AuthContext';
 import Markdown from 'react-markdown'
+import { supabase } from '../supabaseClient'; // adjust the import path to your actual file
+import { useEffect, useState } from 'react';
+
 
 
 const formatDate = (date: Date): string => {
@@ -45,7 +49,52 @@ interface NoteCardV2Props {
     onEditNote: (noteId: NoteId) => void;
 }
 
+
+
 const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDeleteNote, onEditNote }) => {
+
+    const { user } = useAuth();
+
+
+    const fetchImage = async (noteImageId: NoteImageId): Promise<string> => {
+        console.log("ImageId to fetch", noteImageId)
+
+        const { data, error } = await supabase.storage.from('note_images').download(`${user?.id}/${noteImageId}`);
+
+        if (error) throw error;
+        const blob = data;
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result as string);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+        });
+    };
+
+    const [imageUrls, setImageUrls] = useState<string[]>([]);
+
+    useEffect(() => {
+
+        const fetchImages = async () => {
+            if (note.images) {
+
+                const urls = await Promise.all(note.images.map(image => {
+                    console.log("note image here", image)
+                    console.log("iamgeid", image.noteImageId)
+                    return fetchImage(image.noteImageId); // add return here
+                }));
+                console.log(urls)
+                setImageUrls(urls);
+            }
+        };
+
+        fetchImages();
+    }, [note.images]);
+
+
+
+
+
     return (
         <IonCard className='m-0 p-0 rounded-none w-full border-b border-slate-300  shadow-none'>
             <IonCardContent className='m-0 p-0'>
@@ -74,6 +123,14 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
                         </IonCol>
                         <IonCol size="1" id='link-col' className="flex items-center justify-end ">
                             {/* <IonIcon className='' icon={chevronForwardOutlineIcon} /> */}
+                        </IonCol>
+                    </IonRow>
+                    <IonRow>
+                        {/** Pic here */}
+                        <IonCol>
+                            {imageUrls.map((imageUrl, index) => (
+                                <IonImg key={index} src={imageUrl} alt={`Note ${note.id} Image ${index}`} />
+                            ))}
                         </IonCol>
                     </IonRow>
                     <IonRow>

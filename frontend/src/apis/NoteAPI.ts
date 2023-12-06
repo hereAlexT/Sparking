@@ -1,5 +1,14 @@
 import { supabase } from '../supabaseClient'
-import { SyncedNote, UnSyncedNote, Note, NoteId, NoteImageId } from '../shared/types'
+import {
+    SyncedNote,
+    UnSyncedNote,
+    Note,
+    NoteId,
+    NoteImageId,
+    NoteImage,
+    NOTE_IMAGE_STATUS,
+    NOTE_STATUS
+} from '../shared/types'
 import { Database } from '../shared/db.types'
 import { UserId } from '../shared/types'
 
@@ -24,7 +33,7 @@ export async function createNote(unSyncedNote: UnSyncedNote) {
         }
     })
 
-    const{data: noteImagesData, error: noteImagesError} = await supabase.from('note_images').insert(noteImages);
+    const { data: noteImagesData, error: noteImagesError } = await supabase.from('note_images').insert(noteImages);
     if (noteImagesError) throw noteImagesError;
 
     return data;
@@ -56,9 +65,43 @@ export async function deleteNote(noteId: NoteId) {
 
 export const getNotes = async (): Promise<SyncedNote[]> => {
 
-    const { data, error } = await supabase.from('notes').select();
+    const { data, error } = await supabase.from('notes').select(`
+        body,
+        created_at,
+        id,
+        updated_at,
+        user_id,
+        note_images (
+            id,
+            created_at,
+            note_id,
+            user_id
+        )
+        `
+    );
     if (error) throw error;
-    return data as SyncedNote[];
+    // console.log(data)
+
+    const mappedData = data.map(note => ({
+        id: note.id,
+        body: note.body,
+        createdAt: note.created_at,
+        updatedAt: note.updated_at,
+        userId: note.user_id,
+        images: note.note_images.map(image => ({
+            NoteImageId: image.id,
+            CreatedAt: image.created_at,
+            NoteId: image.note_id,
+            UserId: image.user_id,
+            NOTE_IMAGE_STATUS: NOTE_IMAGE_STATUS.UNSYNCED // or whatever default status you want
+        })),
+        status: NOTE_STATUS.UNSYNCED // or whatever default status you want
+    }));
+
+    console.log(mappedData)
+
+
+    return mappedData as SyncedNote[];
 
 }
 

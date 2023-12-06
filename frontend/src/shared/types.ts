@@ -16,9 +16,12 @@ export enum NOTE_IMAGE_STATUS {
 }
 
 export interface NoteImage {
-    NoteImageId: NoteImageId;
-    url: string;
-    NOTE_IMAGE_STATUS: NOTE_IMAGE_STATUS;
+    noteImageId: NoteImageId;
+    createdAt: Date;
+    noteId: NoteId;
+    userId: UserId;
+    status: NOTE_IMAGE_STATUS;
+    url: string; // add this line
 }
 
 //todo: change name to synced note
