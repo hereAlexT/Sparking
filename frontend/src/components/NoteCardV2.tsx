@@ -91,7 +91,7 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
                 <div className="flex flex-wrap" >
                     <div className='pt-3 flex w-full'>
                         <div className="w-full" id="dt-col" >
-                            <p className='font-light font-roboto-condensed text-sm'>{formatDate(note.createdAt)}</p>
+                            <p className='font-light font-popins text-sm'>{formatDate(note.createdAt)}</p>
                         </div>
 
                         <div className="w-1/25" id='sync-col' >
@@ -114,9 +114,10 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
                     <div className="flex w-full">
                         <div className="w-full" />
                         <div className="w-1/25" id='menu-col'>
-                            <button id={`${cardSetId}-${note.id}`}>
+                            {/**Don't use button here, it makes the text un */}
+                            <span id={`${cardSetId}-${note.id}`}>
                                 <IonIcon size="small" color="medium" icon={ellipsisHorizontalSharpeIcon} />
-                            </button>
+                            </span>
                             <IonPopover
                                 trigger={`${cardSetId}-${note.id}`}
                                 dismissOnSelect={true}
