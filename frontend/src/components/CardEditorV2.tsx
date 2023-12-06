@@ -54,7 +54,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = 
         setImages([]);
     }
 
-    const handleImageButtonClick = async () => {
+    const handleCameraButtonClick = async () => {
         const image = await Camera.getPhoto({
             quality: 90,
             allowEditing: false,
@@ -114,7 +114,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = 
                     color="primary"
                     size="small"
                     fill="clear"
-                    onClick={handleImageButtonClick}
+                    onClick={handleCameraButtonClick}
                     className='circular-button'>
                     <IonIcon color="dark" className="m-0 p-0" size="small" slot="icon-only" icon={cameraOutlineIcon} />
                 </IonButton>
