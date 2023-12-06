@@ -92,7 +92,7 @@ const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
             console.log("11111")
             // upload pics
             const uploadedImagesPromises = unSyncedNote.images!.map((image) =>
-                blobUrlToFile(image.url, image.NoteImageId).then(file => uploadImageToStorage(file, unSyncedNote.userId!, image.NoteImageId))
+                blobUrlToFile(image.url, image.id).then(file => uploadImageToStorage(file, unSyncedNote.userId!, image.id))
             );
 
             console.log("22222")

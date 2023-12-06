@@ -80,8 +80,8 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
 
                 const urls = await Promise.all(note.images.map(image => {
                     console.log("note image here", image)
-                    console.log("iamgeid", image.noteImageId)
-                    return fetchImage(image.noteImageId); // add return here
+                    console.log("iamgeid", image.id)
+                    return fetchImage(image.id); // add return here
                 }));
                 console.log(urls)
                 setImageUrls(urls);

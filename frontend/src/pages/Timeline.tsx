@@ -17,7 +17,6 @@ import {
     IonFabButton,
     IonIcon
 } from '@ionic/react';
-import BasicNoteCard from '../components/BasicNoteCard';
 import CardEditor from '../components/CardEditor';
 import CardEditorV2 from '../components/CardEditorV2';
 import CardEditorModal from '../components/CardEditorModal';

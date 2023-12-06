@@ -26,7 +26,7 @@ export async function createNote(unSyncedNote: UnSyncedNote) {
     //create a list of note_images
     const noteImages = unSyncedNote.images?.map((image) => {
         return {
-            id: image.NoteImageId,
+            id: image.id,
             note_id: unSyncedNote.id,
             user_id: unSyncedNote.userId,
             created_at: new Date().toISOString(),
@@ -89,17 +89,15 @@ export const getNotes = async (): Promise<SyncedNote[]> => {
         updatedAt: note.updated_at,
         userId: note.user_id,
         images: note.note_images.map(image => ({
-            NoteImageId: image.id,
-            CreatedAt: image.created_at,
-            NoteId: image.note_id,
-            UserId: image.user_id,
-            NOTE_IMAGE_STATUS: NOTE_IMAGE_STATUS.UNSYNCED // or whatever default status you want
+            id: image.id,
+            createdAt: new Date(image.created_at),
+            noteId: image.note_id,
+            userId: image.user_id,
+            status: NOTE_IMAGE_STATUS.UNSYNCED, // or whatever default status you want
+            url: "" // You need to provide a URL here
         })),
-        status: NOTE_STATUS.UNSYNCED // or whatever default status you want
+        status: NOTE_STATUS.UNSYNCED, // or whatever default status you want
     }));
-
-    console.log(mappedData)
-
 
     return mappedData as SyncedNote[];
 

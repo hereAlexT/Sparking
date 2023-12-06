@@ -16,7 +16,7 @@ import {
     IonThumbnail
 
 } from '@ionic/react';
-import { Note, UnSyncedNote, NoteImage, NOTE_IMAGE_STATUS, NOTE_STATUS } from '../shared/types';
+import { Note, UnSyncedNote, NoteImage, NOTE_IMAGE_STATUS, NOTE_STATUS, NoteId } from '../shared/types';
 import {
     arrowForwardOutline as arrowForwardOutlineIcon,
     imageOutline as imageOutlineIcon,
@@ -24,6 +24,7 @@ import {
 } from 'ionicons/icons';
 import { v4 as uuidv4 } from 'uuid';
 import { Camera, CameraResultType, Photo } from '@capacitor/camera';
+import { useAuth } from '../contexts/AuthContext';
 
 interface CardEditorV2Props {
     onSubmit: (noteContent: Note) => void;
@@ -34,11 +35,13 @@ interface CardEditorV2Props {
 
 
 const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = true }) => {
+    const _noteid = note?.id || uuidv4();
     const [content, setContent] = useState('');
+    const { user } = useAuth();
 
     const HandleOnSubmit = () => {
         const newNote: Note = {
-            id: note?.id || uuidv4(),
+            id: _noteid,
             createdAt: note?.createdAt || new Date(),
             updatedAt: new Date(),
             body: content,
@@ -59,9 +62,12 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = 
 
         if (image.webPath) {
             const newImage: NoteImage = {
-                NoteImageId: uuidv4(),
+                createdAt: new Date(),
+                id: uuidv4(),
                 url: image.webPath,
-                NOTE_IMAGE_STATUS: NOTE_IMAGE_STATUS.UNSYNCED
+                noteId: _noteid,
+                userId: user?.id,
+                status: NOTE_IMAGE_STATUS.UNSYNCED
             };
             setImages(prevImages => [...prevImages, newImage]);
         }

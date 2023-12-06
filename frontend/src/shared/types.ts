@@ -16,10 +16,10 @@ export enum NOTE_IMAGE_STATUS {
 }
 
 export interface NoteImage {
-    noteImageId: NoteImageId;
+    id: NoteImageId;
     createdAt: Date;
     noteId: NoteId;
-    userId: UserId;
+    userId?: UserId;
     status: NOTE_IMAGE_STATUS;
     url: string; // add this line
 }
