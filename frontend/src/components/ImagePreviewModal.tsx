@@ -15,12 +15,13 @@ import {
 import { OverlayEventDetail } from '@ionic/core/components';
 
 interface ImagePreviewModalProps {
-    trigger: string;
-    url: string;
-
+    trigger?: string;
+    url?: string;
+    isOpen?: boolean;
+    setIsOpen: (isOpen: boolean) => void;
 }
 
-const ImagePreviewModal: React.FC<ImagePreviewModalProps> = ({ trigger, url}) => {
+const ImagePreviewModal: React.FC<ImagePreviewModalProps> = ({ trigger, url, isOpen, setIsOpen }) => {
 
 
     const modal = useRef<HTMLIonModalElement>(null);
@@ -43,22 +44,19 @@ const ImagePreviewModal: React.FC<ImagePreviewModalProps> = ({ trigger, url}) =>
 
     return (
         // JSX markup goes here
-        <IonModal ref={modal} trigger={trigger} onWillDismiss={(ev) => onWillDismiss(ev)}>
+        <IonModal ref={modal} isOpen={isOpen} trigger={trigger} onWillDismiss={(ev) => onWillDismiss(ev)}>
             <IonHeader>
                 <IonToolbar>
-                    <IonButtons slot="start">
-                        <IonButton onClick={() => modal.current?.dismiss()}>Cancel</IonButton>
-                    </IonButtons>
                     <IonTitle>Welcome</IonTitle>
                     <IonButtons slot="end">
-                        <IonButton strong={true} onClick={() => confirm()}>
-                            Confirm
+                        <IonButton strong={true} onClick={() => { setIsOpen(false); modal.current?.dismiss() }}>
+                            Close
                         </IonButton>
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>
             <IonContent className="ion-padding">
-                <IonImg src={url}/>
+                <IonImg src={url} />
             </IonContent>
         </IonModal>
     );

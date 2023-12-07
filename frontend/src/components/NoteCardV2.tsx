@@ -67,6 +67,9 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
     };
 
 
+
+
+
     useEffect(() => {
 
         const fetchImages = async () => {
@@ -84,6 +87,10 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
 
         fetchImages();
     }, [note.images]);
+
+
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
 
     return (
         <div className='m-0 p-0 rounded-none w-full border-b border-slate-300  shadow-none'>
@@ -109,14 +116,16 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
                     <div className="grid grid-cols-2 gap-4 w-full" id="image_container">
                         {imageUrls.slice(0, 9).map((imageUrl, index) => (
                             <div key={index} >
-                                <img src={imageUrl} alt={`Note ${note.id} Image ${index}`} className="w-full h-32 object-cover" />
-          
-                                <IonButton id={`iamge-preview-modal-${note.id}-${index}`} />
-                                <ImagePreviewModal trigger={`iamge-preview-modal-${note.id}-${index}`} url={imageUrl} />
+                                <img
+                                    src={imageUrl}
+                                    alt={`Note ${note.id} Image ${index}`}
+                                    className="w-full h-32 object-cover"
+                                    onClick={() => { setSelectedImage(imageUrl); setIsOpen(true); console.debug("isOpen ", isOpen);console.log("click image") }}
+                                />
                             </div>
-                            
                         ))}
                     </div>
+                    <ImagePreviewModal isOpen={isOpen} url={selectedImage} setIsOpen={setIsOpen} />
 
                     <div className="flex w-full">
                         <div className="w-full" />
@@ -145,7 +154,7 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
                                             Delete
                                         </IonItem>
                                     </IonList>
-                                
+
                                 </IonContent>
                             </IonPopover>
                         </div>
