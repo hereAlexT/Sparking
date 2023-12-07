@@ -6,27 +6,25 @@ import {
     IonToolbar,
     IonList,
     IonItem,
-    IonButton,
-    IonModal,
     IonButtons,
     IonMenuButton,
     IonCard,
-    IonCardContent,
     IonSearchbar,
     IonFab,
     IonFabButton,
     IonIcon
 } from '@ionic/react';
+import {
+    Note,
+    NoteId,
+    NOTE_STATUS
+} from '../shared/types';
 import CardEditorV2 from '../components/CardEditorV2';
 import CardEditorMobileModal from '../components/CardEditorMobileModal';
 import { useState, useEffect, useRef } from 'react';
 import { useNotes } from '../contexts/NotesContext';
 import { useMeta } from '../contexts/MetaContext';
 import { useAuth } from '../contexts/AuthContext';
-import {
-    Note,
-    NoteId,
-} from '../shared/types';
 import { getPlatforms } from '@ionic/react';
 import { v4 as uuidv4 } from 'uuid';
 import NoteCardV2 from '../components/NoteCardV2';
@@ -34,7 +32,7 @@ import { arrowUpOutline as arrowUpOutlineIcon } from 'ionicons/icons';
 
 
 const TimeLine: React.FC = () => {
-    console.log("timeline render")
+    console.debug("timeline render")
 
     const [isEditorOpen, setIsEditorOpen] = useState(false);
     const [selectedNote, setSelectedNote] = useState<Note | undefined>(undefined);
@@ -57,7 +55,7 @@ const TimeLine: React.FC = () => {
     }, [searchQuery, notes]);
 
     useEffect(() => {
-        console.log(getPlatforms())
+        console.debug(getPlatforms())
         setIsLoading(true);
         console.log("i fire once. isAuthenticated:" + isAuthenticated)
         getNotes().then(() => {
@@ -66,30 +64,36 @@ const TimeLine: React.FC = () => {
     }, []);
 
     const handleOnCreateNote = async (note: Note) => {
+        if (!user) throw new Error("User is null");
         try {
             await createNote({
                 id: note.id || uuidv4(),
                 createdAt: note.createdAt,
                 updatedAt: note.updatedAt,
                 body: note.body,
-                userId: user?.id,
+                userId: user.id,
                 images: note.images,
-            })
+                status: NOTE_STATUS.UNSYNCED
+            });
         } catch (error) {
-            console.log("error")
-            console.log(error)
+            console.log("error");
+            console.log(error);
             alert((error as Error).message);
         }
-
-    }
+    };
 
     const handleOnUpdateNote = async (note: Note) => {
+        if (!user) throw new Error("User is null");
+
         try {
             await updateNote({
                 id: note.id,
+                body: note.body,
                 createdAt: note.createdAt,
                 updatedAt: new Date(),
-                body: note.body
+                userId: user.id,
+                status: NOTE_STATUS.UNSYNCED
+
             });
         } catch (error) {
             console.log("error")

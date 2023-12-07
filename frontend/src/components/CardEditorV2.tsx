@@ -41,13 +41,15 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = 
     const { user } = useAuth();
 
     const HandleOnSubmit = () => {
+        if (!user) throw new Error("User is null");
         const newNote: Note = {
             id: _noteid,
             createdAt: note?.createdAt || new Date(),
             updatedAt: new Date(),
             body: content,
             images: images,
-            status: NOTE_STATUS.UNSYNCED
+            status: NOTE_STATUS.UNSYNCED,
+            userId: user.id
         }
         onSubmit(newNote);
         setContent('');
@@ -62,12 +64,13 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = 
 
         _images.photos.forEach((image) => {
             if (image.webPath) {
+                if (!user) throw new Error("User is null");
                 const newImage: NoteImage = {
                     createdAt: new Date(),
                     id: uuidv4(),
                     url: image.webPath,
                     noteId: _noteid,
-                    userId: user?.id,
+                    userId: user.id,
                     status: NOTE_IMAGE_STATUS.UNSYNCED
                 };
                 setImages(prevImages => [...prevImages, newImage]);
@@ -86,6 +89,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = 
         });
 
         if (image.webPath) {
+            if (!user) throw new Error("User is null");
             const newImage: NoteImage = {
                 createdAt: new Date(),
                 id: uuidv4(),

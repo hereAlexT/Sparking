@@ -120,9 +120,9 @@ export const uploadImageToStorage = async (image: File, userId: UserId, noteImag
 
  
 export interface ImageTransformOptions {
-    width: number;
-    height: number;
-    quality: number;
+    width?: number;
+    height?: number;
+    quality?: number;
 }
 
 

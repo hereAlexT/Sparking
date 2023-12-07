@@ -19,7 +19,7 @@ export interface NoteImage {
     id: NoteImageId;
     createdAt: Date;
     noteId: NoteId;
-    userId?: UserId;
+    userId: UserId;
     status: NOTE_IMAGE_STATUS;
     url: string; // add this line
 }
@@ -33,8 +33,8 @@ export interface Note {
     // updatedAt should be assigned locally.
     updatedAt: Date;
     images?: NoteImage[];
-    status?: NOTE_STATUS; // this should be compulsary in the next version
-    userId?: UserId; // this should be compulsary in the next version
+    status: NOTE_STATUS; 
+    userId: UserId; 
 }
 
 

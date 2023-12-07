@@ -23,7 +23,7 @@ import {
 import { useRef, useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import NoteCardV2 from '../components/NoteCardV2';
-import { NoteId, Note} from '../shared/types';
+import { NoteId, Note, NOTE_STATUS} from '../shared/types';
 import { v4 as uuidv4 } from 'uuid';
 import CardEditorV2 from '../components/CardEditorV2';
 import CardEditorMobileModal from '../components/CardEditorMobileModal';
@@ -37,48 +37,64 @@ const notes_mock: (Note)[] = [
         body: "First note",
         createdAt: new Date(),
         updatedAt: new Date(),
+        status: NOTE_STATUS.SYNCED,
+        userId: "1"
     },
     {
         id: uuidv4(),
         body: "Second note",
         createdAt: new Date(),
         updatedAt: new Date(),
+        status: NOTE_STATUS.SYNCED,
+        userId: "1"
     },
     {
         id: uuidv4(),
         body: "Third note",
         createdAt: new Date(),
         updatedAt: new Date(),
+        status: NOTE_STATUS.SYNCED,
+        userId: "1"
     },
     {
         id: uuidv4(),
         body: "Fourth note",
         createdAt: new Date(),
         updatedAt: new Date(),
+        status: NOTE_STATUS.SYNCED,
+        userId: "1"
     },
     {
         id: uuidv4(),
         body: "Fifth note",
         createdAt: new Date(),
         updatedAt: new Date(),
+        status: NOTE_STATUS.SYNCED,
+        userId: "1"
     },
     {
         id: uuidv4(),
         body: "6 note",
         createdAt: new Date(),
         updatedAt: new Date(),
+        status: NOTE_STATUS.SYNCED,
+        userId: "1"
     },
     {
         id: uuidv4(),
         body: "7 note",
         createdAt: new Date(),
         updatedAt: new Date(),
+        status: NOTE_STATUS.SYNCED,
+        userId: "1"
     },
     {
         id: uuidv4(),
         body: "8 note",
         createdAt: new Date(),
         updatedAt: new Date(),
+        status: NOTE_STATUS.SYNCED,
+        userId: "1"
     },
 ];
 

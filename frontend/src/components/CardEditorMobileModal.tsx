@@ -17,10 +17,11 @@ import {
     IonContent
 
 } from '@ionic/react';
-import { Note } from '../shared/types';
+import { Note, NOTE_STATUS } from '../shared/types';
 import { arrowUpOutline as arrowUpOutlineIcon } from 'ionicons/icons';
 import { arrowForwardOutline as arrowForwardOutlineIcon } from 'ionicons/icons';
 import { v4 as uuidv4 } from 'uuid';
+import { useAuth } from '../contexts/AuthContext';
 
 interface CardEditorMobileProps {
     onSubmit: (noteContent: Note) => void;
@@ -43,6 +44,7 @@ declare global {
 const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({ isEditorOpen, setIsEditorOpen, pageRef, trigger, onSubmit, note, isOnline = true }) => {
 
     const [presentingElement, setPresentingElement] = useState<HTMLElement | undefined>(undefined);
+    const { user } = useAuth();
 
     useEffect(() => {
         setPresentingElement(pageRef.current!);
@@ -61,11 +63,14 @@ const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({ isEditorOpen, 
 
 
     const HandleOnSubmit = () => {
+        if (!user) throw new Error("User is null");
         const newNote: Note = {
             id: note?.id || uuidv4(),
+            body: content,
             createdAt: note?.createdAt || new Date(),
             updatedAt: new Date(),
-            body: content
+            status: NOTE_STATUS.UNSYNCED,
+            userId: user.id
         }
         onSubmit(newNote);
         setContent('');
