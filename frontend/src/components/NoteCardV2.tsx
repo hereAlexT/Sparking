@@ -4,6 +4,7 @@ import {
     IonPopover,
     IonList,
     IonItem,
+    IonButton
 } from '@ionic/react';
 import {
     navigateOutline as navigateOutlineIcon,
@@ -22,6 +23,7 @@ import Markdown from 'react-markdown'
 import { supabase } from '../supabaseClient'; // adjust the import path to your actual file
 import { useEffect, useState } from 'react';
 import { fetchImage } from '../apis/NoteAPI';
+import ImagePreviewModal from './ImagePreviewModal';
 
 
 
@@ -108,7 +110,11 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
                         {imageUrls.slice(0, 9).map((imageUrl, index) => (
                             <div key={index} >
                                 <img src={imageUrl} alt={`Note ${note.id} Image ${index}`} className="w-full h-32 object-cover" />
+          
+                                <IonButton id={`iamge-preview-modal-${note.id}-${index}`} />
+                                <ImagePreviewModal trigger={`iamge-preview-modal-${note.id}-${index}`} url={imageUrl} />
                             </div>
+                            
                         ))}
                     </div>
 
@@ -139,6 +145,7 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
                                             Delete
                                         </IonItem>
                                     </IonList>
+                                
                                 </IonContent>
                             </IonPopover>
                         </div>
