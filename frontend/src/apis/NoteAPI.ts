@@ -130,7 +130,7 @@ export interface ImageTransformOptions {
 export const fetchImage = async (noteImageId: NoteImageId, userId: UserId, transform?: ImageTransformOptions): Promise<string> => {
     console.log("ImageId to fetch", noteImageId)
 
-    const { data, error } = await supabase.storage.from('note_images').download(`${userId}/${noteImageId}`, {transform});
+    const { data, error } = await supabase.storage.from('note_images').download(`${userId}/${noteImageId}`);
 
     if (error) throw error;
     const blob = data;

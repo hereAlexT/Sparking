@@ -55,9 +55,10 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
             throw new Error("User is not defined");
         }
 
+        //transformation only works for supabase pro users
         const transform = {
-            width: 500,
-            quality: 80
+            // width: 500,
+            // quality: 80
         }
 
         return fetchImage(noteImageId, user.id, transform);
