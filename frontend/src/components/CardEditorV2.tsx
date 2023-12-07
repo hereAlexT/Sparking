@@ -21,7 +21,7 @@ import {
     arrowForwardOutline as arrowForwardOutlineIcon,
     imageOutline as imageOutlineIcon,
     cameraOutline as cameraOutlineIcon,
-    imageSharp
+    closeOutline as closeOutlineIcon,
 } from 'ionicons/icons';
 import { v4 as uuidv4 } from 'uuid';
 import { Camera, CameraResultType, Photo } from '@capacitor/camera';
@@ -122,16 +122,27 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = 
                     placeholder="You got a good idea💡, what's that?"
                 />
             </div>
-            <div className='grid grid-cols-3'>
+
+
+            <div className='grid grid-cols-3 gap-1'>
                 {images.map((image, index) => (
                     <div key={index} className="relative">
-                        <img alt={`Image ${index}`} src={image.url} className="w-full" />
-                        <button
-                            className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
+                        <img alt={`Image ${index}`} src={image.url} className="w-full h-32 object-cover" />
+                        {/* <button
+                            className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 circular-button"
                             onClick={() => handleDeleteImage(index)}
                         >
-                            X
-                        </button>
+                            <IonIcon color="dark" className="m-0 p-0" size="small" slot="icon-only" icon={closeOutlineIcon} />
+                        </button> */}
+
+                        <IonButton
+                            color="light"
+                            size="small"
+                            fill="outline"
+                            onClick={HandleOnSubmit}
+                            className='absolute top-0 right-0  text-white rounded-full p-1 circular-button'>
+                            <IonIcon color="light" className="m-0 p-0" size="small" slot="icon-only" icon={closeOutlineIcon} />
+                        </IonButton>
                     </div>
                 ))}
             </div>
