@@ -124,7 +124,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = 
             </div>
 
 
-            <div className='grid grid-cols-3 gap-1'>
+            <div className='grid grid-cols-3 gap-1 w-1/12'>
                 {images.map((image, index) => (
                     <div key={index} className="relative">
                         <img alt={`Image ${index}`} src={image.url} className="w-full h-32 object-cover" />
@@ -167,7 +167,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = 
                     <IonIcon color="dark" className="m-0 p-0" size="small" slot="icon-only" icon={imageOutlineIcon} />
                 </IonButton>
             </div>
-            <div className="w-9/12" />
+            <div className="w-8/12" />
             <div className='w-1/12 flex items-center justify-end'>
                 <IonButton
                     disabled={!isOnline || content.length === 0}
