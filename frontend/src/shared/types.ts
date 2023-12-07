@@ -44,4 +44,3 @@ export enum AUTH_ACTION {
     LOGOUT = "LOGOUT",
     SIGNUP = "REGISTER"
 }
-

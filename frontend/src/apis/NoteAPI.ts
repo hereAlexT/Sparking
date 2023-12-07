@@ -116,6 +116,28 @@ export const uploadImageToStorage = async (image: File, userId: UserId, noteImag
                 });
     if (error) throw error;
     return data;
+}
+
+ 
+export interface ImageTransformOptions {
+    width: number;
+    height: number;
+    quality: number;
+}
 
 
+
+export const fetchImage = async (noteImageId: NoteImageId, userId: UserId, transform?: ImageTransformOptions): Promise<string> => {
+    console.log("ImageId to fetch", noteImageId)
+
+    const { data, error } = await supabase.storage.from('note_images').download(`${userId}/${noteImageId}`, {transform});
+
+    if (error) throw error;
+    const blob = data;
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+    });
 }

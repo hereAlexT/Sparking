@@ -21,6 +21,7 @@ import { useAuth } from '../contexts/AuthContext';
 import Markdown from 'react-markdown'
 import { supabase } from '../supabaseClient'; // adjust the import path to your actual file
 import { useEffect, useState } from 'react';
+import { fetchImage } from '../apis/NoteAPI';
 
 
 
@@ -46,24 +47,22 @@ interface NoteCardV2Props {
 const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDeleteNote, onEditNote }) => {
 
     const { user } = useAuth();
+    const [imageUrls, setImageUrls] = useState<string[]>([]);
 
 
-    const fetchImage = async (noteImageId: NoteImageId): Promise<string> => {
-        console.log("ImageId to fetch", noteImageId)
+    const _fetchImage = async (noteImageId: NoteImageId): Promise<string> => {
+        if (!user || !user.id) {
+            throw new Error("User is not defined");
+        }
 
-        const { data, error } = await supabase.storage.from('note_images').download(`${user?.id}/${noteImageId}`);
+        const transform = {
+            width:500,
+            quality:80
+        }
 
-        if (error) throw error;
-        const blob = data;
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result as string);
-            reader.onerror = reject;
-            reader.readAsDataURL(blob);
-        });
+        return fetchImage(noteImageId, user.id, transform);
     };
 
-    const [imageUrls, setImageUrls] = useState<string[]>([]);
 
     useEffect(() => {
 
@@ -73,7 +72,7 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
                 const urls = await Promise.all(note.images.map(image => {
                     console.log("note image here", image)
                     console.log("iamgeid", image.id)
-                    return fetchImage(image.id); // add return here
+                    return _fetchImage(image.id); // add return here
                 }));
                 console.log(urls)
                 setImageUrls(urls);
