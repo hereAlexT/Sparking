@@ -100,13 +100,13 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
                 </div>
                 {/** Second Row */}
                 {/** Note body */}
-                <div className='mt-2 col-start-1 col-span-10'>
+                <div className='mt-2 col-start-1 col-span-11'>
                     <Markdown className='font-poppins font-normal text-zinc-700 fonr-zinc-800' children={note.body} />
                 </div>
                 <div className='col-start-12 col-span-1' />
 
                 {/** MutipleMedia Row */}
-                <div className="col-start-1 col-span-10">
+                <div className="col-start-1 col-span-11">
                     <div className="mt-4 grid grid-cols-2 gap-1 rounded-lg overflow-hidden" id="image_container">
                         {imageUrls.slice(0, 9).map((imageUrl, index) => (
                             <div key={index} >
