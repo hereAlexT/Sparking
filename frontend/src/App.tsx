@@ -72,9 +72,12 @@ const AppContent: React.FC = () => {
 
   console.log("isSplitPaneOn", isSplitPaneOn)
 
+  const isLoginOrSignup = location.pathname === '/login' || location.pathname === '/signup';
+
+
   return (
-    <IonSplitPane key={key} className="max-w-3xl mx-auto" onIonSplitPaneVisible={(event) => setIsSplitPaneOn(event.detail.visible)} contentId="main">
-      {location.pathname !== '/login' && <Menu />}
+    <IonSplitPane key={key} className={`${isLoginOrSignup ? 'max-w-md' : 'max-w-3xl'} mx-auto`} onIonSplitPaneVisible={(event) => setIsSplitPaneOn(event.detail.visible)} contentId="main">
+      {location.pathname !== '/login' && location.pathname !== '/signup' && <Menu />}
       <Routes />
     </IonSplitPane>
   );

@@ -76,11 +76,8 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
             if (note.images) {
 
                 const urls = await Promise.all(note.images.map(image => {
-                    console.log("note image here", image)
-                    console.log("iamgeid", image.id)
                     return _fetchImage(image.id); // add return here
                 }));
-                console.log(urls)
                 setImageUrls(urls);
             }
         };
@@ -120,7 +117,7 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
                                     src={imageUrl}
                                     alt={`Note ${note.id} Image ${index}`}
                                     className="w-full h-32 object-cover"
-                                    onClick={() => { setSelectedImage(imageUrl); setIsOpen(true); console.debug("isOpen ", isOpen);console.log("click image") }}
+                                    onClick={() => { setSelectedImage(imageUrl); setIsOpen(true);}}
                                 />
                             </div>
                         ))}

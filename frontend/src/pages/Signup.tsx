@@ -1,4 +1,18 @@
-import { IonContent, IonHeader, IonInput, IonPage, IonText, IonTitle, IonToolbar, IonButton, IonGrid, IonCol, IonRow, IonButtons, IonMenuButton } from '@ionic/react';
+import {
+    IonContent,
+    IonHeader,
+    IonInput,
+    IonPage,
+    IonText,
+    IonToolbar,
+    IonButton,
+    IonGrid,
+    IonCol,
+    IonRow,
+    IonButtons,
+    IonMenuButton,
+    IonRouterLink 
+} from '@ionic/react';
 import { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import { useAuth } from '../contexts/AuthContext';
@@ -134,6 +148,11 @@ const Signup: React.FC = () => {
                                 <IonButton disabled={!isOnline} type="submit" expand="block">
                                     {isOnline ? "Signup" : "Cannot signup: You are Offline"}
                                 </IonButton>
+                            </IonCol>
+                        </IonRow>
+                        <IonRow>
+                            <IonCol>
+                                Already have an account? 👉 <IonRouterLink routerLink='/login' >Login</IonRouterLink>
                             </IonCol>
                         </IonRow>
 
