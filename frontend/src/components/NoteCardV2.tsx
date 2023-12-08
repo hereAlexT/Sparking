@@ -4,7 +4,8 @@ import {
     IonPopover,
     IonList,
     IonItem,
-    IonButton
+    IonButton,
+    IonText
 } from '@ionic/react';
 import {
     navigateOutline as navigateOutlineIcon,
@@ -90,74 +91,70 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
     const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
 
     return (
-        <div className='m-0 p-0 rounded-none w-full border-b border-slate-300  shadow-none'>
-                <div className="flex flex-wrap" >
-                    <div className='pt-3 flex w-full'>
-                        <div className="w-full" id="dt-col" >
-                            <p className='font-light font-popins text-sm'>{formatDate(note.createdAt)}</p>
-                        </div>
-
-                        <div className="w-1/25" id='sync-col' >
-                        </div>
-                    </div>
-                    <div className='pt-3 flex w-full'>
-                        <div className="w-full" id='body-col'>
-                            <Markdown className='font-poppins font-light' children={note.body} />
-                        </div>
-                        <div className="w-1/25 flex items-center justify-end" id='link-col'>
-                        </div>
-                    </div>
-
-
-                    <div className="grid grid-cols-2 gap-4 w-full" id="image_container">
+        <div className='m-0 p-0 w-full border-b border-slate-300'>
+            <div className="grid grid-cols-12" >
+                {/** First Row */}
+                {/** Date Time */}
+                <div className='pt-3 col-strat-1 col-span-4'>
+                    <p className='font-light font-popins text-sm'>{formatDate(note.createdAt)}</p>
+                </div>
+                {/** Second Row */}
+                {/** Note body */}
+                <div className='pt-3 col-start-1 col-span-11'>
+                    <Markdown className='font-poppins font-light' children={note.body} />
+                </div>
+                <div className='col-start-12 col-span-1' />
+                {/** MutipleMedia Row */}
+                <div className="col-start-1 col-span-11">
+                    <div className="grid grid-cols-2 gap-1 rounded-lg overflow-hidden" id="image_container">
                         {imageUrls.slice(0, 9).map((imageUrl, index) => (
                             <div key={index} >
                                 <img
                                     src={imageUrl}
                                     alt={`Note ${note.id} Image ${index}`}
-                                    className="w-full h-32 object-cover"
-                                    onClick={() => { setSelectedImage(imageUrl); setIsOpen(true);}}
+                                    className="h-32 w-full object-cover"
+                                    onClick={() => { setSelectedImage(imageUrl); setIsOpen(true); }}
                                 />
                             </div>
                         ))}
                     </div>
                     <ImagePreviewModal isOpen={isOpen} url={selectedImage} setIsOpen={setIsOpen} />
-
-
-                    <div className="flex w-full">
-                        <div className="w-full" />
-                        <div className="w-1/25" id='menu-col'>
-                            {/**Don't use button here, it makes the text un */}
-                            <span id={`${cardSetId}-${note.id}`}>
-                                <IonIcon size="small" color="medium" icon={ellipsisHorizontalSharpeIcon} />
-                            </span>
-                            <IonPopover
-                                trigger={`${cardSetId}-${note.id}`}
-                                dismissOnSelect={true}
-                                keyboardClose={true}
-                                side="left"
-                                alignment='end'
-                                showBackdrop={true}
-                                arrow={false}
-                            >
-                                <IonContent>
-                                    <IonList className="" lines='none'>
-                                        <IonItem button={true} detail={false} onClick={((e) => onEditNote(note.id))}>
-                                            <IonIcon slot="start" size="small" icon={CreateOutlineIcon}></IonIcon>
-                                            Edit
-                                        </IonItem>
-                                        <IonItem disabled={!isOnline} button={true} detail={false} onClick={(e) => onDeleteNote(note.id)}>
-                                            <IonIcon slot="start" size="small" icon={TrashOutlineIcon}></IonIcon>
-                                            Delete
-                                        </IonItem>
-                                    </IonList>
-
-                                </IonContent>
-                            </IonPopover>
-                        </div>
-                    </div>
                 </div>
+                <div className='col-start-12 col-span-1' />
+
+                {/** Third Row */}
+                {/** Popover Menu */}
+                <div className="col-start-12 col-span-1">
+                    {/**Don't use button here, it makes the text un */}
+                    <span id={`${cardSetId}-${note.id}`}>
+                        <IonIcon size="small" color="medium" icon={ellipsisHorizontalSharpeIcon} />
+                    </span>
+                    <IonPopover
+                        trigger={`${cardSetId}-${note.id}`}
+                        dismissOnSelect={true}
+                        keyboardClose={true}
+                        side="left"
+                        alignment='end'
+                        showBackdrop={true}
+                        arrow={false}
+                    >
+                        <IonContent>
+                            <IonList className="" lines='none'>
+                                <IonItem button={true} detail={false} onClick={((e) => onEditNote(note.id))}>
+                                    <IonIcon slot="start" size="small" icon={CreateOutlineIcon}></IonIcon>
+                                    Edit
+                                </IonItem>
+                                <IonItem disabled={!isOnline} button={true} detail={false} onClick={(e) => onDeleteNote(note.id)}>
+                                    <IonIcon slot="start" size="small" icon={TrashOutlineIcon}></IonIcon>
+                                    Delete
+                                </IonItem>
+                            </IonList>
+                        </IonContent>
+                    </IonPopover>
+                </div>
+            </div>
         </div>
+
     );
 };
 
