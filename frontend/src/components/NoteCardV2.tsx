@@ -100,13 +100,38 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
                 </div>
                 {/** Second Row */}
                 {/** Note body */}
-                <div className='mt-2 col-start-1 col-span-11'>
-                    <Markdown className='font-poppins font-normal text-zinc-700 fonr-zinc-800' children={note.body} />
+                <div className='mt-2 col-start-1 col-span-10'>
+                    <Markdown
+                        className='font-poppins font-normal text-zinc-800'
+                        children={note.body}
+                        components={{
+                            h1: ({ node, ...props }) => <h1 style={{ fontSize: '1.5em', fontWeight: 'bold', marginBottom: '1em', marginTop: '0.5em' }} {...props} />,
+                            h2: ({ node, ...props }) => <h2 style={{ fontSize: '1.3em', fontWeight: 'bold', marginBottom: '1em', marginTop: '0.5em' }} {...props} />,
+                            h3: ({ node, ...props }) => <h3 style={{ fontSize: '1.1em', fontWeight: 'bold', marginBottom: '1em', marginTop: '0.5em' }} {...props} />,
+                            h4: ({ node, ...props }) => <h4 style={{ fontSize: '1em', fontWeight: 'bold', marginBottom: '0.5em', marginTop: '0.5em' }} {...props} />,
+                            h5: ({ node, ...props }) => <h5 style={{ fontSize: '1em', fontWeight: 'bold', marginBottom: '0.5em', marginTop: '0em' }} {...props} />,
+                            h6: ({ node, ...props }) => <h6 style={{ fontSize: '1em', fontWeight: 'bold', marginBottom: '0.5em', marginTop: '0em' }} {...props} />,
+                            ul: ({ node, ...props }) => <ul style={{ listStyleType: 'disc', paddingLeft: '1em' }} {...props} />,
+                            ol: ({ node, ...props }) => <ol style={{ listStyleType: 'decimal', paddingLeft: '1em' }} {...props} />,
+                            li: ({ node, ...props }) => <li style={{ margin: '0.5em 0' }} {...props} />,
+                            p: ({ node, ...props }) => <p style={{ margin: '0 0', lineHeight: '1.5em' }} {...props} />,
+                            blockquote: ({ node, ...props }) => <blockquote style={{ margin: '1em 0', paddingLeft: '1em', borderLeft: '4px solid #ddd' }} {...props} />,
+                            code: ({ node, ...props }) => <code style={{ fontFamily: 'monospace', backgroundColor: '#f9f9f9', padding: '2px 4px', borderRadius: '3px' }} {...props} />,
+                            pre: ({ node, ...props }) => <pre style={{ fontFamily: 'monospace', backgroundColor: '#f9f9f9', padding: '1em', borderRadius: '3px', overflowX: 'auto' }} {...props} />,
+                            em: ({ node, ...props }) => <em style={{ fontStyle: 'italic' }} {...props} />,
+                            strong: ({ node, ...props }) => <strong style={{ fontWeight: 'bold' }} {...props} />,
+                            del: ({ node, ...props }) => <del style={{ textDecoration: 'line-through' }} {...props} />,
+                            hr: ({ node, ...props }) => <hr style={{ border: 'none', borderTop: '1px solid #ddd' }} {...props} />,
+                            a: ({ node, ...props }) => <a style={{ color: '#0366d6', textDecoration: 'none' }} {...props} />,
+                            img: ({ node, ...props }) => <img style={{ maxWidth: '100%' }} {...props} />,
+                        }}
+
+                    />
                 </div>
                 <div className='col-start-12 col-span-1' />
 
                 {/** MutipleMedia Row */}
-                <div className="col-start-1 col-span-11">
+                <div className="col-start-1 col-span-10">
                     <div className="mt-4 grid grid-cols-2 gap-1 rounded-lg overflow-hidden" id="image_container">
                         {imageUrls.slice(0, 9).map((imageUrl, index) => (
                             <div key={index} >
@@ -127,7 +152,7 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
                 {/** Popover Menu */}
                 <div className="mt-2 col-start-12 col-span-1 bg-black-600" >
                     {/**Don't use button here, it makes the text un */}
-                    <span  className='flex justify-end'>
+                    <span className='flex justify-end'>
                         <IonIcon id={`${cardSetId}-${note.id}`} size="small" color="medium" icon={ellipsisHorizontalSharpeIcon} />
                     </span>
                     <IonPopover
