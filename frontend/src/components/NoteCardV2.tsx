@@ -100,12 +100,12 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
                 </div>
                 {/** Second Row */}
                 {/** Note body */}
-                <div className='pt-3 col-start-1 col-span-11'>
-                    <Markdown className='font-poppins font-light' children={note.body} />
+                <div className='pt-3 col-start-1 col-span-10'>
+                    <Markdown className='font-poppins font-normal text-zinc-800 fonr-zinc-800' children={note.body} />
                 </div>
                 <div className='col-start-12 col-span-1' />
                 {/** MutipleMedia Row */}
-                <div className="col-start-1 col-span-11">
+                <div className="col-start-1 col-span-10">
                     <div className="grid grid-cols-2 gap-1 rounded-lg overflow-hidden" id="image_container">
                         {imageUrls.slice(0, 9).map((imageUrl, index) => (
                             <div key={index} >
@@ -124,10 +124,10 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
 
                 {/** Third Row */}
                 {/** Popover Menu */}
-                <div className="col-start-12 col-span-1">
+                <div className="col-start-12 col-span-1 bg-black-600" >
                     {/**Don't use button here, it makes the text un */}
-                    <span id={`${cardSetId}-${note.id}`}>
-                        <IonIcon size="small" color="medium" icon={ellipsisHorizontalSharpeIcon} />
+                    <span  className='flex justify-end'>
+                        <IonIcon id={`${cardSetId}-${note.id}`} size="small" color="medium" icon={ellipsisHorizontalSharpeIcon} />
                     </span>
                     <IonPopover
                         trigger={`${cardSetId}-${note.id}`}
