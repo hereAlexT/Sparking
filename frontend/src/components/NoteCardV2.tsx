@@ -70,8 +70,6 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
 
 
 
-
-
     useEffect(() => {
 
         const fetchImages = async () => {

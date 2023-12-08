@@ -59,7 +59,7 @@ type AuthContextType = {
     user: User | null,
     session: Session | null,
     isAuthenticated: boolean,
-    login: (email: string, password: string) => void,
+    login: (email: string, password: string, captchaToken: string) => void,
     logout: () => void,
     signup: (email: string, password: string) => void,
     getSession: () => void,
@@ -69,7 +69,7 @@ const AuthContext = createContext<AuthContextType>({
     user: null,
     session: null,
     isAuthenticated: false,
-    login: (email: string, password: string) => { },
+    login: (email: string, password: string, captchaToken: string) => { },
     logout: () => { },
     signup: (email: string, password: string) => { },
     getSession: () => { },
@@ -91,10 +91,10 @@ function AuthProvider({ children }: AuthProviderProps) {
         reducer,
         initialState);
 
-    const login = async (email: string, password: string) => {
+    const login = async (email: string, password: string, captchaToken: string) => {
         console.log("AuthContext - Signin")
         try {
-            const { user, session } = await ApiLogin(email, password);
+            const { user, session } = await ApiLogin(email, password, captchaToken);
             dispatch({ type: "login", payload: { user, session } })
         } catch (error) {
             console.error(error)

@@ -24,11 +24,12 @@ const Signup = async (email: string, password: string) => {
     }
 };
 
-const Login = async (email: string, password: string) => {
+const Login = async (email: string, password: string, captchaToken: string) => {
     try {
         const { data: { user, session }, error } = await supabase.auth.signInWithPassword({
             email: email,
-            password: password
+            password: password,
+            options: { captchaToken }
         })
 
         if (error) {
@@ -44,11 +45,11 @@ const Login = async (email: string, password: string) => {
 
 const getSession = async () => {
     try {
-        const { data: { session }, error} = await supabase.auth.getSession()
+        const { data: { session }, error } = await supabase.auth.getSession()
         if (error) {
             throw error
         } else {
-            return {session}
+            return { session }
         }
     } catch (error) {
         console.error(error)
@@ -57,7 +58,7 @@ const getSession = async () => {
 }
 
 
-const Logout = async() => {
+const Logout = async () => {
     try {
         const { error } = await supabase.auth.signOut()
         if (error) {

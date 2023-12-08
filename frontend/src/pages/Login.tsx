@@ -10,15 +10,14 @@ import {
     IonCol,
     IonRow,
     IonAlert,
-    IonButtons,
-    IonMenuButton,
     IonRouterLink
 } from '@ionic/react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useHistory } from 'react-router';
 import { useMeta } from '../contexts/MetaContext';
-import { Link } from 'react-router-dom';
+import HCaptcha from '@hcaptcha/react-hcaptcha'
+
 
 
 const Login: React.FC = () => {
@@ -26,16 +25,26 @@ const Login: React.FC = () => {
     const [email, setEmail] = useState("demo@linklabs.app");
     const [password, setPassword] = useState("Password1@");
     const [isLoginFailed, setLoginFailed] = useState(false);
-
     const { login, isAuthenticated, session, user } = useAuth();
     const { isOnline } = useMeta();
+
+
+    /** Captcha */
+    const [captchaToken, setCaptchaToken] = useState<string | undefined>(undefined);
+    const captcha = useRef<HCaptcha | null>(null);
+
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         console.log("Login handleSubmit: isAuthenticated = ", isAuthenticated)
         if (email && password) {
+            if (!captchaToken || !captcha.current) {
+                alert("Please complete the captcha")
+                return;
+            }
             try {
-                await login(email, password);
+                await login(email, password, captchaToken);
+                captcha.current.resetCaptcha()
                 console.log("try to history.push")
                 history.push('/timeline/pri', { direction: 'none' });
                 console.log("push done")
@@ -46,12 +55,6 @@ const Login: React.FC = () => {
         }
     }
 
-    // useEffect(() => {
-    //     console.log("Login useEffect: isAuthenticated = ", isAuthenticated)
-    //     if (isAuthenticated) {
-    //         history.push("/p/timeline", {direction: 'none'});
-    //     }
-    // }, [isAuthenticated, history]);
 
 
     /* Email Address Validation 
@@ -83,9 +86,6 @@ const Login: React.FC = () => {
         setIsTouched(true);
     };
     /* Email Validation Done */
-
-
-
 
     return (
         <IonPage id="main">
@@ -140,8 +140,16 @@ const Login: React.FC = () => {
                         </IonRow>
                         <IonRow>
                             <IonCol>
+                                <HCaptcha
+                                    ref={captcha}
+                                    sitekey="a83897b5-bc57-431a-a856-7574ef928888"
+                                    onVerify={(token) => { setCaptchaToken(token) }} />
+                            </IonCol>
+                        </IonRow>
+                        <IonRow>
+                            <IonCol>
                                 <IonButton
-                                    disabled={!isOnline}
+                                    disabled={!isOnline || !captchaToken}
                                     color="primary"
                                     type="submit"
                                     expand="block"

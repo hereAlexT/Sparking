@@ -20,6 +20,7 @@
     "@capacitor/ios": "^5.5.1",
     "@capacitor/keyboard": "5.0.6",
     "@capacitor/status-bar": "^5.0.6",
+    "@hcaptcha/react-hcaptcha": "^1.9.2",
     "@ionic/pwa-elements": "^3.2.2",
     "@ionic/react": "^7.0.0",
     "@ionic/react-router": "^7.0.0",
