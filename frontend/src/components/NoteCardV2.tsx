@@ -25,6 +25,9 @@ import { supabase } from '../supabaseClient'; // adjust the import path to your 
 import { useEffect, useState } from 'react';
 import { fetchImage } from '../apis/NoteAPI';
 import ImagePreviewModal from './ImagePreviewModal';
+import rehypeKatex from 'rehype-katex'
+import remarkMath from 'remark-math'
+import 'katex/dist/katex.min.css'
 
 
 
@@ -102,6 +105,8 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
                 {/** Note body */}
                 <div className='mt-2 col-start-1 col-span-10'>
                     <Markdown
+                        rehypePlugins={[rehypeKatex]}
+                        remarkPlugins={[remarkMath]}
                         className='font-poppins font-normal text-zinc-800'
                         children={note.body}
                         components={{
