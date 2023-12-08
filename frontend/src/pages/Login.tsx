@@ -11,12 +11,15 @@ import {
     IonRow,
     IonAlert,
     IonButtons,
-    IonMenuButton
+    IonMenuButton,
+    IonRouterLink
 } from '@ionic/react';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useHistory } from 'react-router';
 import { useMeta } from '../contexts/MetaContext';
+import { Link } from 'react-router-dom';
+
 
 const Login: React.FC = () => {
     const history = useHistory();
@@ -82,7 +85,7 @@ const Login: React.FC = () => {
     /* Email Validation Done */
 
 
-    
+
 
     return (
         <IonPage id="main">
@@ -163,14 +166,20 @@ const Login: React.FC = () => {
                         </IonCol>
                     </IonRow>
                     <IonRow>
-                        <IonRow>
-                            <IonCol>
-                                <IonText color="medium">
-                                    <a>Forgot password?</a>
-                                </IonText>
-                            </IonCol>
-                        </IonRow>
+                        <IonCol>
+                            <IonText color="medium">
+                                <a>Forgot password?</a>
+                            </IonText>
+                        </IonCol>
                     </IonRow>
+                    <IonRow>
+                        <IonCol>
+                            <IonText color="medium" >
+                                Don't have an account? 👉   <IonRouterLink routerLink='/signup' >Signup</IonRouterLink>
+                            </IonText>
+                        </IonCol>
+                    </IonRow>
+
                 </IonGrid>
                 <IonAlert
                     isOpen={isLoginFailed}
