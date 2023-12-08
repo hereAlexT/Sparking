@@ -5,9 +5,9 @@ import {
   IonSplitPane,
   isPlatform,
 } from '@ionic/react';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { IonReactRouter } from '@ionic/react-router';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, useLocation } from 'react-router-dom';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -63,11 +63,18 @@ const App: React.FC = () => {
 
 const AppContent: React.FC = () => {
   const { isSplitPaneOn, setIsSplitPaneOn } = useMeta();
+  const location = useLocation();
+  const [key, setKey] = useState(Date.now());
+
+  useEffect(() => {
+    setKey(Date.now());
+  }, [location.pathname]);
+
   console.log("isSplitPaneOn", isSplitPaneOn)
 
   return (
-    <IonSplitPane className="max-w-3xl mx-auto" onIonSplitPaneVisible={(event) => setIsSplitPaneOn(event.detail.visible)} contentId="main">
-      <Menu />
+    <IonSplitPane key={key} className="max-w-3xl mx-auto" onIonSplitPaneVisible={(event) => setIsSplitPaneOn(event.detail.visible)} contentId="main">
+      {location.pathname !== '/login' && <Menu />}
       <Routes />
     </IonSplitPane>
   );

@@ -81,14 +81,17 @@ const Login: React.FC = () => {
     };
     /* Email Validation Done */
 
+
+    
+
     return (
         <IonPage id="main">
             <IonContent>
                 <IonHeader collapse="condense">
                     <IonToolbar>
-                        <IonButtons slot="start">
+                        {/* <IonButtons slot="start">
                             <IonMenuButton />
-                        </IonButtons>
+                        </IonButtons> */}
                     </IonToolbar>
                 </IonHeader>
                 <IonGrid className='ion-padding'>
