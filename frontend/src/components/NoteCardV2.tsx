@@ -91,7 +91,7 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
     const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
 
     return (
-        <div className='m-0 p-0 w-full border-b border-slate-300'>
+        <div className='m-0 py-3 w-full border-b border-slate-300'>
             <div className="grid grid-cols-12" >
                 {/** First Row */}
                 {/** Date Time */}
@@ -100,13 +100,14 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
                 </div>
                 {/** Second Row */}
                 {/** Note body */}
-                <div className='pt-3 col-start-1 col-span-10'>
-                    <Markdown className='font-poppins font-normal text-zinc-800 fonr-zinc-800' children={note.body} />
+                <div className='mt-2 col-start-1 col-span-10'>
+                    <Markdown className='font-poppins font-normal text-zinc-700 fonr-zinc-800' children={note.body} />
                 </div>
                 <div className='col-start-12 col-span-1' />
+
                 {/** MutipleMedia Row */}
                 <div className="col-start-1 col-span-10">
-                    <div className="grid grid-cols-2 gap-1 rounded-lg overflow-hidden" id="image_container">
+                    <div className="mt-4 grid grid-cols-2 gap-1 rounded-lg overflow-hidden" id="image_container">
                         {imageUrls.slice(0, 9).map((imageUrl, index) => (
                             <div key={index} >
                                 <img
@@ -124,7 +125,7 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
 
                 {/** Third Row */}
                 {/** Popover Menu */}
-                <div className="col-start-12 col-span-1 bg-black-600" >
+                <div className="mt-2 col-start-12 col-span-1 bg-black-600" >
                     {/**Don't use button here, it makes the text un */}
                     <span  className='flex justify-end'>
                         <IonIcon id={`${cardSetId}-${note.id}`} size="small" color="medium" icon={ellipsisHorizontalSharpeIcon} />
