@@ -17,6 +17,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useHistory } from 'react-router';
 import { useMeta } from '../contexts/MetaContext';
 import HCaptcha from '@hcaptcha/react-hcaptcha'
+import { HCAPTCHA_SITE_KEY } from '../config';
 
 
 
@@ -27,6 +28,8 @@ const Login: React.FC = () => {
     const [isLoginFailed, setLoginFailed] = useState(false);
     const { login, isAuthenticated, session, user } = useAuth();
     const { isOnline } = useMeta();
+
+
 
 
     /** Captcha */
@@ -142,7 +145,7 @@ const Login: React.FC = () => {
                             <IonCol>
                                 <HCaptcha
                                     ref={captcha}
-                                    sitekey="a83897b5-bc57-431a-a856-7574ef928888"
+                                    sitekey={HCAPTCHA_SITE_KEY}
                                     onVerify={(token) => { setCaptchaToken(token) }} />
                             </IonCol>
                         </IonRow>
