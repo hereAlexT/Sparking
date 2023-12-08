@@ -109,8 +109,8 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = 
     }
 
     return (
-        <div className="flex flex-wrap">
-            <div className="w-full">
+        <div className="grid grid-cols-12">
+            <div className="col-span-12 col-start-1">
                 <IonTextarea
                     className='font-poppins font-light pt-1 px-1 text-black native-textarea-p0-m0 border-b border-slate-400'
                     disabled={!isOnline}
@@ -123,31 +123,32 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = 
                 />
             </div>
 
-
-            <div className='grid grid-cols-3 gap-1 w-1/12'>
-                {images.map((image, index) => (
-                    <div key={index} className="relative">
-                        <img alt={`Image ${index}`} src={image.url} className="w-full h-32 object-cover" />
-                        {/* <button
+            <div className='col-span-12 col-start-1'>
+                <div className='grid grid-cols-3 gap-1 w-full'>
+                    {images.map((image, index) => (
+                        <div key={index} className="relative">
+                            <img alt={`Image ${index}`} src={image.url} className="w-full h-32 object-cover" />
+                            {/* <button
                             className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 circular-button"
                             onClick={() => handleDeleteImage(index)}
                         >
                             <IonIcon color="dark" className="m-0 p-0" size="small" slot="icon-only" icon={closeOutlineIcon} />
                         </button> */}
 
-                        <IonButton
-                            color="light"
-                            size="small"
-                            fill="outline"
-                            onClick={HandleOnSubmit}
-                            className='absolute top-0 right-0  text-white rounded-full p-1 circular-button'>
-                            <IonIcon color="light" className="m-0 p-0" size="small" slot="icon-only" icon={closeOutlineIcon} />
-                        </IonButton>
-                    </div>
-                ))}
+                            <IonButton
+                                color="light"
+                                size="small"
+                                fill="outline"
+                                onClick={() => handleDeleteImage(index)}
+                                className='absolute top-0 right-0  text-white rounded-full p-1 circular-button'>
+                                <IonIcon color="light" className="m-0 p-0" size="small" slot="icon-only" icon={closeOutlineIcon} />
+                            </IonButton>
+                        </div>
+                    ))}
+                </div>
             </div>
 
-            <div className="w-1/12">
+            <div className="col-span-1 col-start-1">
                 <IonButton
                     color="primary"
                     size="small"
@@ -157,7 +158,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = 
                     <IonIcon color="dark" className="m-0 p-0" size="small" slot="icon-only" icon={cameraOutlineIcon} />
                 </IonButton>
             </div>
-            <div className="w-1/12">
+            <div className="col-span-1 col-start-2">
                 <IonButton
                     color="primary"
                     size="small"
@@ -167,8 +168,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = 
                     <IonIcon color="dark" className="m-0 p-0" size="small" slot="icon-only" icon={imageOutlineIcon} />
                 </IonButton>
             </div>
-            <div className="w-8/12" />
-            <div className='w-1/12 flex items-center justify-end'>
+            <div className='col-span-1 col-start-12'>
                 <IonButton
                     disabled={!isOnline || content.length === 0}
                     color="primary"

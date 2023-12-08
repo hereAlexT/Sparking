@@ -128,43 +128,49 @@ const TimeLine: React.FC = () => {
 
     return (
         <IonPage id="main" ref={pageRef}>
+
+            {/** Small Screen */}
             {!isSplitPaneOn && (
-                <IonFab slot="fixed" vertical="bottom" horizontal="end">
-                    <IonFabButton id="open-mobile-editor-modal-timeline">
-                        <IonIcon icon={arrowUpOutlineIcon}></IonIcon>
-                    </IonFabButton>
-                    <CardEditorMobileModal
-                        trigger="open-mobile-editor-modal-timeline"
-                        onSubmit={handleOnCreateNote}
-                        pageRef={pageRef}
-                    />
-                </IonFab>)}
-            {!isSplitPaneOn ? (
-                <IonHeader>
-                    <IonToolbar>
-                        <IonButtons slot="start">
-                            <IonMenuButton />
-                        </IonButtons>
-                        <IonTitle>Timeline {isOnline ? '' : '[Offline]'}</IonTitle>
-                    </IonToolbar>
-                    <IonToolbar>
-                        <IonSearchbar className="mb-1 pb-1" placeholder="Search" onIonInput={(e) => setSearchQuery(e.detail.value!)} ></IonSearchbar>
-                    </IonToolbar>
-                </IonHeader>
-            ) : <div className='m-5' />}
+                <>
+                    <IonFab slot="fixed" vertical="bottom" horizontal="end">
+                        <IonFabButton id="open-mobile-editor-modal-timeline">
+                            <IonIcon icon={arrowUpOutlineIcon}></IonIcon>
+                        </IonFabButton>
+                        <CardEditorMobileModal
+                            trigger="open-mobile-editor-modal-timeline"
+                            onSubmit={handleOnCreateNote}
+                            pageRef={pageRef}
+                        />
+                    </IonFab>
+                    <IonHeader>
+                        <IonToolbar>
+                            <IonButtons slot="start">
+                                <IonMenuButton />
+                            </IonButtons>
+                            <IonTitle>Timeline {isOnline ? '' : '[Offline]'}</IonTitle>
+                        </IonToolbar>
+                        <IonToolbar>
+                            <IonSearchbar className="mb-1 pb-1" placeholder="Search" onIonInput={(e) => setSearchQuery(e.detail.value!)} ></IonSearchbar>
+                        </IonToolbar>
+                    </IonHeader>
+                </>
+            )}
 
-
-            {isSplitPaneOn && (<IonCard className='my-1 px-5 pt-2 pb-1 rounded-md border border-slate-400  shadow-md'>
-                <CardEditorV2
-                    onSubmit={handleOnCreateNote}
-                    isOnline={true}
-                />
-            </IonCard>)}
+            {/** Wide Screen */}
             {isSplitPaneOn && (
-                <IonSearchbar className="mb-1 pb-1" placeholder="Search" onIonInput={(e) => setSearchQuery(e.detail.value!)} ></IonSearchbar>)}
+                <>
+                    <IonSearchbar className="mb-1 pb-1" placeholder="Search" onIonInput={(e) => setSearchQuery(e.detail.value!)} ></IonSearchbar>
+                    <IonCard className='my-1 px-5 pt-2 pb-1 rounded-md border border-slate-400  shadow-md'>
+                        <CardEditorV2
+                            onSubmit={handleOnCreateNote}
+                            isOnline={true}
+                        />
+                    </IonCard>
+                </>
 
+            )}
 
-
+            {/** Shared */}
             <IonContent className='m5'>
                 <IonList lines="none">
                     {isLoading ? <IonItem>Loading...</IonItem> :
@@ -180,17 +186,7 @@ const TimeLine: React.FC = () => {
                             </IonItem>
                         ))}
                 </IonList>
-
             </IonContent>
-            {/* <CardEditorModal
-                isOnline={isOnline}
-                isEditorOpen={isEditorOpen}
-                setIsEditorOpen={setIsEditorOpen}
-                selectedNote={selectedNote}
-                handleOnUpdateNote={handleOnUpdateNote}
-                isSecondModalOpen={false}
-                setIsSecondModalOpen={setIsEditorOpen}
-            /> */}
             <CardEditorMobileModal
                 onSubmit={handleOnUpdateNote}
                 pageRef={pageRef}
