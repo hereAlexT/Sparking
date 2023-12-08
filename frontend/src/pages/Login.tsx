@@ -41,11 +41,11 @@ const Login: React.FC = () => {
         event.preventDefault();
         console.log("Login handleSubmit: isAuthenticated = ", isAuthenticated)
         if (email && password) {
-            if (!captchaToken || !captcha.current) {
-                alert("Please complete the captcha")
-                return;
-            }
             try {
+                if (!captchaToken || !captcha.current) {
+                    alert("Please complete the captcha")
+                    return;
+                }
                 await login(email, password, captchaToken);
                 captcha.current.resetCaptcha()
                 console.log("try to history.push")

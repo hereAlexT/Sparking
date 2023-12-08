@@ -7,11 +7,12 @@ import type {
 
 
 
-const Signup = async (email: string, password: string) => {
+const Signup = async (email: string, password: string, captchaToken: string) => {
     try {
         const { data: { user, session }, error } = await supabase.auth.signUp({
             email: email,
             password: password,
+            options: { captchaToken }
         });
         if (error) {
             throw error

@@ -11,15 +11,20 @@ import {
     IonRow,
     IonButtons,
     IonMenuButton,
-    IonRouterLink 
+    IonRouterLink
 } from '@ionic/react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useHistory } from "react-router-dom";
 import { useAuth } from '../contexts/AuthContext';
 import { useMeta } from '../contexts/MetaContext';
+import HCaptcha from '@hcaptcha/react-hcaptcha'
+import { HCAPTCHA_SITE_KEY } from '../config';
 
 const Signup: React.FC = () => {
 
+    /** Captcha */
+    const [captchaToken, setCaptchaToken] = useState<string | undefined>(undefined);
+    const captcha = useRef<HCaptcha | null>(null);
 
     /* Email Validation */
     const [isTouched, setIsTouched] = useState(false);
@@ -69,15 +74,18 @@ const Signup: React.FC = () => {
         }
 
         try {
-            await signup(email, password);
+            if (!captchaToken || !captcha.current) {
+                alert("Please complete the captcha")
+                return;
+            }
+            await signup(email, password, captchaToken);
+            captcha.current.resetCaptcha()
         } catch (error) {
             alert("Signup failed: \n " + error)
             console.error(error);
         }
 
     };
-
-
 
     return (
         <IonPage id="main">
@@ -142,6 +150,14 @@ const Signup: React.FC = () => {
                                 disabled={false}
                             />
                         </IonRow>
+                        <IonRow>
+                            <IonCol>
+                                <HCaptcha
+                                    ref={captcha}
+                                    sitekey={HCAPTCHA_SITE_KEY}
+                                    onVerify={(token) => { setCaptchaToken(token) }} />
+                            </IonCol>
+                        </IonRow>
 
                         <IonRow>
                             <IonCol className="ion-padding-top">
@@ -158,14 +174,6 @@ const Signup: React.FC = () => {
 
                     </form>
                 </IonGrid>
-
-
-
-
-
-
-
-
             </IonContent>
         </IonPage >
     );
