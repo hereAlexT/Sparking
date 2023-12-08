@@ -18,10 +18,8 @@ import {
 } from 'ionicons/icons';
 import { Note, NoteId, NoteImageId } from '../shared/types';
 import './NoteCardV2.css';
-import { createRoot } from 'react-dom/client'
 import { useAuth } from '../contexts/AuthContext';
 import Markdown from 'react-markdown'
-import { supabase } from '../supabaseClient'; // adjust the import path to your actual file
 import { useEffect, useState } from 'react';
 import { fetchImage } from '../apis/NoteAPI';
 import ImagePreviewModal from './ImagePreviewModal';
