@@ -91,7 +91,6 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
 
     return (
         <div className='m-0 p-0 rounded-none w-full border-b border-slate-300  shadow-none'>
-            <div className='m-0 p-0'>
                 <div className="flex flex-wrap" >
                     <div className='pt-3 flex w-full'>
                         <div className="w-full" id="dt-col" >
@@ -123,6 +122,7 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
                         ))}
                     </div>
                     <ImagePreviewModal isOpen={isOpen} url={selectedImage} setIsOpen={setIsOpen} />
+
 
                     <div className="flex w-full">
                         <div className="w-full" />
@@ -157,7 +157,6 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({ note, cardSetId, isOnline, onDe
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
     );
 };
