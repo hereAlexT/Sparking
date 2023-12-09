@@ -58,37 +58,6 @@ const Login: React.FC = () => {
     }
 
 
-
-    /* Email Address Validation 
-    * You don't want to show validation while the user is typing.
-    * Validation should only occur when the user finishes typing.
-    */
-    const [isTouched, setIsTouched] = useState(false);
-    const [isValid, setIsValid] = useState<boolean>();
-    const validateEmail = (email: string) => {
-        return email.match(
-            /^(?=.{1,254}$)(?=.{1,64}@)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
-        );
-    };
-
-    const validate = (ev: CustomEvent) => {
-        console.log("hhh")
-        const v = ev.detail.value ?? '';
-        if (v === '') {
-            setIsValid(true);
-        } else {
-            const value = (ev.target as HTMLInputElement).value;
-            setIsValid(undefined);
-            if (value === '') return;
-            validateEmail(value) !== null ? setIsValid(true) : setIsValid(false);
-        }
-    };
-
-    const markTouched = () => {
-        setIsTouched(true);
-    };
-    /* Email Validation Done */
-
     return (
         <IonPage id="main">
             <IonContent>
