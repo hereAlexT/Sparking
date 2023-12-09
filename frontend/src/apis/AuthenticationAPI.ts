@@ -48,7 +48,13 @@ const Login = async (email: string, password: string, captchaToken?: string) => 
 const loginWithGoogle = async () => {
     try {
         const { data, error } = await supabase.auth.signInWithOAuth({
-            provider: 'google'
+            provider: 'google',
+            options: {
+                queryParams: {
+                    access_type: 'offline',
+                    prompt: 'consent',
+                }
+            }
         })
         if (error) {
             throw error
