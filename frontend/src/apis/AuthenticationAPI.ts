@@ -5,6 +5,7 @@ import type {
 } from '@supabase/gotrue-js/src/lib/types'
 import { PassThrough } from 'stream';
 import { DOMAIN_NAME } from '../config';
+import { options } from 'ionicons/icons';
 
 
 
@@ -110,12 +111,15 @@ export const UpdateUserPassword = async (password: string) => {
     }
 }
 
-export const resetPasswordForEmail = async (email: string) => {
+export const resetPasswordForEmail = async (email: string, captchaToken: string) => {
     try {
         const { data, error } = await supabase.auth.resetPasswordForEmail(
-            email, {
-            redirectTo: DOMAIN_NAME + '/account/update-password',
-        })
+            email,
+            {
+                redirectTo: DOMAIN_NAME + '/account/update-password',
+                captchaToken: captchaToken
+            },
+        )
         if (error) {
             throw error
         } else {
