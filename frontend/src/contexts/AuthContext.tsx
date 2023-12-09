@@ -61,7 +61,7 @@ type AuthContextType = {
     isAuthenticated: boolean,
     login: (email: string, password: string, captchaToken: string) => void,
     logout: () => void,
-    signup: (email: string, password: string, captchaToken: string) => void,
+    signup: (email: string, password: string, captchaToken: string) => Promise<any>,
     getSession: () => void,
 };
 
@@ -102,11 +102,12 @@ function AuthProvider({ children }: AuthProviderProps) {
         }
     }
 
-    const signup = async (email: string, password: string, captchaToken: string) => {
+    const signup = async (email: string, password: string, captchaToken: string): Promise<any> => {
         console.log("AuthenContext - signup")
         try {
             const { user, session } = await ApiSignup(email, password, captchaToken)
-            dispatch({ type: "signup", payload: { email, password } })
+            // dispatch({ type: "signup", payload: {} })
+            return { user, session }
         } catch (error) {
             console.error(error)
             throw error;

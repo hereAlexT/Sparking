@@ -14,6 +14,7 @@ const Signup = async (email: string, password: string, captchaToken: string) => 
             password: password,
             options: { captchaToken }
         });
+        console.log(user, session)
         if (error) {
             throw error
         } else {
