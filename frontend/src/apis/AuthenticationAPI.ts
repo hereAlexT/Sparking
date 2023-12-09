@@ -3,11 +3,12 @@ import { supabase } from '../supabaseClient'
 import type {
     AuthTokenResponse
 } from '@supabase/gotrue-js/src/lib/types'
+import { PassThrough } from 'stream';
 
 
 
 
-const Signup = async (email: string, password: string, captchaToken?: string) => {
+export const Signup = async (email: string, password: string, captchaToken?: string) => {
     try {
         const { data: { user, session }, error } = await supabase.auth.signUp({
             email: email,
@@ -26,7 +27,7 @@ const Signup = async (email: string, password: string, captchaToken?: string) =>
     }
 };
 
-const Login = async (email: string, password: string, captchaToken?: string) => {
+export const Login = async (email: string, password: string, captchaToken?: string) => {
     try {
         const { data: { user, session }, error } = await supabase.auth.signInWithPassword({
             email: email,
@@ -45,7 +46,7 @@ const Login = async (email: string, password: string, captchaToken?: string) => 
     }
 };
 
-const loginWithGoogle = async () => {
+export const loginWithGoogle = async () => {
     try {
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
@@ -67,7 +68,7 @@ const loginWithGoogle = async () => {
     }
 }
 
-const getSession = async () => {
+export const getSession = async () => {
     try {
         const { data: { session }, error } = await supabase.auth.getSession()
         if (error) {
@@ -82,7 +83,7 @@ const getSession = async () => {
 }
 
 
-const Logout = async () => {
+export const Logout = async () => {
     try {
         const { error } = await supabase.auth.signOut()
         if (error) {
@@ -94,7 +95,17 @@ const Logout = async () => {
     }
 }
 
+export const UpdateUserPassword = async (password: string) => {
+    try {
+        const { data, error } = await supabase.auth.updateUser({ password: password })
+        if (error) {
+            throw error
+        } else {
+            return { data }
+        }
+    } catch (error) {
+        console.error(error)
+        throw error
+    }
 
-
-export { Signup, Login, Logout, getSession, loginWithGoogle };
-
+}

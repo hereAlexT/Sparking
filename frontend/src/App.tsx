@@ -40,10 +40,12 @@ import ComponentLab from './pages/ComponentLab'
 import Settings from './pages/Settings';
 import Menu from './components/Menu';
 import Logout from './components/Logout';
+import UpdatePassword from './pages/UpdatePassword';
 import { AuthProvider } from './contexts/AuthContext';
 import { useAuth } from './contexts/AuthContext';
 import { NotesProvider } from './contexts/NotesContext';
 import { MetaProvider, useMeta } from './contexts/MetaContext';
+
 
 setupIonicReact();
 
@@ -113,6 +115,7 @@ const Routes: React.FC = ({ }) => {
       <Route exact path="/logout" component={Logout} />
       <Route path="/comlab" component={ComponentLab} />
       <Route path="/tabs" render={() => <MainTabs />} />
+      <Route path="/account/update-password" component={UpdatePassword} />
     </IonRouterOutlet>
   );
 };
