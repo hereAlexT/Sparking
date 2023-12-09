@@ -47,6 +47,15 @@ import { MetaProvider, useMeta } from './contexts/MetaContext';
 
 setupIonicReact();
 
+
+function customLog(level: 'debug' | 'info' | 'warn' | 'error', message: any) {
+  if (process.env.NODE_ENV !== 'production') {
+    console[level](message);
+  } else if (level === 'warn' || level === 'error') {
+    console[level](message);
+  }
+}
+
 const App: React.FC = () => {
   return (
     <MetaProvider>
@@ -70,6 +79,9 @@ const AppContent: React.FC = () => {
   useEffect(() => {
     setKey(Date.now());
   }, [location.pathname]);
+
+
+  customLog('info', "isSplitPaneOn: " + isSplitPaneOn);
 
   console.debug("isSplitPaneOn", isSplitPaneOn)
 
