@@ -22,62 +22,57 @@ import { HCAPTCHA_SITE_KEY } from '../config';
 
 const Signup: React.FC = () => {
 
+    const history = useHistory();
+    const { signup, isAuthenticated } = useAuth();
+    const { isOnline } = useMeta();
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [comfirmPassword, setComfirmPassword] = useState("");
+    const [isTermsAgreed, setIsTermsAgreed] = useState(false);
+
+
+    /** Password Validation */
+    const [isPasswordValid, setIsPasswordValid] = useState(true);
+
+    const handlePasswordChange = (e) => {
+        const password = e.target.value;
+        console.log(password)
+        const pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+        const isMatched = pattern.test(password);
+        console.log(isMatched)
+        setPassword(password);
+        setIsPasswordValid(isMatched);
+    };
+
     /** Captcha */
     const [captchaToken, setCaptchaToken] = useState<string | undefined>(undefined);
     const captcha = useRef<HCaptcha | null>(null);
 
-    /* Email Validation */
-    const [isTouched, setIsTouched] = useState(false);
-    const [isValid, setIsValid] = useState<boolean>();
-
-    const validateEmail = (email: string) => {
-        return email.match(
-            /^(?=.{1,254}$)(?=.{1,64}@)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
-        );
-    };
-
-    const validate = (ev: Event) => {
-        const value = (ev.target as HTMLInputElement).value;
-
-        setIsValid(undefined);
-
-        if (value === '') return;
-
-        validateEmail(value) !== null ? setIsValid(true) : setIsValid(false);
-    };
 
 
-    const markTouched = () => {
-        setIsTouched(true);
-    };
-    /* Email Validation */
-
-    const history = useHistory();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [comfirmPassword, setComfirmPassword] = useState("");
-
-    const { signup, isAuthenticated } = useAuth();
-    const { isOnline } = useMeta();
-
+    /** Redirect to timeline, if is authenticated. */
     useEffect(() => {
         if (isAuthenticated) {
             history.push("/timeline/pri", { direction: 'none' });
         }
     }, [isAuthenticated]);
 
+
+
+    /** Signup Logic */
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (password !== comfirmPassword) {
             alert("Password and comfirm password are not matched");
             return;
         }
-
+        if (!captchaToken || !captcha.current) {
+            alert("Please complete the captcha")
+            return;
+        }
         try {
-            if (!captchaToken || !captcha.current) {
-                alert("Please complete the captcha")
-                return;
-            }
+
             await signup(email, password, captchaToken);
             captcha.current.resetCaptcha()
         } catch (error) {
@@ -89,7 +84,6 @@ const Signup: React.FC = () => {
 
     return (
         <IonPage id="main">
-
             <IonContent>
                 <IonHeader collapse="condense">
                     <IonToolbar>
@@ -98,82 +92,65 @@ const Signup: React.FC = () => {
                         </IonButtons>
                     </IonToolbar>
                 </IonHeader>
-                <IonGrid className='ion-padding'>
-                    <IonRow>
-                        <IonCol>
-                            <IonText>
-                                <h1 className='text-3xl font-semibold'>Signup</h1>
-                            </IonText>
-                        </IonCol>
-                    </IonRow>
-                    <form onSubmit={handleSubmit}>
-                        <IonRow>
-                            <IonInput
-                                className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
+                <div className='grid grid-cols-1 p-4'>
+                    <div className='mb-4'>
+                        <h1 className='text-3xl font-semibold'>Signup</h1>
+                    </div>
+                    <form className="" onSubmit={handleSubmit}>
+                        <div className="mb-5">
+                            <label
+                                htmlFor="email"
+                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                            <input
                                 type="email"
-                                fill="solid"
-                                label="Email"
-                                labelPlacement="floating"
-                                helperText="Enter a valid email"
-                                errorText="Invalid email"
-                                onIonInput={(event) => validate(event)}
-                                onIonBlur={() => markTouched()}
-                                onIonChange={(e) => setEmail(e.detail.value!)}
-                                disabled={false}
-                            />
-
-                        </IonRow>
-                        <IonRow>
-                            <IonInput
+                                id="email"
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="name@flowbite.com" required />
+                        </div>
+                        <div className="mb-5">
+                            <label
+                                htmlFor="password"
+                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
+                            <input
                                 type="password"
-                                label="Password"
-                                helperText="Type your password"
-                                labelPlacement="floating"
-                                counter={true}
-                                maxlength={32}
-                                minlength={8}
-                                onIonChange={(e) => setPassword(e.detail.value!)}
-                                disabled={false}
-                            />
-                        </IonRow>
-
-                        <IonRow>
-                            <IonInput
+                                id="password"
+                                onChange={handlePasswordChange}
+                                className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required />
+                            {!isPasswordValid && <p className="mt-2 text-sm text-red-600">Password should include lowercase, uppercase letters, digits and symbols (recommended)</p>}
+                        </div>
+                        <div className="mb-5">
+                            <label
+                                htmlFor="repeat-password"
+                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Repeat password</label>
+                            <input
                                 type="password"
-                                label="Comfirm Password"
-                                helperText="Type your password"
-                                labelPlacement="floating"
-                                counter={true}
-                                maxlength={32}
-                                minlength={8}
-                                onIonChange={(e) => setComfirmPassword(e.detail.value!)}
-                                disabled={false}
+                                id="repeat-password"
+                                onChange={(e) => setComfirmPassword(e.target.value)}
+                                className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required />
+                        </div>
+                        <div className=" flex items-start mb-5">
+                            <input
+                                type="checkbox"
+                                id="terms"
+                                checked={isTermsAgreed}
+                                onChange={(e) => setIsTermsAgreed(e.target.checked)}
+                                className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+                                required
                             />
-                        </IonRow>
-                        <IonRow>
-                            <IonCol>
-                                <HCaptcha
-                                    ref={captcha}
-                                    sitekey={HCAPTCHA_SITE_KEY}
-                                    onVerify={(token) => { setCaptchaToken(token) }} />
-                            </IonCol>
-                        </IonRow>
-
-                        <IonRow>
-                            <IonCol className="ion-padding-top">
-                                <IonButton disabled={!isOnline} type="submit" expand="block">
-                                    {isOnline ? "Signup" : "Cannot signup: You are Offline"}
-                                </IonButton>
-                            </IonCol>
-                        </IonRow>
-                        <IonRow>
-                            <IonCol>
-                                Already have an account? 👉 <IonRouterLink routerLink='/login' >Login</IonRouterLink>
-                            </IonCol>
-                        </IonRow>
-
+                            <label
+                                htmlFor="terms"
+                                className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="#" className="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a></label>
+                        </div>
+                        <HCaptcha
+                            ref={captcha}
+                            sitekey={HCAPTCHA_SITE_KEY}
+                            onVerify={(token) => { setCaptchaToken(token) }} />
+                        <button type="submit" className="mt-4 w-full text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Register new account</button>
                     </form>
-                </IonGrid>
+                    <div className="mt-4">
+                        <label htmlFor="terms" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Already have an account? 👉 <IonRouterLink routerLink='/login' >Login</IonRouterLink></label>
+                    </div>
+                </div>
             </IonContent>
         </IonPage >
     );
