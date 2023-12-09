@@ -45,6 +45,22 @@ const Login = async (email: string, password: string, captchaToken?: string) => 
     }
 };
 
+const loginWithGoogle = async () => {
+    try {
+        const { data, error } = await supabase.auth.signInWithOAuth({
+            provider: 'google'
+        })
+        if (error) {
+            throw error
+        } else {
+            return { data }
+        }
+    } catch (error) {
+        console.error(error)
+        throw error
+    }
+}
+
 const getSession = async () => {
     try {
         const { data: { session }, error } = await supabase.auth.getSession()
@@ -74,5 +90,5 @@ const Logout = async () => {
 
 
 
-export { Signup, Login, Logout, getSession };
+export { Signup, Login, Logout, getSession, loginWithGoogle };
 

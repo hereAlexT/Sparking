@@ -24,7 +24,7 @@ import { HCAPTCHA_SITE_KEY } from '../config';
 const Login: React.FC = () => {
 
     const history = useHistory();
-    const { login, isAuthenticated, session, user } = useAuth();
+    const { login, isAuthenticated, session, user, loginWithGoogle } = useAuth();
     const { isOnline } = useMeta();
 
 
@@ -57,7 +57,7 @@ const Login: React.FC = () => {
         }
     }
 
-  
+
 
     return (
         <IonPage id="main">
@@ -101,6 +101,9 @@ const Login: React.FC = () => {
                             onVerify={(token) => { setCaptchaToken(token) }} />
                         <button type="submit" className="mt-4 w-full text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
                     </form>
+                    <button
+                        onClick={() => loginWithGoogle()}
+                        className="mt-4 w-full text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Continue with Google</button>
                     <div className='mt-4'>
                         <IonRouterLink>Forgot password?</IonRouterLink>
                     </div>

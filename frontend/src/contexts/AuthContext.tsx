@@ -8,6 +8,7 @@ import {
 
 import {
     Login as ApiLogin,
+    loginWithGoogle as ApiLoginWithGoogle,
     Signup as ApiSignup,
     Logout as ApiLogout,
     getSession as ApiGetSession
@@ -63,6 +64,7 @@ type AuthContextType = {
     logout: () => void,
     signup: (email: string, password: string, captchaToken?: string) => any,
     getSession: () => void,
+    loginWithGoogle: () => any,
 };
 
 const AuthContext = createContext<AuthContextType>({
@@ -71,8 +73,9 @@ const AuthContext = createContext<AuthContextType>({
     isAuthenticated: false,
     login: (email: string, password: string, captchaToken?: string) => { },
     logout: () => { },
-    signup: (email: string, password: string, captchaToken?: string) => {},
+    signup: (email: string, password: string, captchaToken?: string) => { },
     getSession: () => { },
+    loginWithGoogle: () => { },
 });
 
 const initialState = {
@@ -100,6 +103,19 @@ function AuthProvider({ children }: AuthProviderProps) {
             console.error(error)
             throw error;
         }
+    }
+
+    const loginWithGoogle = async () => {
+        console.log("AuthContext - loginWithGoogle")
+        try {
+            const { data } = await ApiLoginWithGoogle();
+            console.log("AuthContext - loginWithGoogle data", data)
+            // dispatch({ type: "login", payload: { user, session } })
+        } catch (error) {
+            console.error(error)
+            throw error;
+        }
+
     }
 
     const signup = async (email: string, password: string, captchaToken?: string): Promise<any> => {
@@ -150,7 +166,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 
 
     return (
-        <AuthContext.Provider value={{ user, session, isAuthenticated, login, logout, signup, getSession }}>
+        <AuthContext.Provider value={{ user, session, isAuthenticated, login, logout, signup, getSession, loginWithGoogle }}>
             {children}
         </AuthContext.Provider>
     )
