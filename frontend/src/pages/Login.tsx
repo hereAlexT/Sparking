@@ -18,6 +18,7 @@ import { useHistory } from 'react-router';
 import { useMeta } from '../contexts/MetaContext';
 import HCaptcha from '@hcaptcha/react-hcaptcha'
 import { HCAPTCHA_SITE_KEY } from '../config';
+import { resetPasswordForEmail } from '../apis/AuthenticationAPI';
 
 
 
@@ -57,6 +58,16 @@ const Login: React.FC = () => {
         }
     }
 
+    /** Handle Forget password */
+    const handleForgetPassword = async () => {
+        try {
+            const { data } = await resetPasswordForEmail(email);
+            console.debug(data)
+        } catch (error) {
+            alert ("Failed to reset password: \n" + error)
+            console.error(error);
+        }
+    }
 
 
     return (

@@ -4,6 +4,7 @@ import type {
     AuthTokenResponse
 } from '@supabase/gotrue-js/src/lib/types'
 import { PassThrough } from 'stream';
+import { DOMAIN_NAME } from '../config';
 
 
 
@@ -107,5 +108,21 @@ export const UpdateUserPassword = async (password: string) => {
         console.error(error)
         throw error
     }
+}
 
+export const resetPasswordForEmail = async (email: string) => {
+    try {
+        const { data, error } = await supabase.auth.resetPasswordForEmail(
+            email, {
+            redirectTo: DOMAIN_NAME + '/account/update-password',
+        })
+        if (error) {
+            throw error
+        } else {
+            return { data }
+        }
+    } catch (error) {
+        console.error(error)
+        throw error
+    }
 }
