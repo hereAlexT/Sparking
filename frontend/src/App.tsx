@@ -7,7 +7,8 @@ import {
 } from '@ionic/react';
 import { useState, useEffect } from 'react'
 import { IonReactRouter } from '@ionic/react-router';
-import { Redirect, Route, useLocation } from 'react-router-dom';
+import { Redirect, Route, useLocation, useHistory } from 'react-router-dom';
+
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -70,7 +71,7 @@ const AppContent: React.FC = () => {
     setKey(Date.now());
   }, [location.pathname]);
 
-  console.log("isSplitPaneOn", isSplitPaneOn)
+  console.debug("isSplitPaneOn", isSplitPaneOn)
 
   const isLoginOrSignup = location.pathname === '/login' || location.pathname === '/signup';
 
@@ -94,30 +95,21 @@ const AppContent: React.FC = () => {
 const Routes: React.FC = ({ }) => {
   const { isAuthenticated, logout } = useAuth();
   const { isSplitPaneOn } = useMeta();
+  const history = useHistory();
+  useEffect(() => {
+    if (isAuthenticated && (history.location.pathname === '/login' || history.location.pathname === '/signup')) {
+      history.push('/timeline/pri');
+    }
+  }, [isAuthenticated, history]);
+
 
   return (
     <IonRouterOutlet id="main" animated={!isSplitPaneOn}>
-
       <Redirect exact path="/" to="/login" />
       <Redirect exact path="/timeline" to="/timeline/pri" />
-      <Route
-        exact
-        path="/signup"
-        component={Signup}
-      />
-      <Route
-        exact
-        path="/login"
-        component={isAuthenticated ? TimeLine : Login} />
-      <Route
-        exact
-        path="/settings"
-        component={isAuthenticated ? Settings : Login} />
-      <Route
-        exact
-        path="/timeline/pri"
-        component={isAuthenticated ? TimeLine : Login}
-      />
+      <Route exact path="/signup" component={Signup} />
+      <Route exact path="/settings" component={Settings} />
+      <Route exact path="/timeline/pri" component={TimeLine} />
       <Route exact path="/logout" component={Logout} />
       <Route path="/comlab" component={ComponentLab} />
       <Route path="/tabs" render={() => <MainTabs />} />
