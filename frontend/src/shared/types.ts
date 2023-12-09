@@ -24,7 +24,6 @@ export interface NoteImage {
     url: string; // add this line
 }
 
-//todo: change name to synced note
 export interface Note {
     id: NoteId;
     body: string;
@@ -32,9 +31,9 @@ export interface Note {
     createdAt: Date;
     // updatedAt should be assigned locally.
     updatedAt: Date;
+    userId: UserId;
     images?: NoteImage[];
-    status: NOTE_STATUS; 
-    userId: UserId; 
+    status: NOTE_STATUS;
 }
 
 

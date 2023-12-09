@@ -20,10 +20,12 @@ import type {
 } from '@supabase/gotrue-js/src/lib/types'
 
 
+/** Reducer */
 interface State {
     user?: User;
     session?: Session;
     isAuthenticated: boolean;
+    isMember: boolean;
 }
 
 interface Action {
@@ -56,10 +58,13 @@ function reducer(state: State, action: Action) {
     }
 }
 
+
+/** Props */
 type AuthContextType = {
     user: User | null,
     session: Session | null,
     isAuthenticated: boolean,
+    isMember: boolean,
     login: (email: string, password: string, captchaToken?: string) => void,
     logout: () => void,
     signup: (email: string, password: string, captchaToken?: string) => any,
@@ -71,6 +76,7 @@ const AuthContext = createContext<AuthContextType>({
     user: null,
     session: null,
     isAuthenticated: false,
+    isMember: false,
     login: (email: string, password: string, captchaToken?: string) => { },
     logout: () => { },
     signup: (email: string, password: string, captchaToken?: string) => { },
@@ -82,6 +88,7 @@ const initialState = {
     user: null,
     session: null,
     isAuthenticated: false,
+    isMember: false,
 }
 
 
@@ -90,7 +97,7 @@ interface AuthProviderProps {
 }
 
 function AuthProvider({ children }: AuthProviderProps) {
-    const [{ user, session, isAuthenticated }, dispatch] = useReducer(
+    const [{ user, session, isAuthenticated, isMember}, dispatch] = useReducer(
         reducer,
         initialState);
 
@@ -166,7 +173,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 
 
     return (
-        <AuthContext.Provider value={{ user, session, isAuthenticated, login, logout, signup, getSession, loginWithGoogle }}>
+        <AuthContext.Provider value={{ user, session, isAuthenticated, isMember, login, logout, signup, getSession, loginWithGoogle}}>
             {children}
         </AuthContext.Provider>
     )

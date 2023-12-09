@@ -38,7 +38,7 @@ interface CardEditorV2Props {
 const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = true }) => {
     const _noteid = note?.id || uuidv4();
     const [content, setContent] = useState('');
-    const { user } = useAuth();
+    const { user, isMember } = useAuth();
 
     const HandleOnSubmit = () => {
         if (!user) throw new Error("User is null");
@@ -148,26 +148,31 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({ onSubmit, note, isOnline = 
                 </div>
             </div>
 
-            <div className="col-span-1 col-start-1">
-                <IonButton
-                    color="primary"
-                    size="small"
-                    fill="clear"
-                    onClick={handleCameraButtonClick}
-                    className='circular-button'>
-                    <IonIcon color="dark" className="m-0 p-0" size="small" slot="icon-only" icon={cameraOutlineIcon} />
-                </IonButton>
-            </div>
-            <div className="col-span-1 col-start-2">
-                <IonButton
-                    color="primary"
-                    size="small"
-                    fill="clear"
-                    onClick={handleImageButtonClick}
-                    className='circular-button'>
-                    <IonIcon color="dark" className="m-0 p-0" size="small" slot="icon-only" icon={imageOutlineIcon} />
-                </IonButton>
-            </div>
+            {isMember && (<>
+                <div className="col-span-1">
+                    <IonButton
+                        color="primary"
+                        size="small"
+                        fill="clear"
+                        onClick={handleCameraButtonClick}
+                        className='circular-button'>
+                        <IonIcon color="dark" className="m-0 p-0" size="small" slot="icon-only" icon={cameraOutlineIcon} />
+                    </IonButton>
+                </div>
+                <div className="col-span-1">
+                    <IonButton
+                        color="primary"
+                        size="small"
+                        fill="clear"
+                        onClick={handleImageButtonClick}
+                        className='circular-button'>
+                        <IonIcon color="dark" className="m-0 p-0" size="small" slot="icon-only" icon={imageOutlineIcon} />
+                    </IonButton>
+                </div>
+            </>
+            )}
+
+
             <div className='col-span-1 col-start-12'>
                 <IonButton
                     disabled={!isOnline || content.length === 0}
