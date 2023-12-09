@@ -70,10 +70,9 @@ const Login: React.FC = () => {
         }
 
         try {
-            captcha.current.resetCaptcha()
-            const { data } = await resetPasswordForEmail(email, captchaToken);
+            resetPasswordForEmail(email, captchaToken);
             alert(`We have sent you an email (${email}) to reset your password. Please check your inbox.`)
-            console.debug(data)
+            captcha.current.resetCaptcha()
         } catch (error) {
             alert("Failed to reset password: \n" + error)
             console.error(error);
