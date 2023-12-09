@@ -35,9 +35,8 @@ const Signup: React.FC = () => {
     /** Password Validation */
     const [isPasswordValid, setIsPasswordValid] = useState(true);
 
-    const handlePasswordChange = (e) => {
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const password = e.target.value;
-        console.log(password)
         const pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
         const isMatched = pattern.test(password);
         console.log(isMatched)
@@ -72,7 +71,6 @@ const Signup: React.FC = () => {
             return;
         }
         try {
-
             await signup(email, password, captchaToken);
             captcha.current.resetCaptcha()
         } catch (error) {
