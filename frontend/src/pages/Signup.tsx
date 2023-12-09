@@ -72,7 +72,9 @@ const Signup: React.FC = () => {
         }
         try {
             const { user } = await signup(email, password, captchaToken);
-            (user.confirmation_sent_at) && alert("Verfication email sent, check your Email.");
+            if (user.confirmation_sent_at) {
+                alert("Verification email sent, please check your inbox. If you register your account by other method, please login by that method.");
+            }
             (user.email_confirmed_at) && alert("Email Exist, please login!");
             captcha.current.resetCaptcha()
         } catch (error) {
