@@ -99,6 +99,7 @@ const Routes: React.FC = ({ }) => {
     <IonRouterOutlet id="main" animated={!isSplitPaneOn}>
 
       <Redirect exact path="/" to="/login" />
+      <Redirect exact path="/timeline" to="/timeline/pri" />
       <Route
         exact
         path="/signup"
