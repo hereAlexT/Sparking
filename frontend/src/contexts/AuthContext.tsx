@@ -117,7 +117,6 @@ function AuthProvider({ children }: AuthProviderProps) {
         console.debug("AuthenContext - getSession")
         try {
             const session = await ApiGetSession();
-            console.log("isSession?", session)
             if (session.session) {
                 dispatch({ type: "getSession", payload: { session } })
             }
