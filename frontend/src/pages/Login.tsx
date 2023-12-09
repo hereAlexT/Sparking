@@ -57,6 +57,7 @@ const Login: React.FC = () => {
         }
     }
 
+  
 
     return (
         <IonPage id="main">
@@ -107,108 +108,6 @@ const Login: React.FC = () => {
                         <IonRouterLink routerLink='/signup' >Don't have an account? Signup</IonRouterLink>
                     </div>
                 </div>
-
-
-                {/* <IonGrid className='ion-padding'>
-                    <form onSubmit={handleSubmit}>
-                        <IonRow>
-                            <IonCol>
-                                <IonText>
-                                    <h1 className='text-3xl font-semibold'>Welcome to Sparking.</h1>
-                                </IonText>
-                            </IonCol>
-                        </IonRow>
-                        <IonRow className='mt-8'>
-                            <IonCol>
-                                <IonInput
-                                    className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
-                                    type="email"
-                                    fill="solid"
-                                    label="Email"
-                                    labelPlacement="floating"
-                                    errorText="Invalid email"
-                                    // onIonInput={(event) => validate(event)}
-                                    onIonBlur={() => markTouched()}
-                                    value={email}
-                                    onIonChange={(e) => setEmail(e.detail.value ?? '')}
-                                ></IonInput>
-                            </IonCol>
-                        </IonRow>
-                        <IonRow>
-                            <IonCol>
-                                <IonInput
-                                    type="password"
-                                    fill="solid"
-                                    label="Password"
-                                    labelPlacement="floating"
-                                    errorText='Invalid password'
-                                    counter={true}
-                                    maxlength={32}
-                                    minlength={8}
-                                    value={password}
-                                    onIonChange={(e) => setPassword(e.detail.value ?? '')}
-                                ></IonInput>
-                            </IonCol>
-                        </IonRow>
-                        <IonRow>
-                            <IonCol>
-                                <HCaptcha
-                                    ref={captcha}
-                                    sitekey={HCAPTCHA_SITE_KEY}
-                                    onVerify={(token) => { setCaptchaToken(token) }} />
-                            </IonCol>
-                        </IonRow>
-                        <IonRow>
-                            <IonCol>
-                                <IonButton
-                                    disabled={!isOnline || !captchaToken}
-                                    color="primary"
-                                    type="submit"
-                                    expand="block"
-                                    className='rounded-full'
-                                >
-                                    {isOnline ? "Login" : "Cannot login: You are Offline"}
-                                </IonButton>
-                            </IonCol>
-                        </IonRow>
-                    </form>
-
-                    <IonRow>
-                        <IonCol>
-                            <IonButton
-                                disabled={true}
-                                color="primary"
-                                fill="outline"
-                                expand="block"
-                            >
-                                {isOnline ? "Login with Google (developing)" : "Cannot login: You are Offline"}
-                            </IonButton>
-                        </IonCol>
-                    </IonRow>
-                    <IonRow>
-                        <IonCol>
-                            <IonText color="medium">
-                                <a>Forgot password?</a>
-                            </IonText>
-                        </IonCol>
-                    </IonRow>
-                    <IonRow>
-                        <IonCol>
-                            <IonText color="medium" >
-                                Don't have an account? 👉   <IonRouterLink routerLink='/signup' >Signup</IonRouterLink>
-                            </IonText>
-                        </IonCol>
-                    </IonRow>
-
-                </IonGrid>
-                <IonAlert
-                    isOpen={isLoginFailed}
-                    header="Login Failed"
-                    // subHeader="Wrong Username or password"
-                    message="We don't recognize you, try again or create a new account?"
-                    buttons={['Action']}
-                    onDidDismiss={() => setLoginFailed(false)}
-                ></IonAlert> */}
             </IonContent>
         </IonPage>
     );

@@ -25,7 +25,7 @@ const MetaProvider: React.FC<MetaProviderProps> = ({ children }) => {
 
 
     useEffect(() => {
-        console.log(isSplitPaneOn); // Print the isSplitPaneOn state whenever it changes
+        console.debug("isSplitPaneOn: ", isSplitPaneOn); // Print the isSplitPaneOn state whenever it changes
     }, [isSplitPaneOn]);
 
     useEffect(() => {

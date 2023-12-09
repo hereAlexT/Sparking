@@ -48,14 +48,6 @@ import { MetaProvider, useMeta } from './contexts/MetaContext';
 setupIonicReact();
 
 
-function customLog(level: 'debug' | 'info' | 'warn' | 'error', message: any) {
-  if (process.env.NODE_ENV !== 'production') {
-    console[level](message);
-  } else if (level === 'warn' || level === 'error') {
-    console[level](message);
-  }
-}
-
 const App: React.FC = () => {
   return (
     <MetaProvider>
@@ -80,10 +72,6 @@ const AppContent: React.FC = () => {
     setKey(Date.now());
   }, [location.pathname]);
 
-
-  customLog('info', "isSplitPaneOn: " + isSplitPaneOn);
-
-  console.debug("isSplitPaneOn", isSplitPaneOn)
 
   const isLoginOrSignup = location.pathname === '/login' || location.pathname === '/signup';
 
@@ -118,6 +106,7 @@ const Routes: React.FC = ({ }) => {
     <IonRouterOutlet id="main" animated={!isSplitPaneOn}>
       <Redirect exact path="/" to="/login" />
       <Redirect exact path="/timeline" to="/timeline/pri" />
+      <Route exact path="/login" component={Login} />
       <Route exact path="/signup" component={Signup} />
       <Route exact path="/settings" component={Settings} />
       <Route exact path="/timeline/pri" component={TimeLine} />
