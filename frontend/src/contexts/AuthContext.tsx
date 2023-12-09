@@ -35,15 +35,15 @@ function reducer(state: State, action: Action) {
         case "login":
             return { ...state, user: action.payload.user, session: action.payload.session, isAuthenticated: true }
         case "logout":
-            console.log("reducer : logout")
+            console.debug("reducer : logout")
             return { ...state, user: null, session: null, isAuthenticated: false };
         case "signup":
-            console.log("reducer : signup")
+            console.debug("reducer : signup")
             return { ...state, user: null, isAuthenticated: false, session: null };
         case "getSession":
-            console.log("reducer : getSession")
-            console.log("reducer : getSession session ", action.payload.session.session)
-            console.log("reducer : getSession user", action.payload.session.session.user)
+            console.debug("reducer : getSession")
+            // console.debug("reducer : getSession session ", action.payload.session.session)
+            // console.debug("reducer : getSession user", action.payload.session.session.user)
             return {
                 ...state,
                 user: action.payload.session.session.user,
@@ -114,7 +114,7 @@ function AuthProvider({ children }: AuthProviderProps) {
         }
     }
     const getSession = async () => {
-        console.log("AuthenContext - getSession")
+        console.debug("AuthenContext - getSession")
         try {
             const session = await ApiGetSession();
             console.log("isSession?", session)

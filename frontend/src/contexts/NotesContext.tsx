@@ -37,7 +37,7 @@ interface Action<T> {
 }
 
 const reducer = (state: Note[], action: NoteAction): Note[] => {
-    console.log("reducer called")
+    console.debug("reducer called")
     switch (action.type) {
         case NOTE_ACTION.CREATE_NOTE:
             return [action.payload as Note, ...state];
@@ -47,7 +47,7 @@ const reducer = (state: Note[], action: NoteAction): Note[] => {
             return state.map(note => note.id === ((action.payload as Note)?.id || null) ? action.payload as Note : note);
         case NOTE_ACTION.GET_NOTES:
         case NOTE_ACTION.SEARCH_NOTES:
-            console.log("searchNotes called")
+            console.debug("searchNotes called")
             return action.payload as Note[]; // return the filtered notes
         default:
             return state;
@@ -88,7 +88,7 @@ const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
 
     const createNote = async (unSyncedNote: Note) => {
         try {
-            console.log("unSyncedNote", unSyncedNote)
+            console.debug("unSyncedNote", unSyncedNote)
             // create file object from blob url
             const filePromises = unSyncedNote.images!.map((image, index) => blobUrlToFile(image.url, `filename${index}`));
 
@@ -138,8 +138,7 @@ const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
             updatedAt: new Date(note.updatedAt),
             createdAt: new Date(note.createdAt)
         }));
-        console.log("getNotes called")
-        // console.log(_notes)
+        console.debug("getNotes called")
         _notes.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
         dispatch({ type: NOTE_ACTION.GET_NOTES, payload: _notes })
         return _notes;
@@ -147,8 +146,7 @@ const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
 
     // Modify the searchNotes function
     const searchNotes = (query: string) => {
-        console.log("triggered searchNotes");
-        console.log(query)
+        console.debug("triggered searchNotes");
 
         if (query) {
             const _notes = notes.filter(note => note.body.includes(query));

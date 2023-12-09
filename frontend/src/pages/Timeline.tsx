@@ -32,8 +32,6 @@ import { arrowUpOutline as arrowUpOutlineIcon } from 'ionicons/icons';
 
 
 const TimeLine: React.FC = () => {
-    console.debug("timeline render")
-
     const [isEditorOpen, setIsEditorOpen] = useState(false);
     const [selectedNote, setSelectedNote] = useState<Note | undefined>(undefined);
     const [isLoading, setIsLoading] = useState(true);
@@ -57,7 +55,6 @@ const TimeLine: React.FC = () => {
     useEffect(() => {
         console.debug(getPlatforms())
         setIsLoading(true);
-        console.log("i fire once. isAuthenticated:" + isAuthenticated)
         getNotes().then(() => {
             setIsLoading(false);
         });
