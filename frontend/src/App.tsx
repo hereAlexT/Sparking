@@ -98,8 +98,21 @@ const Routes: React.FC = ({ }) => {
   const { isSplitPaneOn } = useMeta();
   const history = useHistory();
   useEffect(() => {
-    if (isAuthenticated && (history.location.pathname === '/login' || history.location.pathname === '/signup')) {
+    const pathname = history.location.pathname;
+    if (isAuthenticated && (
+      pathname === '/login' ||
+      pathname === '/signup')) {
       history.push('/timeline/pri');
+    }
+
+    if (!isAuthenticated && (
+      pathname === '/login' ||
+      pathname === '/settings' ||
+      pathname === '/comlab' ||
+      pathname === '/timeline' ||
+      pathname === '/timeline/pri'
+    )) {
+      history.push('/login');
     }
   }, [isAuthenticated, history]);
 
