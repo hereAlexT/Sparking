@@ -49,9 +49,7 @@ const Login: React.FC = () => {
                 }
                 await login(email, password, captchaToken);
                 captcha.current.resetCaptcha()
-                console.log("try to history.push")
                 history.push('/timeline/pri', { direction: 'none' });
-                console.log("push done")
             } catch (error) {
                 alert("Login failed: \n " + error)
                 console.error(error);
