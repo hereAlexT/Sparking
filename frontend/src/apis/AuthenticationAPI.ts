@@ -7,7 +7,7 @@ import type {
 
 
 
-const Signup = async (email: string, password: string, captchaToken: string) => {
+const Signup = async (email: string, password: string, captchaToken?: string) => {
     try {
         const { data: { user, session }, error } = await supabase.auth.signUp({
             email: email,
@@ -26,7 +26,7 @@ const Signup = async (email: string, password: string, captchaToken: string) => 
     }
 };
 
-const Login = async (email: string, password: string, captchaToken: string) => {
+const Login = async (email: string, password: string, captchaToken?: string) => {
     try {
         const { data: { user, session }, error } = await supabase.auth.signInWithPassword({
             email: email,

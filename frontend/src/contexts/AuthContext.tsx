@@ -59,9 +59,9 @@ type AuthContextType = {
     user: User | null,
     session: Session | null,
     isAuthenticated: boolean,
-    login: (email: string, password: string, captchaToken: string) => void,
+    login: (email: string, password: string, captchaToken?: string) => void,
     logout: () => void,
-    signup: (email: string, password: string, captchaToken: string) => Promise<any>,
+    signup: (email: string, password: string, captchaToken?: string) => Promise<any>,
     getSession: () => void,
 };
 
@@ -69,9 +69,9 @@ const AuthContext = createContext<AuthContextType>({
     user: null,
     session: null,
     isAuthenticated: false,
-    login: (email: string, password: string, captchaToken: string) => { },
+    login: (email: string, password: string, captchaToken?: string) => { },
     logout: () => { },
-    signup: (email: string, password: string, captchaToken: string) => { },
+    signup: (email: string, password: string, captchaToken?: string) => { },
     getSession: () => { },
 });
 
