@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
     IonContent,
     IonHeader,
@@ -74,6 +74,17 @@ const UpdatePassword: React.FC = () => {
         setPassword(password);
         setIsPasswordValid(isMatched);
     };
+
+    //** Handle invliad url */
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+        const errorCode = urlParams.get('error_code');
+        const errorDescription = urlParams.get('error_description');
+        if (error || errorCode || errorDescription) {
+            alert(`Error: ${error}\nError Code: ${errorCode}\nError Description: ${decodeURIComponent(errorDescription || '')}`);
+        }
+    }, []);
 
     return (
         <IonPage>
