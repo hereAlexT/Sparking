@@ -136,6 +136,9 @@ const ComponentLab: React.FC = () => {
                                     if (sessionCopy.access_token) {
                                         sessionCopy.access_token = '****';
                                     }
+                                    if (sessionCopy.provider_token) {
+                                        sessionCopy.provider_token = '****';
+                                    }
                                     alert("Sesssion info: \n" + isAuthenticated + "\n" + JSON.stringify(sessionCopy, null, 2) + "\n" + user)
                                     console.log("Sesssion info: \n" + isAuthenticated + "\n" + JSON.stringify(sessionCopy, null, 2) + "\n" + user)
                                 }}
@@ -147,9 +150,9 @@ const ComponentLab: React.FC = () => {
                             </IonButton>
                         </IonCol>
                     </IonRow>
-                    <IonRow>
+                    {/* <IonRow>
                         <IonCol>
-                            {/** use a button Get session and print in console*/}
+            
                             <IonButton
                                 color="primary"
                                 fill='outline'
@@ -165,10 +168,9 @@ const ComponentLab: React.FC = () => {
                                 pageRef={pageRef}
                             />
 
-
                         </IonCol>
-                    </IonRow>
-                    <IonRow>
+                    </IonRow> */}
+                    {/* <IonRow>
                         <IonCard className='m-0 px-5 pt-2 pb-1 rounded-xl w-full border border-slate-400  shadow-none'>
                             <CardEditorV2
                                 onSubmit={(note: Note) => console.log(note)}
@@ -191,7 +193,7 @@ const ComponentLab: React.FC = () => {
                                 </IonItem>
                             ))}
                         </IonList>
-                    </IonRow>
+                    </IonRow> */}
                 </IonGrid>
             </IonContent>
         </IonPage>
