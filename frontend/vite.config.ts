@@ -8,6 +8,20 @@ export default defineConfig({
     react(),
     legacy()
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'settings': ['src/pages/Settings.tsx'],
+          'timeline': ['src/pages/Timeline.tsx'],
+          'login': ['src/pages/Login.tsx'],
+          'signup': ['src/pages/Signup.tsx'],
+          'UpdatePassword': ['src/pages/UpdatePassword.tsx'],
+          'DeveloperTool' : ['src/pages/ComponentLab.tsx']
+        },
+      },
+    },
+  },
   test: {
     globals: true,
     environment: 'jsdom',
