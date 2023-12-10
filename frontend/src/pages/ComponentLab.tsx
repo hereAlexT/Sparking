@@ -23,11 +23,12 @@ import {
 import { useRef, useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import NoteCardV2 from '../components/NoteCardV2';
-import { NoteId, Note, NOTE_STATUS} from '../shared/types';
+import { NoteId, Note, NOTE_STATUS } from '../shared/types';
 import { v4 as uuidv4 } from 'uuid';
 import CardEditorV2 from '../components/CardEditorV2';
 import CardEditorMobileModal from '../components/CardEditorMobileModal';
 import Markdown from 'react-markdown'
+import ReactGA from "react-ga4";
 
 import { arrowUpOutline as arrowUpOutlineIcon } from 'ionicons/icons';
 
@@ -132,6 +133,10 @@ const ComponentLab: React.FC = () => {
                             {/** use a button Get session and print in console*/}
                             <IonButton
                                 onClick={() => {
+                                    ReactGA.event({
+                                        'category': 'DeveloperTool',
+                                        'action': 'GetSession',
+                                    })
                                     let sessionCopy = { ...session };
                                     if (sessionCopy.access_token) {
                                         sessionCopy.access_token = '****';

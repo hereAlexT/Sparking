@@ -8,6 +8,23 @@ import {
 import { useState, useEffect } from 'react'
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route, useLocation, useHistory } from 'react-router-dom';
+import ReactGA from "react-ga4";
+import { GA_MEASUREMENT_ID } from './config';
+
+/* Import Components */
+import MainTabs from './pages/MainTabs';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
+import TimeLine from './pages/Timeline';
+import ComponentLab from './pages/ComponentLab'
+import Settings from './pages/Settings';
+import Menu from './components/Menu';
+import Logout from './components/Logout';
+import UpdatePassword from './pages/UpdatePassword';
+import { AuthProvider } from './contexts/AuthContext';
+import { useAuth } from './contexts/AuthContext';
+import { NotesProvider } from './contexts/NotesContext';
+import { MetaProvider, useMeta } from './contexts/MetaContext';
 
 
 /* Core CSS required for Ionic components to work properly */
@@ -31,22 +48,8 @@ import './theme/variables.css';
 import './theme/global.css'
 import './App.css'
 
-/* Import Components */
-import MainTabs from './pages/MainTabs';
-import Signup from './pages/Signup';
-import Login from './pages/Login';
-import TimeLine from './pages/Timeline';
-import ComponentLab from './pages/ComponentLab'
-import Settings from './pages/Settings';
-import Menu from './components/Menu';
-import Logout from './components/Logout';
-import UpdatePassword from './pages/UpdatePassword';
-import { AuthProvider } from './contexts/AuthContext';
-import { useAuth } from './contexts/AuthContext';
-import { NotesProvider } from './contexts/NotesContext';
-import { MetaProvider, useMeta } from './contexts/MetaContext';
 
-
+/** Ionic Init */
 setupIonicReact();
 
 
@@ -65,6 +68,9 @@ const App: React.FC = () => {
     </MetaProvider>)
 };
 
+/** Google Analytics Init */
+ReactGA.initialize(GA_MEASUREMENT_ID);
+
 const AppContent: React.FC = () => {
   const { isSplitPaneOn, setIsSplitPaneOn } = useMeta();
   const location = useLocation();
@@ -74,8 +80,14 @@ const AppContent: React.FC = () => {
     setKey(Date.now());
   }, [location.pathname]);
 
-
   const isLoginOrSignup = location.pathname === '/login' || location.pathname === '/signup';
+
+
+  useEffect(() => {
+    ReactGA.send({ hitType: 'pageview', page: location.pathname + location.search });
+    // console.log("GA: ", location.pathname + location.search)
+  }, [location]);
+
 
   return (
     <IonSplitPane key={key} className={`${isLoginOrSignup ? 'max-w-md' : 'max-w-3xl'} mx-auto`} onIonSplitPaneVisible={(event) => setIsSplitPaneOn(event.detail.visible)} contentId="main">
