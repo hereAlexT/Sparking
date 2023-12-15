@@ -2,6 +2,7 @@ import { fetchImage } from "../apis/NoteAPI";
 import { useAuth } from "../contexts/AuthContext";
 import { Note, NoteId, NoteImageId } from "../shared/types";
 import ImagePreviewModal from "./ImagePreviewModal";
+// or any style you prefer
 import "./NoteCardV2.css";
 import {
   IonIcon,
@@ -12,6 +13,8 @@ import {
   IonButton,
   IonText,
 } from "@ionic/react";
+import "highlight.js/styles/github.css";
+// or any style you prefer
 import {
   navigateOutline as navigateOutlineIcon,
   cloudOutline as cloudOutlineIcon,
@@ -24,8 +27,11 @@ import {
 import "katex/dist/katex.min.css";
 import { useEffect, useState } from "react";
 import Markdown from "react-markdown";
+import rehypeHighlight from "rehype-highlight";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
+
+// or any style you prefer
 
 const formatDate = (date: Date): string => {
   return date.toLocaleString("en-GB", {
@@ -102,7 +108,7 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({
         {/** Note body */}
         <div className="col-span-10 col-start-1 mt-2">
           <Markdown
-            rehypePlugins={[rehypeKatex]}
+            rehypePlugins={[rehypeKatex, rehypeHighlight]}
             remarkPlugins={[remarkMath]}
             className="font-poppins font-normal text-zinc-800"
             children={note.body}
