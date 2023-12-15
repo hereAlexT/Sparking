@@ -1,5 +1,6 @@
 import { useAuth } from "../contexts/AuthContext";
 import { useMeta } from "../contexts/MetaContext";
+import { THEME_TYPE } from "../shared/types";
 import {
   IonContent,
   IonHeader,
@@ -14,11 +15,14 @@ import {
   IonIcon,
   IonButtons,
   IonBackButton,
+  IonSelect,
+  IonSelectOption,
 } from "@ionic/react";
 import {
   mailOutline as mailOutLineIcon,
   logOutOutline as logOutOutlineIcon,
   hammerOutline as hammerOutlineIcon,
+  moonOutline as moonOutlineIcon,
 } from "ionicons/icons";
 import React, { ReactNode } from "react";
 
@@ -41,7 +45,7 @@ const StyledIonList: React.FC<StyledIonListProps> = ({
 const Settings: React.FC = () => {
   console.log("Settings.tsx: Settings");
   const { user } = useAuth();
-  const { isSplitPaneOn } = useMeta();
+  const { isSplitPaneOn, theme, setTheme } = useMeta();
 
   return (
     <IonPage id="main">
@@ -75,6 +79,26 @@ const Settings: React.FC = () => {
                 Add your location data to every note.
               </IonNote>
             </IonToggle>
+          </IonItem>
+        </StyledIonList>
+
+        <StyledIonList inset={true}>
+          <IonItem>
+            <IonIcon aria-hidden="true" icon={moonOutlineIcon} slot="start" />
+            <IonSelect
+              label="Color Scheme"
+              placeholder={
+                theme.charAt(0).toUpperCase() + theme.slice(1).toLowerCase()
+              }
+              interface="popover"
+              onIonChange={(e) => setTheme(e.detail.value)}
+            >
+              {Object.values(THEME_TYPE).map((type) => (
+                <IonSelectOption value={type}>
+                  {type.charAt(0).toUpperCase() + type.slice(1).toLowerCase()}
+                </IonSelectOption>
+              ))}
+            </IonSelect>
           </IonItem>
         </StyledIonList>
 

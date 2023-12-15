@@ -43,3 +43,9 @@ export enum AUTH_ACTION {
     LOGOUT = "LOGOUT",
     SIGNUP = "REGISTER"
 }
+
+export enum THEME_TYPE {
+    DARK = "DARK",
+    LIGHT = "LIGHT",
+    SYSTEM = "SYSTEM"
+}
