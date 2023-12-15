@@ -102,7 +102,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
     <div className="grid grid-cols-12">
       <div className="col-span-12 col-start-1">
         <IonTextarea
-          className="native-textarea-p0-m0 border-b border-slate-400 px-1 pt-1 font-poppins font-light text-black dark:text-white"
+          className="native-textarea-p0-m0 border-b border-slate-400 px-1 pt-1 font-poppins text-black dark:text-white"
           disabled={!isOnline}
           value={isOnline ? content : "We are working on offline editing!"}
           onIonInput={(event: CustomEvent) => setContent(event.detail.value)}
