@@ -43,6 +43,7 @@ import "@ionic/react/css/structure.css";
 import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/typography.css";
+import clsx from "clsx";
 import { useState, useEffect } from "react";
 import ReactGA from "react-ga4";
 import { Redirect, Route, useLocation, useHistory } from "react-router-dom";
@@ -92,7 +93,8 @@ const AppContent: React.FC = () => {
   return (
     <IonSplitPane
       key={key}
-      className={`${isLoginOrSignup ? "max-w-md" : "max-w-3xl"} mx-auto`}
+      /** Limit the size when in pages that not two columns*/
+      className={clsx(isLoginOrSignup && "max-w-md")}
       onIonSplitPaneVisible={(event) => setIsSplitPaneOn(event.detail.visible)}
       contentId="main"
     >
@@ -132,7 +134,11 @@ const Routes: React.FC = ({}) => {
   }, [isAuthenticated, history]);
 
   return (
-    <IonRouterOutlet id="main" animated={!isSplitPaneOn}>
+    <IonRouterOutlet
+      id="main"
+      animated={!isSplitPaneOn}
+      className="mx-auto max-w-2xl"
+    >
       <Redirect exact path="/" to="/login" />
       <Redirect exact path="/timeline" to="/timeline/pri" />
       <Route exact path="/login" component={Login} />
