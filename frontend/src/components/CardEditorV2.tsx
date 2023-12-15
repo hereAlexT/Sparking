@@ -100,7 +100,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
 
   return (
     <div className="grid grid-cols-12">
-      <div className="col-span-12 col-start-1">
+      <div className="col-span-12 col-start-1 ">
         <IonTextarea
           className="native-textarea-p0-m0 border-b border-slate-400 px-1 pt-1 font-poppins text-black dark:text-white"
           disabled={!isOnline}
@@ -199,7 +199,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
           onClick={HandleOnSubmit}
         >
           <IonIcon
-            className="m-0  p-0 text-white dark:text-black"
+            className="m-0 p-0 text-white dark:text-black"
             size="small"
             slot="icon-only"
             icon={arrowForwardOutlineIcon}
