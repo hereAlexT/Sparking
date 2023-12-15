@@ -6,6 +6,7 @@ import {
   NOTE_STATUS,
   NoteId,
 } from "../shared/types";
+import { SubmitButton } from "./CardEditor";
 import { Camera, CameraResultType, Photo } from "@capacitor/camera";
 import { IonButton, IonTextarea, IonIcon } from "@ionic/react";
 import {
@@ -187,13 +188,9 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
       )}
 
       <div className="col-span-1 col-start-12">
-        <IonButton
+        <SubmitButton
           disabled={!isOnline || content.length === 0}
-          color="primary"
-          size="small"
-          fill="solid"
           onClick={HandleOnSubmit}
-          className="circular-button"
         >
           <IonIcon
             color="light"
@@ -201,8 +198,8 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
             size="small"
             slot="icon-only"
             icon={arrowForwardOutlineIcon}
-          ></IonIcon>
-        </IonButton>
+          />
+        </SubmitButton>
       </div>
     </div>
   );
