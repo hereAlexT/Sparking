@@ -94,7 +94,7 @@ const AppContent: React.FC = () => {
     <IonSplitPane
       key={key}
       /** Limit the size when in pages that not two columns*/
-      className={clsx(isLoginOrSignup && "max-w-md")}
+      className={clsx(isLoginOrSignup && "mx-auto max-w-md border-none")}
       onIonSplitPaneVisible={(event) => setIsSplitPaneOn(event.detail.visible)}
       contentId="main"
     >
@@ -137,7 +137,7 @@ const Routes: React.FC = ({}) => {
     <IonRouterOutlet
       id="main"
       animated={!isSplitPaneOn}
-      className="mx-auto max-w-2xl border-x"
+      className={clsx("mx-auto max-w-2xl", isAuthenticated && "border-none")}
     >
       <Redirect exact path="/" to="/login" />
       <Redirect exact path="/timeline" to="/timeline/pri" />
