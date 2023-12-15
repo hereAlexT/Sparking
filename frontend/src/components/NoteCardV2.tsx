@@ -27,7 +27,8 @@ import {
 import "katex/dist/katex.min.css";
 import { useEffect, useState } from "react";
 import Markdown from "react-markdown";
-import rehypeHighlight from "rehype-highlight";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { dracula as highliter } from "react-syntax-highlighter/dist/esm/styles/prism";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 
@@ -113,6 +114,25 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({
             // className="font-poppins font-normal text-zinc-800 dark:text-white"
             className="prose font-poppins"
             children={note.body}
+            components={{
+              code(props) {
+                const { children, className, node, ...rest } = props;
+                const match = /language-(\w+)/.exec(className || "");
+                return match ? (
+                  <SyntaxHighlighter
+                    {...rest}
+                    PreTag="div"
+                    children={String(children).replace(/\n$/, "")}
+                    language={match[1]}
+                    style={highliter}
+                  />
+                ) : (
+                  <code {...rest} className={className}>
+                    {children}
+                  </code>
+                );
+              },
+            }}
             // components={{
             //   h1: ({ node, ...props }) => (
             //     <h1
