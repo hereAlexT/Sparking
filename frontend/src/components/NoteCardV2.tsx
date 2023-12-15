@@ -25,7 +25,7 @@ import {
   trashOutline as TrashOutlineIcon,
 } from "ionicons/icons";
 import "katex/dist/katex.min.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Markdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula as highliter } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -95,6 +95,8 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({
     undefined,
   );
 
+  /** Highligter */
+  const syntaxHighlighterRef = useRef<SyntaxHighlighter>(null);
   return (
     <div className="m-0 w-full border-b border-slate-300 py-3 dark:border-slate-200">
       <div className="grid grid-cols-12">
@@ -121,6 +123,7 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({
                 return match ? (
                   <SyntaxHighlighter
                     {...rest}
+                    ref={syntaxHighlighterRef}
                     PreTag="div"
                     children={String(children).replace(/\n$/, "")}
                     language={match[1]}
