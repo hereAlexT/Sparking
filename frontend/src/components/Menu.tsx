@@ -85,18 +85,7 @@ const Menu: React.FC<MenuProps> = ({}) => {
   }
 
   return (
-    <IonMenu
-      contentId="main"
-      className="max-w-4xs border-r"
-      style={
-        {
-          // "--background": "blue",
-          // "--max-width": "200px",
-          // "--min-width": "50px",
-          // "--width": "100%",
-        }
-      }
-    >
+    <IonMenu contentId="main" className="max-w-4xs border-r">
       <IonHeader className="pt-14"></IonHeader>
       <IonContent
         style={
