@@ -137,7 +137,7 @@ const Routes: React.FC = ({}) => {
     <IonRouterOutlet
       id="main"
       animated={!isSplitPaneOn}
-      className="mx-auto max-w-2xl"
+      className="mx-auto max-w-2xl border-x"
     >
       <Redirect exact path="/" to="/login" />
       <Redirect exact path="/timeline" to="/timeline/pri" />
