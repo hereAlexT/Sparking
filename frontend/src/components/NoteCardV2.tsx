@@ -95,12 +95,12 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({
   );
 
   return (
-    <div className="m-0 w-full border-b border-slate-300 py-3">
+    <div className="m-0 w-full border-b border-slate-300 py-3 dark:border-slate-200">
       <div className="grid grid-cols-12">
         {/** First Row */}
         {/** Date Time */}
-        <div className="col-strat-1 col-span-4 pt-3">
-          <p className="font-popins text-sm font-light">
+        <div className="col-strat-1 col-span-7 pt-3">
+          <p className="font-popins text-sm font-light text-gray-700 dark:text-gray-300">
             {formatDate(note.createdAt)}
           </p>
         </div>
@@ -110,7 +110,7 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({
           <Markdown
             rehypePlugins={[rehypeKatex, rehypeHighlight]}
             remarkPlugins={[remarkMath]}
-            className="font-poppins font-normal text-zinc-800"
+            className="font-poppins font-normal text-zinc-800 dark:text-white"
             children={note.body}
             components={{
               h1: ({ node, ...props }) => (

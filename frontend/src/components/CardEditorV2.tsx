@@ -102,7 +102,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
     <div className="grid grid-cols-12">
       <div className="col-span-12 col-start-1">
         <IonTextarea
-          className="native-textarea-p0-m0 border-b border-slate-400 px-1 pt-1 font-poppins font-light text-black"
+          className="native-textarea-p0-m0 border-b border-slate-400 px-1 pt-1 font-poppins font-light text-black dark:text-white"
           disabled={!isOnline}
           value={isOnline ? content : "We are working on offline editing!"}
           onIonInput={(event: CustomEvent) => setContent(event.detail.value)}
@@ -199,8 +199,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
           onClick={HandleOnSubmit}
         >
           <IonIcon
-            color="light"
-            className="m-0 p-0"
+            className="m-0  p-0 text-white dark:text-black"
             size="small"
             slot="icon-only"
             icon={arrowForwardOutlineIcon}
