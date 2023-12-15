@@ -193,7 +193,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
         </>
       )}
 
-      <div className="col-span-1 col-start-12">
+      <div className="col-span-1 col-start-12 my-1 flex justify-end">
         <SubmitButton
           disabled={!isOnline || content.length === 0}
           onClick={HandleOnSubmit}
