@@ -108,153 +108,154 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({
         {/** Note body */}
         <div className="col-span-10 col-start-1 mt-2">
           <Markdown
-            rehypePlugins={[rehypeKatex, rehypeHighlight]}
+            rehypePlugins={[rehypeKatex]}
             remarkPlugins={[remarkMath]}
-            className="font-poppins font-normal text-zinc-800 dark:text-white"
+            // className="font-poppins font-normal text-zinc-800 dark:text-white"
+            className="prose font-poppins"
             children={note.body}
-            components={{
-              h1: ({ node, ...props }) => (
-                <h1
-                  style={{
-                    fontSize: "1.5em",
-                    fontWeight: "bold",
-                    marginBottom: "1em",
-                    marginTop: "0.5em",
-                  }}
-                  {...props}
-                />
-              ),
-              h2: ({ node, ...props }) => (
-                <h2
-                  style={{
-                    fontSize: "1.3em",
-                    fontWeight: "bold",
-                    marginBottom: "1em",
-                    marginTop: "0.5em",
-                  }}
-                  {...props}
-                />
-              ),
-              h3: ({ node, ...props }) => (
-                <h3
-                  style={{
-                    fontSize: "1.1em",
-                    fontWeight: "bold",
-                    marginBottom: "1em",
-                    marginTop: "0.5em",
-                  }}
-                  {...props}
-                />
-              ),
-              h4: ({ node, ...props }) => (
-                <h4
-                  style={{
-                    fontSize: "1em",
-                    fontWeight: "bold",
-                    marginBottom: "0.5em",
-                    marginTop: "0.5em",
-                  }}
-                  {...props}
-                />
-              ),
-              h5: ({ node, ...props }) => (
-                <h5
-                  style={{
-                    fontSize: "1em",
-                    fontWeight: "bold",
-                    marginBottom: "0.5em",
-                    marginTop: "0em",
-                  }}
-                  {...props}
-                />
-              ),
-              h6: ({ node, ...props }) => (
-                <h6
-                  style={{
-                    fontSize: "1em",
-                    fontWeight: "bold",
-                    marginBottom: "0.5em",
-                    marginTop: "0em",
-                  }}
-                  {...props}
-                />
-              ),
-              ul: ({ node, ...props }) => (
-                <ul
-                  style={{ listStyleType: "disc", paddingLeft: "1em" }}
-                  {...props}
-                />
-              ),
-              ol: ({ node, ...props }) => (
-                <ol
-                  style={{ listStyleType: "decimal", paddingLeft: "1em" }}
-                  {...props}
-                />
-              ),
-              li: ({ node, ...props }) => (
-                <li style={{ margin: "0.5em 0" }} {...props} />
-              ),
-              p: ({ node, ...props }) => (
-                <p style={{ margin: "0 0", lineHeight: "1.5em" }} {...props} />
-              ),
-              blockquote: ({ node, ...props }) => (
-                <blockquote
-                  style={{
-                    margin: "1em 0",
-                    paddingLeft: "1em",
-                    borderLeft: "4px solid #ddd",
-                  }}
-                  {...props}
-                />
-              ),
-              code: ({ node, ...props }) => (
-                <code
-                  style={{
-                    fontFamily: "monospace",
-                    backgroundColor: "#f9f9f9",
-                    padding: "2px 4px",
-                    borderRadius: "3px",
-                  }}
-                  {...props}
-                />
-              ),
-              pre: ({ node, ...props }) => (
-                <pre
-                  style={{
-                    fontFamily: "monospace",
-                    backgroundColor: "#f9f9f9",
-                    padding: "1em",
-                    borderRadius: "3px",
-                    overflowX: "auto",
-                  }}
-                  {...props}
-                />
-              ),
-              em: ({ node, ...props }) => (
-                <em style={{ fontStyle: "italic" }} {...props} />
-              ),
-              strong: ({ node, ...props }) => (
-                <strong style={{ fontWeight: "bold" }} {...props} />
-              ),
-              del: ({ node, ...props }) => (
-                <del style={{ textDecoration: "line-through" }} {...props} />
-              ),
-              hr: ({ node, ...props }) => (
-                <hr
-                  style={{ border: "none", borderTop: "1px solid #ddd" }}
-                  {...props}
-                />
-              ),
-              a: ({ node, ...props }) => (
-                <a
-                  style={{ color: "#0366d6", textDecoration: "none" }}
-                  {...props}
-                />
-              ),
-              img: ({ node, ...props }) => (
-                <img style={{ maxWidth: "100%" }} {...props} />
-              ),
-            }}
+            // components={{
+            //   h1: ({ node, ...props }) => (
+            //     <h1
+            //       style={{
+            //         fontSize: "1.5em",
+            //         fontWeight: "bold",
+            //         marginBottom: "1em",
+            //         marginTop: "0.5em",
+            //       }}
+            //       {...props}
+            //     />
+            //   ),
+            //   h2: ({ node, ...props }) => (
+            //     <h2
+            //       style={{
+            //         fontSize: "1.3em",
+            //         fontWeight: "bold",
+            //         marginBottom: "1em",
+            //         marginTop: "0.5em",
+            //       }}
+            //       {...props}
+            //     />
+            //   ),
+            //   h3: ({ node, ...props }) => (
+            //     <h3
+            //       style={{
+            //         fontSize: "1.1em",
+            //         fontWeight: "bold",
+            //         marginBottom: "1em",
+            //         marginTop: "0.5em",
+            //       }}
+            //       {...props}
+            //     />
+            //   ),
+            //   h4: ({ node, ...props }) => (
+            //     <h4
+            //       style={{
+            //         fontSize: "1em",
+            //         fontWeight: "bold",
+            //         marginBottom: "0.5em",
+            //         marginTop: "0.5em",
+            //       }}
+            //       {...props}
+            //     />
+            //   ),
+            //   h5: ({ node, ...props }) => (
+            //     <h5
+            //       style={{
+            //         fontSize: "1em",
+            //         fontWeight: "bold",
+            //         marginBottom: "0.5em",
+            //         marginTop: "0em",
+            //       }}
+            //       {...props}
+            //     />
+            //   ),
+            //   h6: ({ node, ...props }) => (
+            //     <h6
+            //       style={{
+            //         fontSize: "1em",
+            //         fontWeight: "bold",
+            //         marginBottom: "0.5em",
+            //         marginTop: "0em",
+            //       }}
+            //       {...props}
+            //     />
+            //   ),
+            //   ul: ({ node, ...props }) => (
+            //     <ul
+            //       style={{ listStyleType: "disc", paddingLeft: "1em" }}
+            //       {...props}
+            //     />
+            //   ),
+            //   ol: ({ node, ...props }) => (
+            //     <ol
+            //       style={{ listStyleType: "decimal", paddingLeft: "1em" }}
+            //       {...props}
+            //     />
+            //   ),
+            //   li: ({ node, ...props }) => (
+            //     <li style={{ margin: "0.5em 0" }} {...props} />
+            //   ),
+            //   p: ({ node, ...props }) => (
+            //     <p style={{ margin: "0 0", lineHeight: "1.5em" }} {...props} />
+            //   ),
+            //   blockquote: ({ node, ...props }) => (
+            //     <blockquote
+            //       style={{
+            //         margin: "1em 0",
+            //         paddingLeft: "1em",
+            //         borderLeft: "4px solid #ddd",
+            //       }}
+            //       {...props}
+            //     />
+            //   ),
+            //   code: ({ node, ...props }) => (
+            //     <code
+            //       style={{
+            //         fontFamily: "monospace",
+            //         backgroundColor: "#f9f9f9",
+            //         padding: "2px 4px",
+            //         borderRadius: "3px",
+            //       }}
+            //       {...props}
+            //     />
+            //   ),
+            //   pre: ({ node, ...props }) => (
+            //     <pre
+            //       style={{
+            //         fontFamily: "monospace",
+            //         backgroundColor: "#f9f9f9",
+            //         padding: "1em",
+            //         borderRadius: "3px",
+            //         overflowX: "auto",
+            //       }}
+            //       {...props}
+            //     />
+            //   ),
+            //   em: ({ node, ...props }) => (
+            //     <em style={{ fontStyle: "italic" }} {...props} />
+            //   ),
+            //   strong: ({ node, ...props }) => (
+            //     <strong style={{ fontWeight: "bold" }} {...props} />
+            //   ),
+            //   del: ({ node, ...props }) => (
+            //     <del style={{ textDecoration: "line-through" }} {...props} />
+            //   ),
+            //   hr: ({ node, ...props }) => (
+            //     <hr
+            //       style={{ border: "none", borderTop: "1px solid #ddd" }}
+            //       {...props}
+            //     />
+            //   ),
+            //   a: ({ node, ...props }) => (
+            //     <a
+            //       style={{ color: "#0366d6", textDecoration: "none" }}
+            //       {...props}
+            //     />
+            //   ),
+            //   img: ({ node, ...props }) => (
+            //     <img style={{ maxWidth: "100%" }} {...props} />
+            //   ),
+            // }}
           />
         </div>
         <div className="col-span-1 col-start-12" />

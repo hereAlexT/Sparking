@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "@capacitor/cli": "^5.5.1",
+    "@tailwindcss/typography": "^0.5.10",
     "@testing-library/dom": ">=7.21.4",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
