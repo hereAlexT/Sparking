@@ -34,6 +34,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
   const { user, isMember } = useAuth();
 
   const HandleOnSubmit = () => {
+    if (content === "") return;
     if (!user) throw new Error("User is null, you need to login.");
     const newNote: Note = {
       id: _noteid,
@@ -109,6 +110,12 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
           autoGrow={true}
           color="primary"
           placeholder="You got a good idea💡, what's that?"
+          onKeyDown={(event: React.KeyboardEvent) => {
+            if (event.key === "Enter" && !event.shiftKey) {
+              event.preventDefault();
+              HandleOnSubmit();
+            }
+          }}
         />
       </div>
 
