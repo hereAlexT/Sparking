@@ -85,7 +85,7 @@ const Menu: React.FC<MenuProps> = ({}) => {
   }
 
   return (
-    <IonMenu contentId="main" className="max-w-4xs border-r">
+    <IonMenu contentId="main" className="border-r">
       <IonHeader className="pt-14"></IonHeader>
       <IonContent
         style={
