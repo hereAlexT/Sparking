@@ -85,9 +85,26 @@ const Menu: React.FC<MenuProps> = ({}) => {
   }
 
   return (
-    <IonMenu contentId="main" className="max-w-4xs border-r">
+    <IonMenu
+      contentId="main"
+      className="max-w-4xs border-r"
+      style={
+        {
+          // "--background": "blue",
+          // "--max-width": "200px",
+          // "--min-width": "50px",
+          // "--width": "100%",
+        }
+      }
+    >
       <IonHeader className="pt-14"></IonHeader>
-      <IonContent>
+      <IonContent
+        style={
+          {
+            // "--background": "blue",
+          }
+        }
+      >
         <IonList></IonList>
         {isSplitPaneOn && (
           <IonList>
