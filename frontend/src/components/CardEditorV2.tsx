@@ -159,8 +159,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
               className="circular-button"
             >
               <IonIcon
-                color="dark"
-                className="m-0 p-0"
+                className="dark:white m-0 p-0 text-black"
                 size="small"
                 slot="icon-only"
                 icon={cameraOutlineIcon}
