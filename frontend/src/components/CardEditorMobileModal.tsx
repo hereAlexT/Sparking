@@ -1,5 +1,7 @@
 import { useAuth } from "../contexts/AuthContext";
+import { useNotes } from "../contexts/NotesContext";
 import { Note, NOTE_STATUS } from "../shared/types";
+import { NoteImage } from "../shared/types";
 import {
   IonButton,
   IonCol,
@@ -13,7 +15,6 @@ import {
   IonTitle,
   IonModal,
   IonFooter,
-  IonContent,
 } from "@ionic/react";
 import { arrowForwardOutline as arrowForwardOutlineIcon } from "ionicons/icons";
 import React, { useState, useRef, useEffect } from "react";
@@ -21,6 +22,9 @@ import { v4 as uuidv4 } from "uuid";
 
 interface CardEditorMobileProps {
   onSubmit: (noteContent: Note) => void;
+  /**
+   * If note is passed, enter note updating mode, otherwise enter not creating mode.
+   */
   note?: Note;
   isOnline?: boolean;
   trigger?: string;
@@ -29,6 +33,7 @@ interface CardEditorMobileProps {
   setIsEditorOpen?: (isOpen: boolean) => void;
 }
 
+/** On Mobie, the foot bar should always on top of the keyboard. */
 declare global {
   interface WindowEventMap {
     ionKeyboardDidShow: CustomEvent;
@@ -36,6 +41,7 @@ declare global {
   }
 }
 
+/** Modal Setup */
 const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({
   isEditorOpen,
   setIsEditorOpen,
@@ -48,7 +54,6 @@ const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({
   const [presentingElement, setPresentingElement] = useState<
     HTMLElement | undefined
   >(undefined);
-  const { user } = useAuth();
 
   useEffect(() => {
     setPresentingElement(pageRef.current!);
@@ -62,22 +67,6 @@ const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({
     modalRef.current?.dismiss();
     setIsEditorOpen?.(false);
   }
-
-  const [content, setContent] = useState(note?.body || "");
-
-  const HandleOnSubmit = () => {
-    if (!user) throw new Error("User is null");
-    const newNote: Note = {
-      id: note?.id || uuidv4(),
-      body: content,
-      createdAt: note?.createdAt || new Date(),
-      updatedAt: new Date(),
-      status: NOTE_STATUS.UNSYNCED,
-      userId: user.id,
-    };
-    onSubmit(newNote);
-    setContent("");
-  };
 
   const footerRef = useRef<HTMLIonFooterElement>(null);
   const modalRef = useRef<HTMLIonModalElement>(null);
@@ -107,6 +96,35 @@ const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({
       window.removeEventListener("ionKeyboardDidHide", handleKeyboardHide);
     };
   }, []);
+
+  /** Create / update note */
+
+  const { user } = useAuth();
+  const { createNote, updateNote } = useNotes();
+  const _noteid = note?.id || uuidv4();
+  const [content, setContent] = useState(note?.body || "");
+  const mode = note ? "UPDATE" : "CREATE";
+  const [images, setImages] = useState<NoteImage[]>([]);
+
+  const HandleOnSubmit = () => {
+    if (!user) throw new Error("User is null, you need to login.");
+    const newNote: Note = {
+      id: _noteid,
+      body: content,
+      createdAt: note?.createdAt || new Date(),
+      updatedAt: new Date(),
+      images: images,
+      status: NOTE_STATUS.UNSYNCED,
+      userId: user.id,
+    };
+    if (mode === "CREATE") {
+      createNote(newNote);
+    } else {
+      updateNote(newNote);
+    }
+    setContent("");
+    dismiss();
+  };
 
   return (
     <IonModal
