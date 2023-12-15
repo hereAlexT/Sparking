@@ -7,6 +7,11 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      maxWidth: {
+        'xxs': '10rem',
+        '3xs': '5rem',
+        '4xs': '1rem',
+      },
       fontFamily: {
         'poppins': ['Poppins', 'sans-serif'],
         'roboto-condensed': ['Roboto Condensed', 'sans-serif'],

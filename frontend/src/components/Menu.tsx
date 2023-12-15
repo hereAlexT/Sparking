@@ -17,6 +17,7 @@ import {
   IonButtons,
   IonInput,
 } from "@ionic/react";
+import clsx from "clsx";
 import {
   addOutline as addIcon,
   logInOutline as logInIcon,
@@ -84,7 +85,7 @@ const Menu: React.FC<MenuProps> = ({}) => {
   }
 
   return (
-    <IonMenu contentId="main">
+    <IonMenu contentId="main" className="max-w-4xs border-r">
       <IonHeader className="pt-14"></IonHeader>
       <IonContent>
         <IonList></IonList>
