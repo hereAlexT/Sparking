@@ -5,6 +5,7 @@ import ImagePreviewModal from "../ImagePreviewModal";
 // or any style you prefer
 import "./NoteCardV2.css";
 import NoteContent from "./NoteContent";
+import NoteDatetimeBlock from "./NoteDatetimeBlock";
 import {
   IonIcon,
   IonContent,
@@ -97,10 +98,9 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({
         {/** First Row */}
         {/** Date Time */}
         <div className="col-strat-1 col-span-7 pt-3">
-          <p className="font-popins text-sm font-light text-gray-700 dark:text-gray-300">
-            {formatDate(note.createdAt)}
-          </p>
+          <NoteDatetimeBlock createdAt={note.createdAt} />
         </div>
+
         {/** Second Row */}
         {/** Note body */}
         <div className="col-span-10 col-start-1 mt-2">
