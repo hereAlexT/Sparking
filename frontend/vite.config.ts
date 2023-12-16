@@ -1,12 +1,14 @@
 import legacy from '@vitejs/plugin-legacy'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
+import { VitePWA } from 'vite-plugin-pwa';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react(),
-    legacy()
+    legacy(),
+    VitePWA({ registerType: 'autoUpdate' })
   ],
   build: {
     rollupOptions: {
@@ -17,7 +19,7 @@ export default defineConfig({
           'login': ['src/pages/Login.tsx'],
           'signup': ['src/pages/Signup.tsx'],
           'UpdatePassword': ['src/pages/UpdatePassword.tsx'],
-          'DeveloperTool' : ['src/pages/ComponentLab.tsx']
+          'DeveloperTool': ['src/pages/ComponentLab.tsx']
         },
       },
     },
