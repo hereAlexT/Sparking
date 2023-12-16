@@ -1,5 +1,6 @@
 import { fetchImage } from "../../apis/NoteAPI";
 import { useAuth } from "../../contexts/AuthContext";
+import { useMeta } from "../../contexts/MetaContext";
 import { Note, NoteId, NoteImageId } from "../../shared/types";
 import ImagePreviewModal from "../ImagePreviewModal";
 // or any style you prefer
@@ -45,6 +46,7 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({
   onEditNote,
   className,
 }) => {
+  const { isSplitPaneOn } = useMeta();
   const { user } = useAuth();
   const [imageUrls, setImageUrls] = useState<string[]>([]);
 
@@ -85,7 +87,7 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({
   return (
     <div
       className={clsx(
-        "w-full rounded-none border-b-2 border-slate-200 bg-white px-3 py-3 transition-colors duration-75 ease-in hover:bg-sky-50 dark:border-slate-200",
+        " group w-full rounded-none border-b-2 border-slate-200  px-3 py-3 transition-colors duration-75 ease-in  dark:border-slate-200",
         className,
       )}
     >
@@ -132,13 +134,18 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({
 
         {/** Third Row */}
         {/** Popover Menu */}
-        <div className="bg-black-600 col-span-1 col-start-12 mt-2">
+        <div
+          className={clsx(
+            "bg-black-600 col-span-1 col-start-12 mt-2",
+            isSplitPaneOn ? "opacity-0 group-hover:opacity-100" : "opacity-100",
+          )}
+        >
           {/**Don't use button here, it makes the text un */}
           <span className="flex justify-end">
             <IonIcon
               id={`${cardSetId}-${note.id}`}
               size="small"
-              color="medium"
+              className="text-slate-800"
               icon={ellipsisHorizontalSharpeIcon}
             />
           </span>
