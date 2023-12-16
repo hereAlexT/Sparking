@@ -37,7 +37,7 @@ const StyledIonList: React.FC<StyledIonListProps> = ({
   inset,
   customClass,
 }) => (
-  <IonList inset={inset} className={`border border-slate-300 ${customClass}`}>
+  <IonList inset={inset} className={`border border-slate-200 ${customClass}`}>
     {children}
   </IonList>
 );
