@@ -160,7 +160,7 @@ const TimeLine: React.FC = () => {
 
       {/** Shared */}
       <IonContent className="m5">
-        <ul className="mt-2 list-none">
+        <ul className="mt-2 list-none space-y-3">
           {isLoading ? (
             <li>Loading...</li>
           ) : (

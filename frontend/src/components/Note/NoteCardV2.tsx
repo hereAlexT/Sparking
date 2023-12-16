@@ -87,7 +87,7 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({
   return (
     <div
       className={clsx(
-        " group w-full rounded-none border-b-2 border-slate-200  px-3 py-3 transition-colors duration-75 ease-in  dark:border-slate-200",
+        "  group w-full rounded-lg border-2 border-slate-200 px-3  py-3 transition-colors duration-75 ease-in hover:border-sky-700  dark:border-slate-200",
         className,
       )}
     >
