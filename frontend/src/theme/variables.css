@@ -177,6 +177,7 @@ body.dark {
 /** IonMen **/
 ion-menu {
   --ion-background-color: #faf8f7;
+  /* --ion-background-color: #f9f7f7; */
   --ion-text-color: var(--ion-color-primary-contrast);
 
   ion-toolbar {
