@@ -152,7 +152,7 @@ const TimeLine: React.FC = () => {
             placeholder="Search"
             onIonInput={(e) => setSearchQuery(e.detail.value!)}
           ></IonSearchbar>
-          <IonCard className="shadow-1xl my-1 rounded-xl border-2 border-neutral-200  px-5 pb-1  pt-2 shadow-none  transition-colors duration-75 ease-in-out hover:border-sky-600">
+          <IonCard className="shadow-1xl my-1 rounded-xl border-2 border-neutral-200 bg-white  px-5 pb-1  pt-2 shadow-none  transition-colors duration-75 ease-in-out hover:border-sky-600">
             <CardEditorV2 onSubmit={handleOnCreateNote} isOnline={true} />
           </IonCard>
         </>

@@ -1,3 +1,4 @@
+import { SubmitButton } from ".";
 import { useAuth } from "../../contexts/AuthContext";
 import {
   Note,
@@ -6,7 +7,6 @@ import {
   NOTE_STATUS,
   NoteId,
 } from "../../shared/types";
-import { SubmitButton } from ".";
 import { Camera, CameraResultType, Photo } from "@capacitor/camera";
 import { IonButton, IonTextarea, IonIcon } from "@ionic/react";
 import {
