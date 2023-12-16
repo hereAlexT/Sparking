@@ -12,9 +12,8 @@ import {
   IonPopover,
   IonList,
   IonItem,
-  IonButton,
-  IonText,
 } from "@ionic/react";
+import clsx from "clsx";
 import "highlight.js/styles/github.css";
 // or any style you prefer
 import {
@@ -29,23 +28,13 @@ import {
 import "katex/dist/katex.min.css";
 import { useEffect, useState, useRef } from "react";
 
-// or any style you prefer
-
-const formatDate = (date: Date): string => {
-  return date.toLocaleString("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-};
 interface NoteCardV2Props {
   note: Note;
   cardSetId: string;
   isOnline: boolean;
   onDeleteNote: (noteId: NoteId) => void;
   onEditNote: (noteId: NoteId) => void;
+  className?: string;
 }
 
 const NoteCardV2: React.FC<NoteCardV2Props> = ({
@@ -54,6 +43,7 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({
   isOnline,
   onDeleteNote,
   onEditNote,
+  className,
 }) => {
   const { user } = useAuth();
   const [imageUrls, setImageUrls] = useState<string[]>([]);
@@ -93,7 +83,12 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({
   );
 
   return (
-    <div className="m-0 w-full border-b border-slate-300 py-3 dark:border-slate-200">
+    <div
+      className={clsx(
+        "w-full rounded-none border-b-2 border-slate-200 bg-white px-3 py-3 transition-colors duration-75 ease-in hover:bg-sky-50 dark:border-slate-200",
+        className,
+      )}
+    >
       <div className="grid grid-cols-12">
         {/** First Row */}
         {/** Date Time */}
@@ -153,7 +148,7 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({
             keyboardClose={true}
             side="left"
             alignment="end"
-            showBackdrop={true}
+            showBackdrop={false}
             arrow={false}
           >
             <IonContent>

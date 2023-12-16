@@ -60,7 +60,7 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 
-  --ion-background-color: #fafafa;
+  --ion-background-color: #f0f9ff 100;
 }
 
 /** CUSTOM DARK MODE */
@@ -162,8 +162,8 @@ body.dark {
   --ion-color-step-950: #f2f2f2;
 
   --ion-item-background: #000000;
-
   --ion-card-background: #1c1c1d;
+  --ion-background-color: #082f49;
 }
 
 .ios ion-modal.dark {
@@ -175,8 +175,8 @@ body.dark {
 /** CUSTOM DARK MODE DONE */
 
 /** IonMen **/
-/* ion-menu {
-  --ion-background-color: var(--ion-color-primary);
+ion-menu {
+  --ion-background-color: #faf8f7;
   --ion-text-color: var(--ion-color-primary-contrast);
 
   ion-toolbar {
@@ -186,7 +186,7 @@ body.dark {
   ion-list {
     background: transparent;
   }
-} */
+}
 
 html {
   /* For more information on dynamic font scaling, visit the documentation: 

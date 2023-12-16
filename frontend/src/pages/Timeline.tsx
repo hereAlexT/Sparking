@@ -152,7 +152,7 @@ const TimeLine: React.FC = () => {
             placeholder="Search"
             onIonInput={(e) => setSearchQuery(e.detail.value!)}
           ></IonSearchbar>
-          <IonCard className="shadow-1xl my-1 rounded-xl border-2 border-neutral-200  px-5 pb-1  pt-2 shadow-none  transition-colors duration-75 ease-in-out hover:border-neutral-400">
+          <IonCard className="shadow-1xl my-1 rounded-xl border-2 border-neutral-200  px-5 pb-1  pt-2 shadow-none  transition-colors duration-75 ease-in-out hover:border-sky-600">
             <CardEditorV2 onSubmit={handleOnCreateNote} isOnline={true} />
           </IonCard>
         </>
@@ -160,23 +160,24 @@ const TimeLine: React.FC = () => {
 
       {/** Shared */}
       <IonContent className="m5">
-        <IonList lines="none">
+        <ul className="mt-2 list-none">
           {isLoading ? (
-            <IonItem>Loading...</IonItem>
+            <li>Loading...</li>
           ) : (
             filteredNotes.map((note: Note) => (
-              <IonItem key={note.id} button={false} detail={false}>
+              <li key={note.id} className="flex justify-center">
                 <NoteCardV2
                   isOnline={isOnline}
                   note={note}
                   cardSetId="TimeLine"
                   onDeleteNote={handleOnDeleteNote}
                   onEditNote={handleOnEditNote}
+                  className="mx-4"
                 ></NoteCardV2>
-              </IonItem>
+              </li>
             ))
           )}
-        </IonList>
+        </ul>
       </IonContent>
       <CardEditorMobileModal
         onSubmit={handleOnUpdateNote}
