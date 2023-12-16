@@ -85,17 +85,16 @@ const Menu: React.FC<MenuProps> = ({}) => {
     <IonMenu contentId="main" className="border-r-2">
       <IonHeader className="pt-14"></IonHeader>
       <IonContent>
-        {isSplitPaneOn && (
-          <ul className="text list-none space-y-1 px-4 py-2">
-            <li>
-              <MenuItem
-                active={currentPath.includes("/timeline")}
-                to="/timeline/pri"
-                label="Timeline"
-                icon={prismOutlineIcon}
-              />
-            </li>
-            {/* <li>
+        <ul className="text list-none space-y-1 px-4 py-2">
+          <li>
+            <MenuItem
+              active={currentPath.includes("/timeline")}
+              to="/timeline/pri"
+              label="Timeline"
+              icon={prismOutlineIcon}
+            />
+          </li>
+          {/* <li>
               <MenuItem
                 active={currentPath.includes("/comlab")}
                 to="/comlab"
@@ -111,14 +110,8 @@ const Menu: React.FC<MenuProps> = ({}) => {
                 active={false}
               />
             </li> */}
-          </ul>
-        )}
+        </ul>
       </IonContent>
-      <div className="flex h-full flex-col items-center justify-center">
-        <div className="text-center">Welcome to Sparking</div>
-        <div className="text-center">Settings</div>
-        <div className="text-center">👇</div>
-      </div>
       <div className="mb-5 border-t px-4 py-2">
         <MenuItem
           to="/settings"
