@@ -1,6 +1,6 @@
 import CardEditorMobileModal from "../components/CardEditorMobileModal";
 import CardEditorV2 from "../components/CardEditorV2";
-import NoteCardV2 from "../components/NoteCardV2";
+import NoteCardV2 from "../components/Note/NoteCardV2";
 import { useAuth } from "../contexts/AuthContext";
 import { useMeta } from "../contexts/MetaContext";
 import { useNotes } from "../contexts/NotesContext";

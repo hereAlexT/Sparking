@@ -1,0 +1,1 @@
+export { default as NoteCardV2 } from './NoteCardV2';
