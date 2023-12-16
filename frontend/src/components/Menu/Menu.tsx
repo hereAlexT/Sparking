@@ -21,6 +21,7 @@ import {
 } from "ionicons/icons";
 import { useRef } from "react";
 import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const routes = {
   appPages: [
@@ -53,7 +54,7 @@ interface Pages {
 interface MenuProps {}
 
 const Menu: React.FC<MenuProps> = ({}) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const { isSplitPaneOn } = useMeta();
   const searchModal = useRef<HTMLIonModalElement>(null);
   const location = useLocation();
@@ -94,7 +95,7 @@ const Menu: React.FC<MenuProps> = ({}) => {
                 icon={prismOutlineIcon}
               />
             </li>
-            <li>
+            {/* <li>
               <MenuItem
                 active={currentPath.includes("/comlab")}
                 to="/comlab"
@@ -109,10 +110,23 @@ const Menu: React.FC<MenuProps> = ({}) => {
                 icon={logOutIcon}
                 active={false}
               />
-            </li>
+            </li> */}
           </ul>
         )}
       </IonContent>
+      <div className="flex h-full flex-col items-center justify-center">
+        <div className="text-center">Welcome to Sparking</div>
+        <div className="text-center">Settings</div>
+        <div className="text-center">👇</div>
+      </div>
+      <div className="mb-5 border-t px-4 py-2">
+        <MenuItem
+          to="/settings"
+          label="Alex Teng"
+          icon={cogOutlineIcon}
+          active={false}
+        ></MenuItem>
+      </div>
     </IonMenu>
   );
 };
