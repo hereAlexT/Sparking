@@ -1,32 +1,26 @@
-import { useAuth } from "../contexts/AuthContext";
-import { useMeta } from "../contexts/MetaContext";
+import { useAuth } from "../../contexts/AuthContext";
+import { useMeta } from "../../contexts/MetaContext";
+import MenuItem from "./MenuItem";
 import {
   IonContent,
-  IonList,
-  IonListHeader,
   IonMenu,
   IonMenuToggle,
   IonItem,
   IonLabel,
   IonIcon,
-  IonTitle,
-  IonToolbar,
   IonHeader,
-  IonModal,
-  IonButton,
-  IonButtons,
-  IonInput,
 } from "@ionic/react";
-import clsx from "clsx";
 import {
   addOutline as addIcon,
   logInOutline as logInIcon,
+  logOutOutline as logOutIcon,
   prismOutline as prismOutlineIcon,
   cogOutline as cogOutlineIcon,
   flaskOutline as flaskOutlineIcon,
   searchOutline as searchOutlineIcon,
 } from "ionicons/icons";
 import { useRef } from "react";
+import { useLocation } from "react-router-dom";
 
 const routes = {
   appPages: [
@@ -62,6 +56,8 @@ const Menu: React.FC<MenuProps> = ({}) => {
   const { isAuthenticated } = useAuth();
   const { isSplitPaneOn } = useMeta();
   const searchModal = useRef<HTMLIonModalElement>(null);
+  const location = useLocation();
+  const currentPath = location.pathname;
 
   function renderlistItems(list: Pages[]) {
     // Ensure only pages with a path are rendered
@@ -85,33 +81,37 @@ const Menu: React.FC<MenuProps> = ({}) => {
   }
 
   return (
-    <IonMenu contentId="main" className="border-r">
+    <IonMenu contentId="main" className="border-r-2">
       <IonHeader className="pt-14"></IonHeader>
-      <IonContent
-        style={
-          {
-            // "--background": "blue",
-          }
-        }
-      >
-        <IonList></IonList>
+      <IonContent>
         {isSplitPaneOn && (
-          <IonList>
-            <IonListHeader>Timeline</IonListHeader>
-            <IonMenuToggle key="timeline" autoHide={false}>
-              <IonItem routerLink="/timeline/pri" routerDirection="none">
-                <IonIcon slot="start" icon={prismOutlineIcon} />
-                <IonLabel>Timeline</IonLabel>
-              </IonItem>
-            </IonMenuToggle>
-          </IonList>
+          <ul className="text list-none space-y-1 px-4 py-2">
+            <li>
+              <MenuItem
+                active={currentPath.includes("/timeline")}
+                to="/timeline/pri"
+                label="Timeline"
+                icon={prismOutlineIcon}
+              />
+            </li>
+            <li>
+              <MenuItem
+                active={currentPath.includes("/comlab")}
+                to="/comlab"
+                label="Developer Tool"
+                icon={flaskOutlineIcon}
+              />
+            </li>
+            <li>
+              <MenuItem
+                to="/logout"
+                label="Logout"
+                icon={logOutIcon}
+                active={false}
+              />
+            </li>
+          </ul>
         )}
-        <IonList>
-          <IonListHeader>Account</IonListHeader>
-          {isAuthenticated
-            ? renderlistItems(routes.loggedInPages)
-            : renderlistItems(routes.appPages)}
-        </IonList>
       </IonContent>
     </IonMenu>
   );

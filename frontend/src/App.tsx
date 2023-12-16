@@ -1,6 +1,6 @@
 import "./App.css";
 import Logout from "./components/Logout";
-import Menu from "./components/Menu";
+import Menu from "./components/Menu/Menu";
 import { GA_MEASUREMENT_ID } from "./config";
 import { AuthProvider } from "./contexts/AuthContext";
 import { useAuth } from "./contexts/AuthContext";
