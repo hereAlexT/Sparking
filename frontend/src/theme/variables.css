@@ -189,7 +189,7 @@ ion-menu {
 }
 
 .split-pane-visible > ion-menu {
-  max-width: 200px !important;
+  max-width: 304px !important;
 }
 
 html {
