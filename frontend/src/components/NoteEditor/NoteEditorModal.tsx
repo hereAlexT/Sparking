@@ -1,7 +1,7 @@
-import { useAuth } from "../contexts/AuthContext";
-import { useNotes } from "../contexts/NotesContext";
-import { Note, NOTE_STATUS } from "../shared/types";
-import { NoteImage } from "../shared/types";
+import { useAuth } from "../../contexts/AuthContext";
+import { useNotes } from "../../contexts/NotesContext";
+import { Note, NOTE_STATUS } from "../../shared/types";
+import { NoteImage } from "../../shared/types";
 import {
   IonButton,
   IonCol,

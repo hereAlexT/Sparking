@@ -1,12 +1,12 @@
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 import {
   Note,
   NoteImage,
   NOTE_IMAGE_STATUS,
   NOTE_STATUS,
   NoteId,
-} from "../shared/types";
-import { SubmitButton } from "./CardEditor";
+} from "../../shared/types";
+import { SubmitButton } from ".";
 import { Camera, CameraResultType, Photo } from "@capacitor/camera";
 import { IonButton, IonTextarea, IonIcon } from "@ionic/react";
 import {
