@@ -7,14 +7,17 @@ import {
   NOTE_STATUS,
   NoteId,
 } from "../../shared/types";
+import { SparkMde } from "./Mde";
 import { Camera, CameraResultType, Photo } from "@capacitor/camera";
 import { IonButton, IonTextarea, IonIcon } from "@ionic/react";
+import SimpleMDE, { Options } from "easymde";
 import {
   arrowForwardOutline as arrowForwardOutlineIcon,
   imageOutline as imageOutlineIcon,
   cameraOutline as cameraOutlineIcon,
   closeOutline as closeOutlineIcon,
 } from "ionicons/icons";
+import { useMemo } from "react";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
@@ -98,10 +101,19 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
     setImages((images) => images.filter((_, i) => i !== index));
   }
 
+  /** Markdown Editor */
+  const MdeOptions = useMemo(() => {
+    return {
+      minHeight: "50px",
+      spellChecker: false,
+      lineNumbers: false,
+    } as SimpleMDE.Options;
+  }, []);
+
   return (
     <div className="grid grid-cols-12">
       <div className="col-span-12 col-start-1 ">
-        <IonTextarea
+        {/* <IonTextarea
           className="native-textarea-p0-m0 border-b border-slate-400 px-1 pt-1 font-poppins text-black dark:text-white"
           disabled={!isOnline}
           value={isOnline ? content : "We are working on offline editing!"}
@@ -116,7 +128,8 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
               HandleOnSubmit();
             }
           }}
-        />
+        /> */}
+        <SparkMde />
       </div>
 
       <div className="col-span-12 col-start-1">

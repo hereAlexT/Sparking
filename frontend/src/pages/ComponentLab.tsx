@@ -1,3 +1,5 @@
+import { SparkMde } from "../components/NoteEditor/Mde";
+import Mde from "../components/NoteEditor/Mde/SimpleMdeReact";
 import CardEditorMobileModal from "../components/NoteEditor/NoteEditorMobileModal";
 import CardEditorV2 from "../components/NoteEditor/NoteEditorV2";
 import NoteCardV2 from "../components/NoteEditor/NoteEditorV2";
@@ -24,6 +26,7 @@ import {
   IonTextarea,
   IonIcon,
 } from "@ionic/react";
+// import "easymde/dist/easymde.min.css";
 import { arrowUpOutline as arrowUpOutlineIcon } from "ionicons/icons";
 import { useRef, useState, useEffect } from "react";
 import ReactGA from "react-ga4";
@@ -160,6 +163,11 @@ const ComponentLab: React.FC = () => {
               >
                 Get Session
               </IonButton>
+            </IonCol>
+          </IonRow>
+          <IonRow>
+            <IonCol>
+              <SparkMde />
             </IonCol>
           </IonRow>
           {/* <IonRow>
