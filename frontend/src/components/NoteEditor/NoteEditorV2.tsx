@@ -152,7 +152,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
       icon: <NumberedList />,
     },
     { name: "Link", action: "drawLink", icon: <Link /> },
-    { name: "Heading", action: "toggleHeading1", icon: <Heading /> },
+    { name: "Heading", action: "toggleHeadingSmaller", icon: <Heading /> },
     { name: "Quote", action: "toggleBlockquote", icon: <Quote /> },
   ];
 
