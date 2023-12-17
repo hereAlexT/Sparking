@@ -1,15 +1,18 @@
 import SimpleMdeReact from "./SimpleMdeReact";
 import "./sparkmde.css";
+import { EditorChange } from "codemirror";
 import SimpleMDE, { Options } from "easymde";
 import EasyMDE from "easymde";
 import React from "react";
 import { useMemo, useRef, useImperativeHandle } from "react";
 
 interface SparkMdeProps {
-  // Define the props for the SparkMde component here
+  onChange?: (value: string, changeObject?: EditorChange) => void;
+  value?: string;
 }
 
-const SparkMde = React.forwardRef(({}, ref) => {
+const SparkMde = React.forwardRef((props: SparkMdeProps, ref) => {
+  const { onChange, value } = props;
   const editorRef = useRef<SimpleMDE | null>(null);
 
   const getMdeInstance = (editor: SimpleMDE) => {
@@ -42,15 +45,12 @@ const SparkMde = React.forwardRef(({}, ref) => {
 
   return (
     <>
-      <SimpleMdeReact options={MdeOptions} getMdeInstance={getMdeInstance} />
-      {/* <button
-        onClick={() => {
-          (editorRef.current as any)?.toggleBold();
-        }}
-        className="bg-blue-500 p-3 text-white active:bg-blue-950"
-      >
-        Bold
-      </button> */}
+      <SimpleMdeReact
+        options={MdeOptions}
+        getMdeInstance={getMdeInstance}
+        onChange={onChange}
+        value={value}
+      />
     </>
   );
 });

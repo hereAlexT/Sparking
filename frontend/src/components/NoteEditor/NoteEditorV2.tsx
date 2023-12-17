@@ -7,6 +7,9 @@ import {
   NOTE_STATUS,
   NoteId,
 } from "../../shared/types";
+import { Italic } from "../Icons";
+import Bold from "../Icons/Bold";
+import EditorButton from "./EditorButton";
 import { SparkMde } from "./Mde";
 import { Camera, CameraResultType, Photo } from "@capacitor/camera";
 import { IonButton, IonTextarea, IonIcon } from "@ionic/react";
@@ -131,22 +134,26 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
             }
           }}
         /> */}
-        <SparkMde ref={sparkMdeRef} />
+        <SparkMde
+          ref={sparkMdeRef}
+          onChange={(e) => setContent(e)}
+          value={content}
+        />
       </div>
-      <button
+      <EditorButton
         onClick={() => {
-          sparkMdeRef.current.toggleBold();
+          (sparkMdeRef.current as any).toggleBold();
         }}
       >
-        Bold
-      </button>
-      <button
+        <Bold />
+      </EditorButton>
+      <EditorButton
         onClick={() => {
-          sparkMdeRef.current.toggleBold();
+          (sparkMdeRef.current as any).toggleItalic();
         }}
       >
-        Italic
-      </button>
+        <Italic />
+      </EditorButton>
 
       <div className="col-span-12 col-start-1">
         <div className="grid w-full grid-cols-3 gap-1">
@@ -157,12 +164,18 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
                 src={image.url}
                 className="h-32 w-full object-cover"
               />
-              {/* <button
-                            className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 circular-button"
-                            onClick={() => handleDeleteImage(index)}
-                        >
-                            <IonIcon color="dark" className="m-0 p-0" size="small" slot="icon-only" icon={closeOutlineIcon} />
-                        </button> */}
+              <button
+                className="circular-button absolute right-0 top-0 rounded-full bg-red-500 p-1 text-white"
+                onClick={() => handleDeleteImage(index)}
+              >
+                <IonIcon
+                  color="dark"
+                  className="m-0 p-0"
+                  size="small"
+                  slot="icon-only"
+                  icon={closeOutlineIcon}
+                />
+              </button>
 
               <IonButton
                 color="light"
