@@ -119,6 +119,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
       spellChecker: false,
       nativeSpellcheck: true,
       lineNumbers: false,
+      inputStyle: "contenteditable",
     } as EasyMDE.Options;
   }, []);
 
