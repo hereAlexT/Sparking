@@ -18,6 +18,10 @@ http://ionicframework.com/docs/theming/ */
   --ion-toolbar-background: var(--sparking-bg-dark-color);
   --ion-toolbar-border-color: var(--sparking-bg-dark-color);
 }
+.ios ion-toolbar {
+  --ion-toolbar-background: var(--sparking-bg-light-color);
+  --ion-toolbar-border-color: var(--sparking-bg-light-color);
+}
 
 .ios ion-modal {
   --ion-background-color: var(--sparking-bg-light-color);

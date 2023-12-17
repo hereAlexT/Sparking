@@ -20,9 +20,13 @@ import {
   IonFab,
   IonFabButton,
   IonIcon,
+  IonButton,
 } from "@ionic/react";
 import { getPlatforms } from "@ionic/react";
-import { arrowUpOutline as arrowUpOutlineIcon } from "ionicons/icons";
+import {
+  arrowUpOutline as arrowUpOutlineIcon,
+  searchOutline as searchOutlineIcon,
+} from "ionicons/icons";
 import { useState, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 
@@ -111,6 +115,10 @@ const TimeLine: React.FC = () => {
 
   const pageRef = useRef(undefined);
 
+  //** Visibility of searchbar */
+
+  const [isSearchBarVisible, setSearchBarVisible] = useState(false);
+
   return (
     <IonPage id="main" ref={pageRef}>
       {/** Small Screen */}
@@ -118,7 +126,7 @@ const TimeLine: React.FC = () => {
         <>
           <IonFab slot="fixed" vertical="bottom" horizontal="end">
             <IonFabButton id="open-mobile-editor-modal-timeline">
-              <IonIcon icon={arrowUpOutlineIcon}></IonIcon>
+              <IonIcon icon={arrowUpOutlineIcon} className="text-white" />
             </IonFabButton>
             <CardEditorMobileModal
               trigger="open-mobile-editor-modal-timeline"
@@ -131,15 +139,24 @@ const TimeLine: React.FC = () => {
               <IonButtons slot="start">
                 <IonMenuButton />
               </IonButtons>
-              <IonTitle>Timeline {isOnline ? "" : "[Offline]"}</IonTitle>
+              <IonTitle>Sparking</IonTitle>
+              <IonButtons slot="end">
+                <IonButton onClick={() => setSearchBarVisible(true)}>
+                  <IonIcon icon={searchOutlineIcon} />
+                </IonButton>
+              </IonButtons>
             </IonToolbar>
-            <IonToolbar>
-              <IonSearchbar
-                className="mb-1 pb-1"
-                placeholder="Search"
-                onIonInput={(e) => setSearchQuery(e.detail.value!)}
-              ></IonSearchbar>
-            </IonToolbar>
+
+            {isSearchBarVisible && (
+              <IonToolbar>
+                <IonSearchbar
+                  placeholder="Search"
+                  showCancelButton="always"
+                  onIonInput={(e) => setSearchQuery(e.detail.value!)}
+                  onIonBlur={() => setSearchBarVisible(false)}
+                />
+              </IonToolbar>
+            )}
           </IonHeader>
         </>
       )}
