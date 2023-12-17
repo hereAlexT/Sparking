@@ -36,7 +36,7 @@ const SparkMde = React.forwardRef(({}, ref) => {
       uploadImage: false,
       placeholder: "You got an idea💡? What's that?",
       status: false,
-      toolbar: toolbar,
+      toolbar: false,
     } as SimpleMDE.Options;
   }, []);
 
