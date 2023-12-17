@@ -9,10 +9,12 @@ import SimpleMDE from "react-simplemde-editor";
 interface SparkMdeProps {
   onChange?: (value: string, changeObject?: EditorChange) => void;
   value?: string;
+  minHeight?: string;
+  maxHeight?: string;
 }
 
 const SparkMde = React.forwardRef((props: SparkMdeProps, ref) => {
-  const { onChange, value } = props;
+  const { onChange, value, minHeight, maxHeight } = props;
   const editorRef = useRef<EasyMDE | null>(null);
 
   const getMdeInstance = (editor: EasyMDE) => {
@@ -110,7 +112,9 @@ const SparkMde = React.forwardRef((props: SparkMdeProps, ref) => {
 
   const MdeOptions = useMemo(() => {
     return {
-      minHeight: "50px",
+      autoDownloadFontAwesome: false,
+      minHeight: minHeight || "100%",
+      // maxHeight: maxHeight || "100%",
       spellChecker: false,
       lineNumbers: false,
       unorderedListStyle: "-",
@@ -118,6 +122,7 @@ const SparkMde = React.forwardRef((props: SparkMdeProps, ref) => {
       placeholder: "You got an idea💡? What's that?",
       status: false,
       toolbar: false,
+      autofocus: true,
     } as EasyMDE.Options;
   }, []);
 

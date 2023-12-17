@@ -1,23 +1,48 @@
+import { SubmitButton } from ".";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNotes } from "../../contexts/NotesContext";
-import { Note, NOTE_STATUS } from "../../shared/types";
-import { NoteImage } from "../../shared/types";
+import {
+  Note,
+  NoteImage,
+  NOTE_IMAGE_STATUS,
+  NOTE_STATUS,
+  NoteId,
+} from "../../shared/types";
+import {
+  Bold,
+  BulletList,
+  Heading,
+  Italic,
+  Link,
+  NumberedList,
+  Quote,
+} from "../Icons";
+import EditorButton from "./EditorButton";
+import { SparkMde } from "./Mde";
+import "./NoteEditorMobileModal.css";
+import { Camera, CameraResultType } from "@capacitor/camera";
 import {
   IonButton,
-  IonCol,
-  IonRow,
-  IonGrid,
-  IonTextarea,
   IonIcon,
-  IonButtons,
-  IonToolbar,
-  IonHeader,
-  IonTitle,
   IonModal,
+  IonToolbar,
   IonFooter,
+  IonCol,
+  IonGrid,
+  IonHeader,
+  IonButtons,
+  IonRow,
+  IonContent,
 } from "@ionic/react";
-import { arrowForwardOutline as arrowForwardOutlineIcon } from "ionicons/icons";
-import React, { useState, useRef, useEffect } from "react";
+import {
+  arrowForwardOutline as arrowForwardOutlineIcon,
+  imageOutline as imageOutlineIcon,
+  cameraOutline as cameraOutlineIcon,
+  closeOutline as closeOutlineIcon,
+  arrowUpOutline as arrowUpOutlineIcon,
+} from "ionicons/icons";
+import { useMemo, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 interface CardEditorMobileProps {
@@ -126,6 +151,24 @@ const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({
     dismiss();
   };
 
+  /** Editor Buttons */
+  const sparkMdeRef = useRef();
+  const buttonData = [
+    { name: "Bold", action: "toggleBold", icon: <Bold /> },
+    { name: "Italic", action: "toggleItalic", icon: <Italic /> },
+    { name: "BulletList", action: "toggleUnorderedList", icon: <BulletList /> },
+    {
+      name: "NumberedList",
+      action: "toggleOrderedList",
+      icon: <NumberedList />,
+    },
+    { name: "Link", action: "drawLink", icon: <Link /> },
+    { name: "Heading", action: "toggleHeading1", icon: <Heading /> },
+    { name: "Quote", action: "toggleBlockquote", icon: <Quote /> },
+  ];
+
+  const contentRef = useRef<HTMLIonContentElement>(null);
+
   return (
     <IonModal
       ref={modalRef}
@@ -146,49 +189,45 @@ const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({
           </IonButtons>
         </IonToolbar>
       </IonHeader>
-      <IonGrid class="ion-no-padding" className="m-0 p-0">
-        <IonRow className="h-full">
-          <IonCol>
-            <IonTextarea
-              className="native-textarea-p0-m0 h-full border-slate-400 px-1 pt-1 font-poppins font-light text-black"
-              disabled={!isOnline}
-              value={isOnline ? content : "We are working on offline editing!"}
-              onIonInput={(event: CustomEvent) =>
-                setContent(event.detail.value)
-              }
-              rows={0}
-              autoGrow={true}
-              color="primary"
-              placeholder="You got a good idea💡, what's that?"
-            />
-          </IonCol>
-        </IonRow>
-      </IonGrid>
+      <IonContent ref={contentRef}>
+        <div className="noteEditorMobileModal">
+          <SparkMde
+            ref={sparkMdeRef}
+            onChange={(e) => setContent(e)}
+            value={content}
+            minHeight="800px"
+          />
+        </div>
+      </IonContent>
       <IonFooter ref={footerRef}>
         <IonToolbar>
-          <IonGrid class="ion-no-padding">
-            <IonRow>
-              <IonCol size="11" className="" />
-              <IonCol size="1" className="">
-                <IonButton
-                  disabled={!isOnline || content.length === 0}
-                  color="primary"
-                  size="small"
-                  fill="solid"
-                  onClick={HandleOnSubmit}
-                  className="circular-button"
-                >
-                  <IonIcon
-                    color="light"
-                    className="m-0 p-0"
-                    size="small"
-                    slot="icon-only"
-                    icon={arrowForwardOutlineIcon}
-                  ></IonIcon>
-                </IonButton>
-              </IonCol>
-            </IonRow>
-          </IonGrid>
+          <div className="flex justify-between">
+            <div className="flex gap-x-2">
+              {buttonData.map((button, index) => (
+                <div className="col-span-1" key={index}>
+                  <EditorButton
+                    onClick={() => {
+                      (sparkMdeRef.current as any)[button.action]();
+                    }}
+                  >
+                    {button.icon}
+                  </EditorButton>
+                </div>
+              ))}
+            </div>
+            <SubmitButton
+              disabled={!isOnline || content.length === 0}
+              onClick={HandleOnSubmit}
+            >
+              <IonIcon
+                color="light"
+                className="m-0 p-0"
+                size="small"
+                slot="icon-only"
+                icon={arrowUpOutlineIcon}
+              />
+            </SubmitButton>
+          </div>
         </IonToolbar>
       </IonFooter>
     </IonModal>

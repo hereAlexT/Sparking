@@ -1,0 +1,7 @@
+.noteEditorMobileModal .CodeMirror {
+  background: transparent;
+}
+
+.noteEditorMobileModal .EasyMDEContainer .CodeMirror {
+  @apply border-none;
+}
