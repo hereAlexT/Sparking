@@ -18,7 +18,7 @@ import {
   closeOutline as closeOutlineIcon,
 } from "ionicons/icons";
 import { useMemo } from "react";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 interface CardEditorV2Props {
@@ -110,6 +110,8 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
     } as SimpleMDE.Options;
   }, []);
 
+  const sparkMdeRef = useRef();
+
   return (
     <div className="grid grid-cols-12">
       <div className="col-span-12 col-start-1 ">
@@ -129,8 +131,22 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
             }
           }}
         /> */}
-        <SparkMde />
+        <SparkMde ref={sparkMdeRef} />
       </div>
+      <button
+        onClick={() => {
+          sparkMdeRef.current.toggleBold();
+        }}
+      >
+        Bold
+      </button>
+      <button
+        onClick={() => {
+          sparkMdeRef.current.toggleBold();
+        }}
+      >
+        Italic
+      </button>
 
       <div className="col-span-12 col-start-1">
         <div className="grid w-full grid-cols-3 gap-1">

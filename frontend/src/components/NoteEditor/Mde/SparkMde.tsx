@@ -3,18 +3,27 @@ import "./sparkmde.css";
 import SimpleMDE, { Options } from "easymde";
 import EasyMDE from "easymde";
 import React from "react";
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useImperativeHandle } from "react";
 
 interface SparkMdeProps {
   // Define the props for the SparkMde component here
 }
 
-const SparkMde: React.FC<SparkMdeProps> = () => {
+const SparkMde = React.forwardRef(({}, ref) => {
   const editorRef = useRef<SimpleMDE | null>(null);
 
   const getMdeInstance = (editor: SimpleMDE) => {
     editorRef.current = editor;
   };
+
+  useImperativeHandle(ref, () => ({
+    toggleBold: () => {
+      (editorRef.current as any)?.toggleBold();
+    },
+    toggleItalic: () => {
+      (editorRef.current as any)?.toggleItalic();
+    },
+  }));
 
   const toolbar = ["bold", "italic", "heading", "|", "quote", "unordered-list"];
 
@@ -31,21 +40,19 @@ const SparkMde: React.FC<SparkMdeProps> = () => {
     } as SimpleMDE.Options;
   }, []);
 
-  const handleBoldClick = () => {
-    console.log(editorRef.current);
-    (editorRef.current as any)?.toggleBold();
-  };
   return (
     <>
       <SimpleMdeReact options={MdeOptions} getMdeInstance={getMdeInstance} />
-      <button
-        onClick={handleBoldClick}
+      {/* <button
+        onClick={() => {
+          (editorRef.current as any)?.toggleBold();
+        }}
         className="bg-blue-500 p-3 text-white active:bg-blue-950"
       >
         Bold
-      </button>
+      </button> */}
     </>
   );
-};
+});
 
 export default SparkMde;
