@@ -135,7 +135,6 @@ const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({
     >
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Modal</IonTitle>
           <IonButtons slot="end">
             <IonButton
               onClick={() => {
