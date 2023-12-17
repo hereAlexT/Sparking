@@ -104,10 +104,6 @@ const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({
           "transform",
           `translate3d(0, -${keyboardHeight}px, 0)`,
         );
-        footerRef.current.style.setProperty(
-          "height",
-          "50%", // adjust this value to your liking
-        );
       }
     };
 
