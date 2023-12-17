@@ -140,20 +140,6 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
           value={content}
         />
       </div>
-      <EditorButton
-        onClick={() => {
-          (sparkMdeRef.current as any).toggleBold();
-        }}
-      >
-        <Bold />
-      </EditorButton>
-      <EditorButton
-        onClick={() => {
-          (sparkMdeRef.current as any).toggleItalic();
-        }}
-      >
-        <Italic />
-      </EditorButton>
 
       <div className="col-span-12 col-start-1">
         <div className="grid w-full grid-cols-3 gap-1">
@@ -234,6 +220,25 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
           </div>
         </>
       )}
+
+      <div className="col-span-1">
+        <EditorButton
+          onClick={() => {
+            (sparkMdeRef.current as any).toggleBold();
+          }}
+        >
+          <Bold />
+        </EditorButton>
+      </div>
+      <div className="col-span-1">
+        <EditorButton
+          onClick={() => {
+            (sparkMdeRef.current as any).toggleItalic();
+          }}
+        >
+          <Italic />
+        </EditorButton>
+      </div>
 
       <div className="col-span-1 col-start-12 my-1 flex justify-end">
         <SubmitButton
