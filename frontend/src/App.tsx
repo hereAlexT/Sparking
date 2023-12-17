@@ -92,6 +92,7 @@ const AppContent: React.FC = () => {
 
   return (
     <IonSplitPane
+      when="sm"
       key={key}
       /** Limit the size when in pages that not two columns*/
       className={clsx(isLoginOrSignup && "mx-auto max-w-md border-none")}
