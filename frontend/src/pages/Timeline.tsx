@@ -141,7 +141,9 @@ const TimeLine: React.FC = () => {
               </IonButtons>
               <IonTitle>Sparking</IonTitle>
               <IonButtons slot="end">
-                <IonButton onClick={() => setSearchBarVisible(true)}>
+                <IonButton
+                  onClick={() => setSearchBarVisible(!isSearchBarVisible)}
+                >
                   <IonIcon icon={searchOutlineIcon} />
                 </IonButton>
               </IonButtons>
@@ -154,6 +156,7 @@ const TimeLine: React.FC = () => {
                   showCancelButton="always"
                   onIonInput={(e) => setSearchQuery(e.detail.value!)}
                   onIonBlur={() => setSearchBarVisible(false)}
+                  onIonCancel={() => setSearchBarVisible(false)}
                 />
               </IonToolbar>
             )}
