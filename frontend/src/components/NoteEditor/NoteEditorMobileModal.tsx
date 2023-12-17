@@ -167,6 +167,16 @@ const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({
     { name: "Quote", action: "toggleBlockquote", icon: <Quote /> },
   ];
 
+  /** Fix on Safari, the SparkMde won't load until click it */
+  const [key, setKey] = useState(Math.random());
+
+  // Update the key state variable whenever the modal is opened
+  useEffect(() => {
+    if (isEditorOpen) {
+      setKey(Math.random());
+    }
+  }, [isEditorOpen]);
+
   const contentRef = useRef<HTMLIonContentElement>(null);
 
   return (
@@ -192,6 +202,7 @@ const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({
       <IonContent ref={contentRef}>
         <div className="noteEditorMobileModal">
           <SparkMde
+            key={key}
             ref={sparkMdeRef}
             onChange={(e) => setContent(e)}
             value={content}
