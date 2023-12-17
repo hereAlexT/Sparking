@@ -18,16 +18,15 @@ import {
 } from "../Icons";
 import EditorButton from "./EditorButton";
 import { SparkMde } from "./Mde";
-import { Camera, CameraResultType, Photo } from "@capacitor/camera";
-import { IonButton, IonTextarea, IonIcon } from "@ionic/react";
-import SimpleMDE, { Options } from "easymde";
+import { Camera, CameraResultType } from "@capacitor/camera";
+import { IonButton, IonIcon } from "@ionic/react";
 import {
   arrowForwardOutline as arrowForwardOutlineIcon,
   imageOutline as imageOutlineIcon,
   cameraOutline as cameraOutlineIcon,
   closeOutline as closeOutlineIcon,
 } from "ionicons/icons";
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import React, { useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 
@@ -47,6 +46,8 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
   const { user, isMember } = useAuth();
 
   const HandleOnSubmit = () => {
+    console.log("handle on submit");
+    console.log("content", content);
     if (content === "") return;
     if (!user) throw new Error("User is null, you need to login.");
     const newNote: Note = {
@@ -117,9 +118,29 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
       minHeight: "50px",
       spellChecker: false,
       lineNumbers: false,
-    } as SimpleMDE.Options;
+    } as EasyMDE.Options;
   }, []);
 
+  /** When press shift + enter, it should submit the message */
+  const HandleOnSubmitRef = useRef<() => void>();
+  HandleOnSubmitRef.current = HandleOnSubmit;
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Enter" && event.shiftKey) {
+        console.log("Yes shift + enter");
+        HandleOnSubmitRef.current && HandleOnSubmitRef.current();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    // Cleanup function to remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []); // Empty dependency array so the effect only runs once when the component mounts
+
+  /** Editor Buttons */
   const sparkMdeRef = useRef();
   const buttonData = [
     { name: "Bold", action: "toggleBold", icon: <Bold /> },
