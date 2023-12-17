@@ -4,3 +4,4 @@ export { default as Heading } from "./Heading";
 export { default as Quote } from "./Quote";
 export { default as NumberedList } from "./NumberedList";
 export { default as BulletList } from "./BulletList";
+export { default as Link } from "./Link";

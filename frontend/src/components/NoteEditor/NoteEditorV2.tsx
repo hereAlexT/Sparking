@@ -7,8 +7,15 @@ import {
   NOTE_STATUS,
   NoteId,
 } from "../../shared/types";
-import { Italic } from "../Icons";
-import Bold from "../Icons/Bold";
+import {
+  Bold,
+  BulletList,
+  Heading,
+  Italic,
+  Link,
+  NumberedList,
+  Quote,
+} from "../Icons";
 import EditorButton from "./EditorButton";
 import { SparkMde } from "./Mde";
 import { Camera, CameraResultType, Photo } from "@capacitor/camera";
@@ -114,26 +121,23 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
   }, []);
 
   const sparkMdeRef = useRef();
+  const buttonData = [
+    { name: "Bold", action: "toggleBold", icon: <Bold /> },
+    { name: "Italic", action: "toggleItalic", icon: <Italic /> },
+    { name: "BulletList", action: "toggleBulletList", icon: <BulletList /> },
+    {
+      name: "NumberedList",
+      action: "toggleNumberList",
+      icon: <NumberedList />,
+    },
+    { name: "Link", action: "toggleLink", icon: <Link /> },
+    { name: "Heading", action: "toggleHeadingSmaller", icon: <Heading /> },
+    { name: "Quote", action: "toggleBlockquote", icon: <Quote /> },
+  ];
 
   return (
     <div className="grid grid-cols-12">
       <div className="col-span-12 col-start-1 ">
-        {/* <IonTextarea
-          className="native-textarea-p0-m0 border-b border-slate-400 px-1 pt-1 font-poppins text-black dark:text-white"
-          disabled={!isOnline}
-          value={isOnline ? content : "We are working on offline editing!"}
-          onIonInput={(event: CustomEvent) => setContent(event.detail.value)}
-          rows={0}
-          autoGrow={true}
-          color="primary"
-          placeholder="You got a good idea💡, what's that?"
-          onKeyDown={(event: React.KeyboardEvent) => {
-            if (event.key === "Enter" && !event.shiftKey) {
-              event.preventDefault();
-              HandleOnSubmit();
-            }
-          }}
-        /> */}
         <SparkMde
           ref={sparkMdeRef}
           onChange={(e) => setContent(e)}
@@ -221,24 +225,17 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
         </>
       )}
 
-      <div className="col-span-1">
-        <EditorButton
-          onClick={() => {
-            (sparkMdeRef.current as any).toggleBold();
-          }}
-        >
-          <Bold />
-        </EditorButton>
-      </div>
-      <div className="col-span-1">
-        <EditorButton
-          onClick={() => {
-            (sparkMdeRef.current as any).toggleItalic();
-          }}
-        >
-          <Italic />
-        </EditorButton>
-      </div>
+      {buttonData.map((button, index) => (
+        <div className="col-span-1" key={index}>
+          <EditorButton
+            onClick={() => {
+              (sparkMdeRef.current as any)[button.action]();
+            }}
+          >
+            {button.icon}
+          </EditorButton>
+        </div>
+      ))}
 
       <div className="col-span-1 col-start-12 my-1 flex justify-end">
         <SubmitButton
