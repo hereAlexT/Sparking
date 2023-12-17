@@ -1,10 +1,10 @@
-import SimpleMdeReact from "./SimpleMdeReact";
+// import SimpleMdeReact from "./SimpleMdeReact";
 import "./sparkmde.css";
 import { EditorChange } from "codemirror";
-import SimpleMDE, { Options } from "easymde";
-import EasyMDE from "easymde";
-import React from "react";
+import EasyMDE, { Options, toggleBlockquote } from "easymde";
+import React, { useEffect } from "react";
 import { useMemo, useRef, useImperativeHandle } from "react";
+import SimpleMDE from "react-simplemde-editor";
 
 interface SparkMdeProps {
   onChange?: (value: string, changeObject?: EditorChange) => void;
@@ -13,18 +13,96 @@ interface SparkMdeProps {
 
 const SparkMde = React.forwardRef((props: SparkMdeProps, ref) => {
   const { onChange, value } = props;
-  const editorRef = useRef<SimpleMDE | null>(null);
+  const editorRef = useRef<EasyMDE | null>(null);
 
-  const getMdeInstance = (editor: SimpleMDE) => {
+  const getMdeInstance = (editor: EasyMDE) => {
     editorRef.current = editor;
+  };
+
+  const callOnEditor = (func: (editor: EasyMDE) => void) => {
+    if (editorRef.current) {
+      func(editorRef.current);
+    }
   };
 
   useImperativeHandle(ref, () => ({
     toggleBold: () => {
-      (editorRef.current as any)?.toggleBold();
+      callOnEditor(EasyMDE.toggleBold);
     },
     toggleItalic: () => {
-      (editorRef.current as any)?.toggleItalic();
+      callOnEditor(EasyMDE.toggleItalic);
+    },
+    toggleStrikethrough: () => {
+      callOnEditor(EasyMDE.toggleStrikethrough);
+    },
+    toggleHeadingSmaller: () => {
+      callOnEditor(EasyMDE.toggleHeadingSmaller);
+    },
+    toggleHeadingBigger: () => {
+      callOnEditor(EasyMDE.toggleHeadingBigger);
+    },
+    toggleHeading1: () => {
+      callOnEditor(EasyMDE.toggleHeading1);
+    },
+    toggleHeading2: () => {
+      callOnEditor(EasyMDE.toggleHeading2);
+    },
+    toggleHeading3: () => {
+      callOnEditor(EasyMDE.toggleHeading3);
+    },
+    toggleHeading4: () => {
+      callOnEditor(EasyMDE.toggleHeading4);
+    },
+    toggleHeading5: () => {
+      callOnEditor(EasyMDE.toggleHeading5);
+    },
+    toggleHeading6: () => {
+      callOnEditor(EasyMDE.toggleHeading6);
+    },
+    toggleCodeBlock: () => {
+      callOnEditor(EasyMDE.toggleCodeBlock);
+    },
+    toggleBlockquote: () => {
+      callOnEditor(EasyMDE.toggleBlockquote);
+    },
+    toggleUnorderedList: () => {
+      callOnEditor(EasyMDE.toggleUnorderedList);
+    },
+    toggleOrderedList: () => {
+      callOnEditor(EasyMDE.toggleOrderedList);
+    },
+    cleanBlock: () => {
+      callOnEditor(EasyMDE.cleanBlock);
+    },
+    drawLink: () => {
+      callOnEditor(EasyMDE.drawLink);
+    },
+    drawImage: () => {
+      callOnEditor(EasyMDE.drawImage);
+    },
+    drawUploadedImage: () => {
+      callOnEditor(EasyMDE.drawUploadedImage);
+    },
+    drawTable: () => {
+      callOnEditor(EasyMDE.drawTable);
+    },
+    drawHorizontalRule: () => {
+      callOnEditor(EasyMDE.drawHorizontalRule);
+    },
+    togglePreview: () => {
+      callOnEditor(EasyMDE.togglePreview);
+    },
+    toggleSideBySide: () => {
+      callOnEditor(EasyMDE.toggleSideBySide);
+    },
+    toggleFullScreen: () => {
+      callOnEditor(EasyMDE.toggleFullScreen);
+    },
+    undo: () => {
+      callOnEditor(EasyMDE.undo);
+    },
+    redo: () => {
+      callOnEditor(EasyMDE.redo);
     },
   }));
 
@@ -40,12 +118,12 @@ const SparkMde = React.forwardRef((props: SparkMdeProps, ref) => {
       placeholder: "You got an idea💡? What's that?",
       status: false,
       toolbar: false,
-    } as SimpleMDE.Options;
+    } as EasyMDE.Options;
   }, []);
 
   return (
     <>
-      <SimpleMdeReact
+      <SimpleMDE
         options={MdeOptions}
         getMdeInstance={getMdeInstance}
         onChange={onChange}

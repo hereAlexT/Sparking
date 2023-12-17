@@ -1,5 +1,4 @@
 import { SparkMde } from "../components/NoteEditor/Mde";
-import Mde from "../components/NoteEditor/Mde/SimpleMdeReact";
 import CardEditorMobileModal from "../components/NoteEditor/NoteEditorMobileModal";
 import CardEditorV2 from "../components/NoteEditor/NoteEditorV2";
 import NoteCardV2 from "../components/NoteEditor/NoteEditorV2";

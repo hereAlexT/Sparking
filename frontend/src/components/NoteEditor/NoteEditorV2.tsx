@@ -124,14 +124,14 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
   const buttonData = [
     { name: "Bold", action: "toggleBold", icon: <Bold /> },
     { name: "Italic", action: "toggleItalic", icon: <Italic /> },
-    { name: "BulletList", action: "toggleBulletList", icon: <BulletList /> },
+    { name: "BulletList", action: "toggleUnorderedList", icon: <BulletList /> },
     {
       name: "NumberedList",
-      action: "toggleNumberList",
+      action: "toggleOrderedList",
       icon: <NumberedList />,
     },
-    { name: "Link", action: "toggleLink", icon: <Link /> },
-    { name: "Heading", action: "toggleHeadingSmaller", icon: <Heading /> },
+    { name: "Link", action: "drawLink", icon: <Link /> },
+    { name: "Heading", action: "toggleHeading1", icon: <Heading /> },
     { name: "Quote", action: "toggleBlockquote", icon: <Quote /> },
   ];
 
