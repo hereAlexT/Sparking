@@ -112,17 +112,16 @@ const SparkMde = React.forwardRef((props: SparkMdeProps, ref) => {
 
   const MdeOptions = useMemo(() => {
     return {
-      autoDownloadFontAwesome: false,
       minHeight: minHeight || "100%",
-      // maxHeight: maxHeight || "100%",
       spellChecker: false,
       lineNumbers: false,
       unorderedListStyle: "-",
       uploadImage: false,
       placeholder: "You got an idea💡? What's that?",
       status: false,
-      toolbar: false,
       autofocus: true,
+      autoDownloadFontAwesome: false,
+      toolbar: false,
     } as EasyMDE.Options;
   }, []);
 

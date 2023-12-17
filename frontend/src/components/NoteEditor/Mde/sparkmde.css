@@ -685,22 +685,22 @@ span.CodeMirror-selectedtext {
   color: #183691;
 }
 .cm-s-easymde .cm-header-1 {
-  font-size: calc(1.375rem + 1.5vw);
+  @apply text-2xl font-bold;
 }
 .cm-s-easymde .cm-header-2 {
-  font-size: calc(1.325rem + 0.9vw);
+  @apply text-xl font-bold;
 }
 .cm-s-easymde .cm-header-3 {
-  font-size: calc(1.3rem + 0.6vw);
+  @apply text-lg font-bold;
 }
 .cm-s-easymde .cm-header-4 {
-  font-size: calc(1.275rem + 0.3vw);
+  @apply text-base font-bold;
 }
 .cm-s-easymde .cm-header-5 {
-  font-size: 1.25rem;
+  @apply text-base font-normal;
 }
 .cm-s-easymde .cm-header-6 {
-  font-size: 1rem;
+  @apply text-base font-light;
 }
 .cm-s-easymde .cm-header-1,
 .cm-s-easymde .cm-header-2,
