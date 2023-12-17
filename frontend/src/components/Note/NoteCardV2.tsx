@@ -100,7 +100,7 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({
 
         {/** Second Row */}
         {/** Note body */}
-        <div className="col-span-10 col-start-1 mt-2">
+        <div className="col-span-12 col-start-1 mt-2">
           <NoteContent note={note} />
         </div>
         <div className="col-span-1 col-start-12" />
