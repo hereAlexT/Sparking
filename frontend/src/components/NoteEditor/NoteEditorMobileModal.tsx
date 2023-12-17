@@ -183,7 +183,7 @@ const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({
     <IonModal
       ref={modalRef}
       trigger={trigger}
-      presentingElement={presentingElement}
+      // presentingElement={presentingElement}
       isOpen={isEditorOpen}
     >
       <IonHeader>
