@@ -1,4 +1,4 @@
-import CardEditorMobileModal from "../components/NoteEditor/NoteEditorModal";
+import CardEditorMobileModal from "../components/NoteEditor/NoteEditorMobileModal";
 import CardEditorV2 from "../components/NoteEditor/NoteEditorV2";
 import NoteCardV2 from "../components/NoteEditor/NoteEditorV2";
 import { useAuth } from "../contexts/AuthContext";
