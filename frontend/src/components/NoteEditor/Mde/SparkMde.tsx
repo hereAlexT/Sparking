@@ -11,18 +11,12 @@ interface SparkMdeProps {
 
 const SparkMde: React.FC<SparkMdeProps> = () => {
   const editorRef = useRef<SimpleMDE | null>(null);
-  const toolbar = [
-    {
-      name: "bold",
-      action: function customFunction(editor: EasyMDE) {
-        editorRef.current = editor;
-        console.log("editor", editor);
-        (editor as any).toggleBold();
-      },
-      className: "fa fa-bold",
-      title: "Bold",
-    },
-  ];
+
+  const getMdeInstance = (editor: SimpleMDE) => {
+    editorRef.current = editor;
+  };
+
+  const toolbar = ["bold", "italic", "heading", "|", "quote", "unordered-list"];
 
   const MdeOptions = useMemo(() => {
     return {
@@ -39,11 +33,11 @@ const SparkMde: React.FC<SparkMdeProps> = () => {
 
   const handleBoldClick = () => {
     console.log(editorRef.current);
-    editorRef.current?.toggleBold();
+    (editorRef.current as any)?.toggleBold();
   };
   return (
     <>
-      <SimpleMdeReact options={MdeOptions} />
+      <SimpleMdeReact options={MdeOptions} getMdeInstance={getMdeInstance} />
       <button
         onClick={handleBoldClick}
         className="bg-blue-500 p-3 text-white active:bg-blue-950"
