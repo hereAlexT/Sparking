@@ -117,6 +117,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
     return {
       minHeight: "50px",
       spellChecker: false,
+      nativeSpellcheck: true,
       lineNumbers: false,
     } as EasyMDE.Options;
   }, []);
