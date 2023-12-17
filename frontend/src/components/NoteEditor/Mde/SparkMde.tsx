@@ -15,6 +15,7 @@ const SparkMde: React.FC<SparkMdeProps> = () => {
     {
       name: "bold",
       action: function customFunction(editor) {
+        simpleMdeRef.current = editor;
         console.log("editor", editor);
         editor.toggleBold();
       },
@@ -37,9 +38,8 @@ const SparkMde: React.FC<SparkMdeProps> = () => {
   }, []);
 
   const handleBoldClick = () => {
-    if (simpleMdeRef.current) {
-      EasyMDE.toggleBold(simpleMdeRef.current);
-    }
+    console.log(simpleMdeRef.current);
+    simpleMdeRef.current?.toggleBold();
   };
   return (
     <>
