@@ -40,6 +40,7 @@ import {
   BlockTypeSelect,
   Button,
   BoldItalicUnderlineToggles,
+  mdxEditorRef,
 } from "@mdxeditor/editor";
 import clsx from "clsx";
 import {

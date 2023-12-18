@@ -16,7 +16,6 @@ import {
   NumberedList,
   Quote,
 } from "../Icons";
-import EditorButton from "./EditorButton";
 import HeadingToggle from "./MdxEditor/HeadingToggle";
 import "./NoteEditorV3.css";
 import { Camera, CameraResultType } from "@capacitor/camera";
@@ -27,31 +26,11 @@ import {
   headingsPlugin,
   toolbarPlugin,
   listsPlugin,
-  UndoRedo,
-  KitchenSinkToolbar,
-  quotePlugin,
-  linkPlugin,
-  linkDialogPlugin,
-  imagePlugin,
-  tablePlugin,
-  thematicBreakPlugin,
-  frontmatterPlugin,
-  codeBlockPlugin,
-  sandpackPlugin,
-  codeMirrorPlugin,
-  directivesPlugin,
-  AdmonitionDirectiveDescriptor,
-  diffSourcePlugin,
   markdownShortcutPlugin,
-  SandpackConfig,
   BoldItalicUnderlineToggles,
   ListsToggle,
-  BlockTypeSelect,
-  Separator,
-  Select,
   Button,
-  headingsPluginHooks,
-  corePluginHooks,
+  MDXEditorMethods,
 } from "@mdxeditor/editor";
 import clsx from "clsx";
 // import "@mdxeditor/editor/style.css";
@@ -95,6 +74,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
       userId: user.id,
     };
     onSubmit(newNote);
+    mdxEditorRef.current?.setMarkdown("");
     setContent("");
     setImages([]);
   };
@@ -193,6 +173,8 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
     { name: "Quote", action: "toggleBlockquote", icon: <Quote /> },
   ];
 
+  const mdxEditorRef = React.useRef<MDXEditorMethods>(null);
+
   return (
     <div className="grid grid-cols-12">
       <div className="col-span-12 col-start-1 ">
@@ -203,6 +185,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
         /> */}
         <MDXEditor
           markdown={content}
+          ref={mdxEditorRef}
           onChange={(newValue) => setContent(newValue)}
           contentEditableClassName={clsx("prose", "note-preview")}
           plugins={[
