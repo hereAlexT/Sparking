@@ -20,15 +20,7 @@ const NoteContent: React.FC<NoteContentProps> = ({ note }) => {
       <Markdown
         rehypePlugins={[rehypeKatex]}
         remarkPlugins={[remarkMath]}
-        className={clsx(
-          "prose prose-neutral font-poppins text-sm dark:prose-invert",
-          "prose-h1:text-2xl",
-          "prose-h2:text-xl",
-          "prose-h3:text-lg",
-          "prose-h4:text-base prose-h4:font-bold",
-          "prose-h5:text-base prose-h5:font-normal",
-          "prose-h6:text-base prose-h6:font-light",
-        )}
+        className={clsx("prose", "note-preview")}
         children={note.body}
         components={{
           code(props) {

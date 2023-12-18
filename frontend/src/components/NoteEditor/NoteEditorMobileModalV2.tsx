@@ -65,6 +65,7 @@ import {
   headingsPluginHooks,
   corePluginHooks,
 } from "@mdxeditor/editor";
+import clsx from "clsx";
 import {
   arrowForwardOutline as arrowForwardOutlineIcon,
   imageOutline as imageOutlineIcon,
@@ -243,7 +244,7 @@ const CardEditorMobileModalV2: React.FC<CardEditorMobileProps> = ({
           <MDXEditor
             markdown={content}
             onChange={(newValue) => setContent(newValue)}
-            contentEditableClassName="prose"
+            contentEditableClassName={clsx("prose", "note-preview")}
             plugins={[
               headingsPlugin(),
               listsPlugin(),

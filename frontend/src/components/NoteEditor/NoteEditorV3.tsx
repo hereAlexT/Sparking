@@ -52,6 +52,7 @@ import {
   headingsPluginHooks,
   corePluginHooks,
 } from "@mdxeditor/editor";
+import clsx from "clsx";
 // import "@mdxeditor/editor/style.css";
 import {
   arrowForwardOutline as arrowForwardOutlineIcon,
@@ -202,7 +203,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
         <MDXEditor
           markdown={content}
           onChange={(newValue) => setContent(newValue)}
-          contentEditableClassName="prose"
+          contentEditableClassName={clsx("prose", "note-preview")}
           plugins={[
             headingsPlugin(),
             listsPlugin(),
