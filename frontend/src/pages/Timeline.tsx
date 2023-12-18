@@ -1,6 +1,6 @@
 import NoteCardV2 from "../components/Note/NoteCardV2";
 import CardEditorMobileModal from "../components/NoteEditor/NoteEditorMobileModal";
-import CardEditorV2 from "../components/NoteEditor/NoteEditorV2";
+import CardEditorV3 from "../components/NoteEditor/NoteEditorV3";
 import { useAuth } from "../contexts/AuthContext";
 import { useMeta } from "../contexts/MetaContext";
 import { useNotes } from "../contexts/NotesContext";
@@ -173,7 +173,7 @@ const TimeLine: React.FC = () => {
             onIonInput={(e) => setSearchQuery(e.detail.value!)}
           ></IonSearchbar>
           <IonCard className="shadow-1xl my-1 rounded-xl border-2 border-neutral-200 bg-white  px-5 pb-1  pt-2 shadow-none  transition-colors duration-75 ease-in-out hover:border-sky-600">
-            <CardEditorV2 onSubmit={handleOnCreateNote} isOnline={true} />
+            <CardEditorV3 onSubmit={handleOnCreateNote} isOnline={true} />
           </IonCard>
         </>
       )}
