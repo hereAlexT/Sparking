@@ -25,7 +25,7 @@ const MetaContext = createContext<MetaContextType>({
 const MetaProvider: React.FC<MetaProviderProps> = ({ children }) => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [isSplitPaneOn, setIsSplitPaneOn] = useState<boolean>(false);
-  const [theme, setTheme] = useState<THEME_TYPE>(THEME_TYPE.SYSTEM);
+  const [theme, setTheme] = useState<THEME_TYPE>(THEME_TYPE.LIGHT);
 
   useEffect(() => {
     console.debug("isSplitPaneOn: ", isSplitPaneOn); // Print the isSplitPaneOn state whenever it changes
