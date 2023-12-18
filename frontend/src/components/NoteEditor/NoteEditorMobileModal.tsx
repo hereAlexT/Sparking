@@ -19,6 +19,7 @@ import {
 } from "../Icons";
 import EditorButton from "./EditorButton";
 import { SparkMde } from "./Mde";
+import HeadingToggle from "./MdxEditor/HeadingToggle";
 import "./NoteEditorMobileModal.css";
 import { Camera, CameraResultType } from "@capacitor/camera";
 import {

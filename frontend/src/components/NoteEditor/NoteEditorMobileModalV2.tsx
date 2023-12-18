@@ -18,20 +18,16 @@ import {
   Quote,
 } from "../Icons";
 import EditorButton from "./EditorButton";
-import { SparkMde } from "./Mde";
+import HeadingToggle from "./MdxEditor/HeadingToggle";
 import "./NoteEditorMobileModal.css";
-import { Camera, CameraResultType } from "@capacitor/camera";
 import {
   IonButton,
   IonIcon,
   IonModal,
   IonToolbar,
   IonFooter,
-  IonCol,
-  IonGrid,
   IonHeader,
   IonButtons,
-  IonRow,
   IonContent,
 } from "@ionic/react";
 import {
@@ -39,31 +35,11 @@ import {
   headingsPlugin,
   toolbarPlugin,
   listsPlugin,
-  UndoRedo,
-  KitchenSinkToolbar,
-  quotePlugin,
-  linkPlugin,
-  linkDialogPlugin,
-  imagePlugin,
-  tablePlugin,
-  thematicBreakPlugin,
-  frontmatterPlugin,
-  codeBlockPlugin,
-  sandpackPlugin,
-  codeMirrorPlugin,
-  directivesPlugin,
-  AdmonitionDirectiveDescriptor,
-  diffSourcePlugin,
   markdownShortcutPlugin,
-  SandpackConfig,
-  BoldItalicUnderlineToggles,
   ListsToggle,
   BlockTypeSelect,
-  Separator,
-  Select,
   Button,
-  headingsPluginHooks,
-  corePluginHooks,
+  BoldItalicUnderlineToggles,
 } from "@mdxeditor/editor";
 import clsx from "clsx";
 import {
@@ -252,13 +228,11 @@ const CardEditorMobileModalV2: React.FC<CardEditorMobileProps> = ({
               toolbarPlugin({
                 toolbarContents: () => (
                   <>
-                    <Button
-                      onClick={() => console.log("Button clicked!")}
-                    ></Button>
-                    <UndoRedo />
+                    <Button>
+                      <HeadingToggle />
+                    </Button>
                     <BoldItalicUnderlineToggles />
                     <ListsToggle />
-                    <BlockTypeSelect />
                     {/* <SubmitButton
                     disabled={!isOnline || content.length === 0}
                     onClick={HandleOnSubmit}
