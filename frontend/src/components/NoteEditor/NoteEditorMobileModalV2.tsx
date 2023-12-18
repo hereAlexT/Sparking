@@ -98,7 +98,7 @@ declare global {
 }
 
 /** Modal Setup */
-const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({
+const CardEditorMobileModalV2: React.FC<CardEditorMobileProps> = ({
   isEditorOpen,
   setIsEditorOpen,
   pageRef,
@@ -232,12 +232,47 @@ const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({
       </IonHeader>
       <IonContent ref={contentRef}>
         <div className="noteEditorMobileModal">
-          <SparkMde
+          {/* <SparkMde
             key={key}
             ref={sparkMdeRef}
             onChange={(e) => setContent(e)}
             value={content}
             minHeight="800px"
+          /> */}
+
+          <MDXEditor
+            markdown={content}
+            onChange={(newValue) => setContent(newValue)}
+            contentEditableClassName="prose"
+            plugins={[
+              headingsPlugin(),
+              listsPlugin(),
+              markdownShortcutPlugin(),
+              toolbarPlugin({
+                toolbarContents: () => (
+                  <>
+                    <Button
+                      onClick={() => console.log("Button clicked!")}
+                    ></Button>
+                    <UndoRedo />
+                    <BoldItalicUnderlineToggles />
+                    <ListsToggle />
+                    <BlockTypeSelect />
+                    {/* <SubmitButton
+                    disabled={!isOnline || content.length === 0}
+                    onClick={HandleOnSubmit}
+                  >
+                    <IonIcon
+                      className="m-0 p-0 text-white dark:text-black"
+                      size="small"
+                      slot="icon-only"
+                      icon={arrowForwardOutlineIcon}
+                    />
+                  </SubmitButton> */}
+                  </>
+                ),
+              }),
+            ]}
           />
         </div>
       </IonContent>
@@ -276,4 +311,4 @@ const CardEditorMobileModal: React.FC<CardEditorMobileProps> = ({
   );
 };
 
-export default CardEditorMobileModal;
+export default CardEditorMobileModalV2;

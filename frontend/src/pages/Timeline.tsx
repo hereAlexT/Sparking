@@ -1,5 +1,5 @@
 import NoteCardV2 from "../components/Note/NoteCardV2";
-import CardEditorMobileModal from "../components/NoteEditor/NoteEditorMobileModal";
+import CardEditorMobileModalV2 from "../components/NoteEditor/NoteEditorMobileModalV2";
 import CardEditorV3 from "../components/NoteEditor/NoteEditorV3";
 import { useAuth } from "../contexts/AuthContext";
 import { useMeta } from "../contexts/MetaContext";
@@ -199,7 +199,7 @@ const TimeLine: React.FC = () => {
           )}
         </ul>
       </IonContent>
-      <CardEditorMobileModal
+      <CardEditorMobileModalV2
         onSubmit={handleOnUpdateNote}
         pageRef={pageRef}
         setIsEditorOpen={setIsEditorOpen}

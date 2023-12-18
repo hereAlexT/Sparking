@@ -209,7 +209,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
             markdownShortcutPlugin(),
             toolbarPlugin({
               toolbarContents: () => (
-                <div>
+                <>
                   <Button
                     onClick={() => console.log("Button clicked!")}
                   ></Button>
@@ -217,7 +217,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
                   <BoldItalicUnderlineToggles />
                   <ListsToggle />
                   <BlockTypeSelect />
-                  <SubmitButton
+                  {/* <SubmitButton
                     disabled={!isOnline || content.length === 0}
                     onClick={HandleOnSubmit}
                   >
@@ -227,8 +227,8 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
                       slot="icon-only"
                       icon={arrowForwardOutlineIcon}
                     />
-                  </SubmitButton>
-                </div>
+                  </SubmitButton> */}
+                </>
               ),
             }),
           ]}
@@ -315,7 +315,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
         </>
       )}
 
-      {buttonData.map((button, index) => (
+      {/* {buttonData.map((button, index) => (
         <div className="col-span-1" key={index}>
           <EditorButton
             onClick={() => {
@@ -325,7 +325,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
             {button.icon}
           </EditorButton>
         </div>
-      ))}
+      ))} */}
 
       <div className="col-span-1 col-start-12 my-1 flex justify-end">
         <SubmitButton
