@@ -1,10 +1,15 @@
 import React from "react";
 
-const Heading: React.FC = () => {
+interface HeadingProps {
+  className?: string;
+}
+
+const Heading: React.FC<HeadingProps> = ({ className }) => {
   // Add your component logic here
 
   return (
     <svg
+      className={className}
       xmlns="http://www.w3.org/2000/svg"
       height="16"
       width="14"

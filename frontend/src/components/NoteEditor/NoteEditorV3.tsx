@@ -17,6 +17,7 @@ import {
   Quote,
 } from "../Icons";
 import EditorButton from "./EditorButton";
+import HeadingToggle from "./MdxEditor/HeadingToggle";
 import "./NoteEditorV3.css";
 import { Camera, CameraResultType } from "@capacitor/camera";
 import { IonButton, IonIcon } from "@ionic/react";
@@ -211,13 +212,11 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
             toolbarPlugin({
               toolbarContents: () => (
                 <>
-                  <Button
-                    onClick={() => console.log("Button clicked!")}
-                  ></Button>
-                  <UndoRedo />
+                  <Button>
+                    <HeadingToggle />
+                  </Button>
                   <BoldItalicUnderlineToggles />
                   <ListsToggle />
-                  <BlockTypeSelect />
                   {/* <SubmitButton
                     disabled={!isOnline || content.length === 0}
                     onClick={HandleOnSubmit}
