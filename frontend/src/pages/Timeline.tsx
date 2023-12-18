@@ -23,6 +23,7 @@ import {
   IonButton,
 } from "@ionic/react";
 import { getPlatforms } from "@ionic/react";
+import clsx from "clsx";
 import {
   arrowUpOutline as arrowUpOutlineIcon,
   searchOutline as searchOutlineIcon,
@@ -172,7 +173,14 @@ const TimeLine: React.FC = () => {
             placeholder="Search"
             onIonInput={(e) => setSearchQuery(e.detail.value!)}
           ></IonSearchbar>
-          <IonCard className="shadow-1xl my-1 rounded-xl border-2 border-neutral-200 bg-white  px-5 pb-1  pt-2 shadow-none  transition-colors duration-75 ease-in-out hover:border-sky-600">
+          <IonCard
+            className={clsx(
+              "shadow-1xl my-1 rounded-xl border",
+              "px-5 pb-1 pt-2 shadow-none  transition-colors duration-75 ease-in-out ",
+              "border-neutral-200 bg-white hover:border-sky-600",
+              " dark:border-indigo-600 dark:border-opacity-20 dark:bg-blue-950 dark:hover:border-indigo-400",
+            )}
+          >
             <CardEditorV3 onSubmit={handleOnCreateNote} isOnline={true} />
           </IonCard>
         </>

@@ -37,6 +37,8 @@ import {
   listsPlugin,
   markdownShortcutPlugin,
   ListsToggle,
+  CreateLink,
+  linkPlugin,
   BlockTypeSelect,
   Button,
   BoldItalicUnderlineToggles,
@@ -225,6 +227,7 @@ const CardEditorMobileModalV2: React.FC<CardEditorMobileProps> = ({
               headingsPlugin(),
               listsPlugin(),
               markdownShortcutPlugin(),
+              linkPlugin(),
               toolbarPlugin({
                 toolbarContents: () => (
                   <>

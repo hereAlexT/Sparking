@@ -87,20 +87,23 @@ const NoteCardV2: React.FC<NoteCardV2Props> = ({
   return (
     <div
       className={clsx(
-        "  group w-full rounded-lg border border-slate-200 bg-white px-3  py-3 transition-colors duration-75 ease-in hover:border-sky-700  dark:border-slate-200",
+        "group w-full rounded-md px-3 pb-3 pt-1 ",
+        "transition-colors duration-75 ease-in",
+        "border border-zinc-100 bg-white hover:border-sky-700 ",
+        "dark:border-indigo-950 dark:bg-slate-800 dark:bg-opacity-70 dark:hover:border-indigo-400",
         className,
       )}
     >
       <div className="grid grid-cols-12">
         {/** First Row */}
         {/** Date Time */}
-        <div className="col-strat-1 col-span-7 pt-3">
+        <div className="col-strat-1 col-span-7 pt-1">
           <NoteDatetimeBlock createdAt={note.createdAt} />
         </div>
 
         {/** Second Row */}
         {/** Note body */}
-        <div className="col-span-12 col-start-1 mt-2">
+        <div className="col-span-12 col-start-1 mt-1">
           <NoteContent note={note} />
         </div>
         <div className="col-span-1 col-start-12" />

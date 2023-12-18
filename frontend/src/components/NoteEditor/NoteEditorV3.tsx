@@ -26,10 +26,13 @@ import {
   headingsPlugin,
   toolbarPlugin,
   listsPlugin,
+  linkPlugin,
   markdownShortcutPlugin,
   BoldItalicUnderlineToggles,
   ListsToggle,
   Button,
+  quotePlugin,
+  CreateLink,
   MDXEditorMethods,
 } from "@mdxeditor/editor";
 import clsx from "clsx";
@@ -192,6 +195,7 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
             headingsPlugin(),
             listsPlugin(),
             markdownShortcutPlugin(),
+            linkPlugin(),
             toolbarPlugin({
               toolbarContents: () => (
                 <>

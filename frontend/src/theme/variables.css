@@ -4,8 +4,14 @@ http://ionicframework.com/docs/theming/ */
 /** Ionic CSS Variables **/
 
 :root {
-  --sparking-bg-light-color: #f6f7fb;
-  --sparking-bg-dark-color: #f6f7fb;
+  /* --sparking-bg-light-color: #faf8f7; */
+  --sparking-bg-light-color: #faf8f7;
+  --sparking-bg-light-secondary-color: #f9f4f1;
+  --sparking-bg-dark-color: #191919;
+  --sparking-bg-dark-secondary-color: #262626;
+}
+
+.ios body {
   --ion-background-color: var(--sparking-bg-light-color);
 }
 
@@ -13,6 +19,11 @@ http://ionicframework.com/docs/theming/ */
   --ion-background-color: var(--sparking-bg-dark-color);
 }
 
+.ios ion-modal {
+  --ion-background-color: var(--sparking-bg-light-color);
+  --ion-toolbar-background: var(--sparking-bg-light-color);
+  --ion-toolbar-border-color: var(--sparking-bg-light-color);
+}
 .ios ion-modal.dark {
   --ion-background-color: var(--sparking-bg-dark-color);
   --ion-toolbar-background: var(--sparking-bg-dark-color);
@@ -23,20 +34,12 @@ http://ionicframework.com/docs/theming/ */
   --ion-toolbar-border-color: transparent;
 }
 
-.ios ion-modal {
-  --ion-background-color: var(--sparking-bg-light-color);
-  --ion-toolbar-background: var(--sparking-bg-light-color);
-  --ion-toolbar-border-color: var(--sparking-bg-light-color);
+.ios ion-menu {
+  --ion-background-color: var(--sparking-bg-light-secondary-color);
 }
 
-ion-menu {
-  --ion-background-color: #faf8f7;
-  ion-toolbar {
-    --background: var(--ion-background-color);
-  }
-  ion-list {
-    background: transparent;
-  }
+.ios.dark ion-menu {
+  --ion-background-color: var(--sparking-bg-dark-secondary-color);
 }
 
 .split-pane-visible > ion-menu {
