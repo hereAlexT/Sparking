@@ -36,7 +36,6 @@ import {
   MDXEditorMethods,
 } from "@mdxeditor/editor";
 import clsx from "clsx";
-// import "@mdxeditor/editor/style.css";
 import {
   arrowForwardOutline as arrowForwardOutlineIcon,
   imageOutline as imageOutlineIcon,
@@ -61,10 +60,9 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
   const _noteid = note?.id || uuidv4();
   const [content, setContent] = useState("");
   const { user, isMember } = useAuth();
+  const [images, setImages] = useState<NoteImage[]>([]);
 
   const HandleOnSubmit = () => {
-    console.log("handle on submit");
-    console.log("content", content);
     if (content === "") return;
     if (!user) throw new Error("User is null, you need to login.");
     const newNote: Note = {
@@ -124,22 +122,9 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
     }
   };
 
-  const [images, setImages] = useState<NoteImage[]>([]);
-
   function handleDeleteImage(index: number) {
     setImages((images) => images.filter((_, i) => i !== index));
   }
-
-  /** Markdown Editor */
-  const MdeOptions = useMemo(() => {
-    return {
-      minHeight: "50px",
-      spellChecker: false,
-      nativeSpellcheck: true,
-      lineNumbers: false,
-      inputStyle: "contenteditable",
-    } as EasyMDE.Options;
-  }, []);
 
   /** When press shift + enter, it should submit the message */
   const HandleOnSubmitRef = useRef<() => void>();
@@ -160,32 +145,11 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
     };
   }, []); // Empty dependency array so the effect only runs once when the component mounts
 
-  /** Editor Buttons */
-  const sparkMdeRef = useRef();
-  const buttonData = [
-    { name: "Bold", action: "toggleBold", icon: <Bold /> },
-    { name: "Italic", action: "toggleItalic", icon: <Italic /> },
-    { name: "BulletList", action: "toggleUnorderedList", icon: <BulletList /> },
-    {
-      name: "NumberedList",
-      action: "toggleOrderedList",
-      icon: <NumberedList />,
-    },
-    { name: "Link", action: "drawLink", icon: <Link /> },
-    { name: "Heading", action: "toggleHeadingSmaller", icon: <Heading /> },
-    { name: "Quote", action: "toggleBlockquote", icon: <Quote /> },
-  ];
-
   const mdxEditorRef = React.useRef<MDXEditorMethods>(null);
 
   return (
     <div className="grid grid-cols-12">
       <div className="col-span-12 col-start-1 ">
-        {/* <SparkMde
-          ref={sparkMdeRef}
-          onChange={(e) => setContent(e)}
-          value={content}
-        /> */}
         <MDXEditor
           markdown={content}
           ref={mdxEditorRef}
