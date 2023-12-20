@@ -37,7 +37,7 @@ describe('tagToHtml', () => {
     it('should convert tags', () => {
         const content = 'This is a test #tag';
         const className = 'tag';
-        const expected = 'This is a test <span class="tag">tag</span>';
+        const expected = 'This is a test <span class="tag">#tag</span>';
         const result = tagToHtml(content, className);
         expect(result).toEqual(expected);
     });
@@ -45,7 +45,7 @@ describe('tagToHtml', () => {
     it('should convert tag like #tag_2', () => {
         const content = '\#TagAtBeginning #TagInTheMiddle \#TagInMiddleWithSlash';
         const className = 'tag';
-        const expected = '\<span class="tag">TagAtBeginning</span> <span class="tag">TagInTheMiddle</span> \<span class="tag">TagInMiddleWithSlash</span>';
+        const expected = '\<span class="tag">#TagAtBeginning</span> <span class="tag">#TagInTheMiddle</span> \<span class="tag">#TagInMiddleWithSlash</span>';
         const result = tagToHtml(content, className);
         console.log("result", result)
         expect(result).toEqual(expected);

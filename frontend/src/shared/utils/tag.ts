@@ -4,7 +4,7 @@
 
 const TAG_REGEX = /#[\w\.]+/g;
 // const TAG_REGEX = /\/?#[\w\.]+/g;
-const CODE_BLOCK_REGEX = /```[\s\S]*?```/g;
+const CODE_BLOCK_REGEX = /```[\s\S]*?```|`[\s\S]*?`/g;
 
 
 const extractTags = (content: string): string[] => {
@@ -48,7 +48,7 @@ const tagToHtml = (content: string, className: string): string => {
     }
 
     const codeParts = content.match(CODE_BLOCK_REGEX) || [];
-    const nonCodeParts = content.split(CODE_BLOCK_REGEX).map(part => part.replace(TAG_REGEX, (match) => `<span class="${className}">${match.slice(1)}</span>`));
+    const nonCodeParts = content.split(CODE_BLOCK_REGEX).map(part => part.replace(TAG_REGEX, (match) => `<span class="${className}">#${match.slice(1)}</span>`));
     let finalParts = [];
     for (let i = 0; i < nonCodeParts.length; i++) {
         finalParts.push(nonCodeParts[i]);
