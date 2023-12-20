@@ -1,5 +1,11 @@
 // tag.test.ts
-import { extractTags, modifyTags, tagToHtml } from '../src/shared/utils/tag';
+import { extractTags, modifyTags, tagToHtml, hierarchyToDbRecords, dbRecordsToHierarchy } from '../src/shared/utils/tag';
+import { Tag, UserId, NoteId } from '../src/shared/types';
+import { Database } from '../src/shared/db.types'
+import { Children } from 'react';
+import { idea } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+
+
 
 describe('extractTags', () => {
     it('should extract tags from a markdown string', () => {
@@ -47,11 +53,8 @@ describe('tagToHtml', () => {
         const className = 'tag';
         const expected = '\<span class="tag">#TagAtBeginning</span> <span class="tag">#TagInTheMiddle</span> \<span class="tag">#TagInMiddleWithSlash</span>';
         const result = tagToHtml(content, className);
-        console.log("result", result)
         expect(result).toEqual(expected);
     });
-
-
 
     it('should not convert tags in codeblock - code block with string', () => {
         const content = '```This is a test #tag```\ngreat day';
@@ -76,4 +79,131 @@ describe('tagToHtml', () => {
         const result = tagToHtml(content, className);
         expect(result).toEqual(expected);
     });
+
+    describe('hierarchyToDbRecords', () => {
+        it('should convert tag hierarchy to flat database structure', () => {
+            const tag = {
+                id: 'uuid1',
+                name: 'tag1',
+                children: [
+                    { id: 'uuid2', name: 'tag2' },
+                    { id: 'uuid3', name: 'tag3' }
+                ]
+            };
+            const userId = '1';
+            const noteId = 'note1';
+
+            const expected = [
+                { id: 'uuid1', name: 'tag1', note_id: noteId, parent: null, user_id: userId },
+                { id: 'uuid2', name: 'tag2', note_id: noteId, parent: 'uuid1', user_id: userId },
+                { id: 'uuid3', name: 'tag3', note_id: noteId, parent: 'uuid1', user_id: userId }
+            ];
+
+            const result = hierarchyToDbRecords(tag, userId, noteId);
+            console.log(result)
+            expect(result).toEqual(expected);
+        });
+
+        it('should convert deep tag hierarchy to flat database structure', () => {
+            const tag = {
+                id: 'uuid1',
+                name: 'tag1',
+                children: [
+                    {
+                        id: 'uuid2',
+                        name: 'tag2',
+                        children: [
+                            { id: 'uuid4', name: 'tag4' },
+                            {
+                                id: 'uuid5', name: 'tag5',
+                                children: [
+                                    { id: 'uuid6', name: 'tag6' }
+                                ]
+                            }
+                        ]
+                    },
+                    { id: 'uuid3', name: 'tag3' }
+                ]
+            };
+            const userId = '1';
+            const noteId = 'note1';
+
+            const expected = [
+                { id: 'uuid1', name: 'tag1', note_id: noteId, parent: null, user_id: userId },
+                { id: 'uuid2', name: 'tag2', note_id: noteId, parent: 'uuid1', user_id: userId },
+                { id: 'uuid4', name: 'tag4', note_id: noteId, parent: 'uuid2', user_id: userId },
+                { id: 'uuid5', name: 'tag5', note_id: noteId, parent: 'uuid2', user_id: userId },
+                { id: 'uuid6', name: 'tag6', note_id: noteId, parent: 'uuid5', user_id: userId },
+                { id: 'uuid3', name: 'tag3', note_id: noteId, parent: 'uuid1', user_id: userId }
+            ];
+
+            const result = hierarchyToDbRecords(tag, userId, noteId);
+            console.log(result)
+            expect(result).toEqual(expected);
+        });
+    });
+
+
+    describe('dbRecordsToHierarchy', () => {
+        it('should convert flat database structure to tag hierarchy', () => {
+            const records: Database['public']['Tables']['tags']['Row'][] = [
+                { id: 'uuid1', name: 'tag1', note_id: 'note1', parent: null, user_id: '1', created_at: '2022-01-01T00:00:00Z', updated_at: '2022-01-01T00:00:00Z' },
+                { id: 'uuid2', name: 'tag2', note_id: 'note1', parent: 'uuid1', user_id: '1', created_at: '2022-01-01T00:00:00Z', updated_at: '2022-01-01T00:00:00Z' },
+                { id: 'uuid3', name: 'tag3', note_id: 'note1', parent: 'uuid1', user_id: '1', created_at: '2022-01-01T00:00:00Z', updated_at: '2022-01-01T00:00:00Z' }
+            ];
+
+            const expected = [{
+                id: 'uuid1',
+                name: 'tag1',
+                children: [
+                    { id: 'uuid2', name: 'tag2' },
+                    { id: 'uuid3', name: 'tag3' }
+                ]
+            }];
+
+            const result = dbRecordsToHierarchy(records);
+
+            expect(result).toEqual(expected);
+        });
+
+        it('should convert deeper flat database structure to tag hierarchy', () => {
+            const records: Database['public']['Tables']['tags']['Row'][] = [
+                { id: 'uuid1', name: 'tag1', note_id: 'note1', parent: null, user_id: '1', created_at: '2022-01-01T00:00:00Z', updated_at: '2022-01-01T00:00:00Z' },
+                { id: 'uuid2', name: 'tag2', note_id: 'note1', parent: 'uuid1', user_id: '1', created_at: '2022-01-01T00:00:00Z', updated_at: '2022-01-01T00:00:00Z' },
+                { id: 'uuid3', name: 'tag3', note_id: 'note1', parent: 'uuid2', user_id: '1', created_at: '2022-01-01T00:00:00Z', updated_at: '2022-01-01T00:00:00Z' },
+                { id: 'uuid4', name: 'tag4', note_id: 'note1', parent: 'uuid3', user_id: '1', created_at: '2022-01-01T00:00:00Z', updated_at: '2022-01-01T00:00:00Z' },
+                { id: 'uuid5', name: 'tag5', note_id: 'note1', parent: 'uuid4', user_id: '1', created_at: '2022-01-01T00:00:00Z', updated_at: '2022-01-01T00:00:00Z' },
+            ];
+
+            const expected = [{
+                id: 'uuid1',
+                name: 'tag1',
+                children: [
+                    {
+                        id: 'uuid2',
+                        name: 'tag2',
+                        children: [
+                            {
+                                id: 'uuid3',
+                                name: 'tag3',
+                                children: [
+                                    {
+                                        id: 'uuid4', name: 'tag4',
+                                        children: [
+                                            { id: 'uuid5', name: 'tag5' }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }];
+
+            const result = dbRecordsToHierarchy(records);
+
+            expect(result).toEqual(expected);
+        });
+    });
+
 });

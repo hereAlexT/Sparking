@@ -1,5 +1,6 @@
-//todo: extract tags from a string of markdown
-//todo: modify tags from a string of markdown
+import { Database } from '../db.types'
+import { Tag, UserId, NoteId } from '../types';
+import { groupBy } from 'lodash';
 
 const TAG_REGEX = /#[\w\/_\\\.]+/g;
 // const TAG_REGEX = /\/?#[\w\.]+/g;
@@ -57,4 +58,50 @@ const tagToHtml = (content: string, className: string): string => {
     }
     return finalParts.join('');
 }
-export { extractTags, modifyTags, tagToHtml }
+
+
+const dbRecordsToHierarchy = (records: Database['public']['Tables']['tags']['Row'][], parentId: string | null = null): Tag[] => {
+    // Group the records by their parent ID
+    const groups = groupBy(records, 'parent');
+
+    // Get the records for the current parent ID
+    const currentRecords = groups[parentId || 'null'] || [];
+
+    // Convert each record to a tag and recursively build its children
+    return currentRecords.map((record: Database['public']['Tables']['tags']['Row']) => {
+        const children = dbRecordsToHierarchy(records, record.id);
+        return {
+            id: record.id,
+            name: record.name,
+            ...(children.length > 0 ? { children } : {})
+        };
+    });
+}
+
+const hierarchyToDbRecords = (tag: Tag, userId: UserId, noteId: NoteId, parent: string | null = null): Database['public']['Tables']['tags']['Insert'][] => {
+    let rows: Database['public']['Tables']['tags']['Insert'][] = [];
+
+    // Create a row for the current tag
+    let row: Database['public']['Tables']['tags']['Insert'] = {
+        id: tag.id,
+        name: tag.name,
+        note_id: noteId,
+        parent: parent, // parent is passed as an argument
+        user_id: userId
+    };
+    rows.push(row);
+
+    // If the tag has children, recursively create rows for them
+    if (tag.children) {
+        for (let child of tag.children) {
+            // Pass the current tag's id as the parent for the child
+            rows = rows.concat(hierarchyToDbRecords(child, userId, noteId, tag.id));
+        }
+    }
+
+    return rows;
+}
+
+
+
+export { extractTags, modifyTags, tagToHtml, hierarchyToDbRecords, dbRecordsToHierarchy }
