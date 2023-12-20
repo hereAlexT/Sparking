@@ -1,9 +1,16 @@
 // tag.test.ts
-import { extractTags, modifyTags, tagToHtml, hierarchyToDbRecords, dbRecordsToHierarchy, tagStringToHierarchy, mergeTags } from '../src/shared/utils/tag';
+import {
+    extractTags,
+    modifyTags,
+    tagToHtml,
+    hierarchyToDbRecords,
+    dbRecordsToHierarchy,
+    tagStringToHierarchy,
+    mergeTags,
+    noteToTags
+} from '../src/shared/utils/tag';
 import { Tag, UserId, NoteId } from '../src/shared/types';
 import { Database } from '../src/shared/db.types'
-import { Children } from 'react';
-import { idea } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 
 
@@ -11,6 +18,13 @@ describe('extractTags', () => {
     it('should extract tags from a markdown string', () => {
         const content = 'This is a test #tag';
         const expected = ['#tag'];
+        const result = extractTags(content);
+        expect(result).toEqual(expected);
+    });
+
+    it('should extract tags from a markdown string', () => {
+        const content = 'This is a test #tag/tag2';
+        const expected = ['#tag/tag2'];
         const result = extractTags(content);
         expect(result).toEqual(expected);
     });
@@ -100,7 +114,6 @@ describe('tagToHtml', () => {
             ];
 
             const result = hierarchyToDbRecords(tag, userId, noteId);
-            console.log(result)
             expect(result).toEqual(expected);
         });
 
@@ -138,7 +151,6 @@ describe('tagToHtml', () => {
             ];
 
             const result = hierarchyToDbRecords(tag, userId, noteId);
-            console.log(result)
             expect(result).toEqual(expected);
         });
     });
@@ -297,5 +309,31 @@ describe('tagToHtml', () => {
             }];
             expect(result).toEqual(expected);
         });
+    });
+});
+
+describe('noteToTags', () => {
+    it('should extract tags from note content and merge with existing tags', () => {
+        const content = 'This is a test #tag1 #tag2';
+        const existingTags: Tag[] = [{
+            id: 'uuid1',
+            name: 'tag1',
+            children: []
+        }];
+
+        const result = noteToTags(content, existingTags);
+        const expected: Tag[] = [
+            {
+                id: 'uuid1',
+                name: 'tag1',
+                children: []
+            },
+            {
+                id: expect.stringMatching(/^temp-/),
+                name: 'tag2',
+                children: []
+            }
+        ];
+        expect(result).toEqual(expected);
     });
 });

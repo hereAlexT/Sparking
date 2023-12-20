@@ -3,7 +3,6 @@ import { Tag, UserId, NoteId } from '../types';
 import { groupBy } from 'lodash';
 
 const TAG_REGEX = /#[\w\/_\\\.]+/g;
-// const TAG_REGEX = /\/?#[\w\.]+/g;
 const CODE_BLOCK_REGEX = /```[\s\S]*?```|`[\s\S]*?`/g;
 
 
@@ -127,13 +126,13 @@ const tagStringToHierarchy = (tagString: string): Tag => {
  * @param source Tags the note needs to merge
  */
 const mergeTags = (target: Tag[], source: Tag[]): Tag[] => {
-    const targetMap = new Map(target.map(tag => [tag.id, tag]));
+    const targetMap = new Map(target.map(tag => [tag.name, tag]));
 
     source.forEach(tag => {
-        if (!targetMap.has(tag.id)) {
+        if (!targetMap.has(tag.name)) {
             target.push(tag);
         } else {
-            const targetTag = targetMap.get(tag.id)!;
+            const targetTag = targetMap.get(tag.name)!;
             if (targetTag.children && tag.children) {
                 targetTag.children = mergeTags(targetTag.children, tag.children);
             }
@@ -144,4 +143,21 @@ const mergeTags = (target: Tag[], source: Tag[]): Tag[] => {
 }
 
 
-export { extractTags, modifyTags, tagToHtml, hierarchyToDbRecords, dbRecordsToHierarchy, tagStringToHierarchy, mergeTags }
+/**
+ * Extract tags from note content, merge them with existed tags, and return the merged tags.
+ */
+const noteToTags = (content: string, tags: Tag[]): Tag[] => {
+    const newTags = extractTags(content).map(tag => tag.replace('#', '')).map(tagStringToHierarchy);
+    return mergeTags(tags, newTags);
+}
+
+export {
+    extractTags,
+    modifyTags,
+    tagToHtml,
+    hierarchyToDbRecords,
+    dbRecordsToHierarchy,
+    tagStringToHierarchy,
+    mergeTags,
+    noteToTags
+}
