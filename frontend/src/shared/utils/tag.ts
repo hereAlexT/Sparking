@@ -90,7 +90,7 @@ const hierarchyToDbRecords = (tag: Tag, userId: UserId, noteId: NoteId, parent: 
     };
     rows.push(row);
 
-    // If the tag has children, recursively create rows for them
+    // If xthe tag has children, recursively create rows for them
     if (tag.children) {
         for (let child of tag.children) {
             // Pass the current tag's id as the parent for the child
@@ -109,6 +109,7 @@ const hierarchyToDbRecords = (tag: Tag, userId: UserId, noteId: NoteId, parent: 
  */
 const tagStringToHierarchy = (tagString: string): Tag => {
     const tagParts = tagString.split('/');
+    //todo: fetch uuid from current tag tree
     let currentTag: Tag = { id: `temp-${Date.now()}`, name: tagParts.pop()!, children: [] };
 
     while (tagParts.length) {
