@@ -1,6 +1,7 @@
 export type NoteId = string;
 export type UserId = string;
 export type NoteImageId = string;
+export type TagId = string;
 
 
 export enum NOTE_STATUS {
@@ -24,6 +25,14 @@ export interface NoteImage {
     url: string; // add this line
 }
 
+
+// A linked list of tags
+export interface Tag {
+    id: TagId;
+    name: string;
+    children?: Tag[];
+}
+
 export interface Note {
     id: NoteId;
     body: string;
@@ -33,6 +42,7 @@ export interface Note {
     updatedAt: Date;
     userId: UserId;
     images?: NoteImage[];
+    tags?: Tag[];
     status: NOTE_STATUS;
 }
 
