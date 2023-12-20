@@ -6,7 +6,10 @@ import {
   NOTE_IMAGE_STATUS,
   NOTE_STATUS,
   NoteId,
+  Tag,
 } from "../../shared/types";
+import { noteToTags } from "../../shared/utils/tag";
+import { mergeTags } from "../../shared/utils/tag";
 import {
   Bold,
   BulletList,
@@ -65,6 +68,10 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
   const HandleOnSubmit = () => {
     if (content === "") return;
     if (!user) throw new Error("User is null, you need to login.");
+
+    // get tags from content
+    const tags: Tag[] = noteToTags(content, []);
+
     const newNote: Note = {
       id: _noteid,
       body: content,
@@ -73,7 +80,9 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
       images: images,
       status: NOTE_STATUS.UNSYNCED,
       userId: user.id,
+      tags: tags,
     };
+    console.log("newNote", newNote);
     onSubmit(newNote);
     mdxEditorRef.current?.setMarkdown("");
     setContent("");
