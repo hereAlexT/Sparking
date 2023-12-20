@@ -1,9 +1,11 @@
+import { tagToHtml } from "../../shared/utils/tag";
 import clsx from "clsx";
 import React from "react";
 import Markdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula as highliter } from "react-syntax-highlighter/dist/esm/styles/prism";
 import rehypeKatex from "rehype-katex";
+import rehypeRaw from "rehype-raw";
 import remarkMath from "remark-math";
 
 interface NoteContentProps {
@@ -18,10 +20,11 @@ const NoteContent: React.FC<NoteContentProps> = ({ note }) => {
   return (
     <div>
       <Markdown
-        rehypePlugins={[rehypeKatex]}
+        rehypePlugins={[rehypeRaw, rehypeKatex]}
         remarkPlugins={[remarkMath]}
         className={clsx("prose", "note-preview")}
-        children={note.body}
+        children={tagToHtml(note.body, "tag bg-blue-300")}
+        // children={note.body}
         components={{
           code(props) {
             const { children, className, node, ...rest } = props;

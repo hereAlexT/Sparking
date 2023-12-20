@@ -3,6 +3,7 @@
 
 
 const TAG_REGEX = /#[\w\.]+/g;
+// const TAG_REGEX = /\/?#[\w\.]+/g;
 const CODE_BLOCK_REGEX = /```[\s\S]*?```/g;
 
 
@@ -39,9 +40,15 @@ const modifyTags = (content: string, tag: string, newTag: string): string => {
  * Replace tags in the content with the given html tag. It deson't convert the tag in code blocks.
  * @param content rendered content
  */
-const tagToHtml = (content: string, html: string): string => {
+const tagToHtml = (content: string, className: string): string => {
+
+    // check second content whether start with "\#", if so ,remove the first character "/"
+    if (content.startsWith('\\#')) {
+        content = content.slice(1);
+    }
+
     const codeParts = content.match(CODE_BLOCK_REGEX) || [];
-    const nonCodeParts = content.split(CODE_BLOCK_REGEX).map(part => part.replace(TAG_REGEX, html));
+    const nonCodeParts = content.split(CODE_BLOCK_REGEX).map(part => part.replace(TAG_REGEX, (match) => `<span class="${className}">${match.slice(1)}</span>`));
     let finalParts = [];
     for (let i = 0; i < nonCodeParts.length; i++) {
         finalParts.push(nonCodeParts[i]);

@@ -118,7 +118,7 @@ export const uploadImageToStorage = async (image: File, userId: UserId, noteImag
     return data;
 }
 
- 
+
 export interface ImageTransformOptions {
     width?: number;
     height?: number;
@@ -141,3 +141,5 @@ export const fetchImage = async (noteImageId: NoteImageId, userId: UserId, trans
         reader.readAsDataURL(blob);
     });
 }
+
+
