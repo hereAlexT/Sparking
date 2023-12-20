@@ -1,8 +1,7 @@
 //todo: extract tags from a string of markdown
 //todo: modify tags from a string of markdown
 
-
-const TAG_REGEX = /#[\w\.]+/g;
+const TAG_REGEX = /#[\w\/_\\\.]+/g;
 // const TAG_REGEX = /\/?#[\w\.]+/g;
 const CODE_BLOCK_REGEX = /```[\s\S]*?```|`[\s\S]*?`/g;
 
