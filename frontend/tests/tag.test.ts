@@ -1,5 +1,5 @@
 // tag.test.ts
-import { extractTags, modifyTags, tagToHtml, hierarchyToDbRecords, dbRecordsToHierarchy } from '../src/shared/utils/tag';
+import { extractTags, modifyTags, tagToHtml, hierarchyToDbRecords, dbRecordsToHierarchy, tagStringToHierarchy, mergeTags } from '../src/shared/utils/tag';
 import { Tag, UserId, NoteId } from '../src/shared/types';
 import { Database } from '../src/shared/db.types'
 import { Children } from 'react';
@@ -206,4 +206,96 @@ describe('tagToHtml', () => {
         });
     });
 
+    describe('tagStringToHierarchy', () => {
+        it('should convert tag string to hierarchy', () => {
+            const tagString = 'tag1/tag2/tag3';
+            const result = tagStringToHierarchy(tagString);
+            const expected = {
+                id: expect.stringMatching(/^temp-/),
+                name: 'tag1',
+                children: [{
+                    id: expect.stringMatching(/^temp-/),
+                    name: 'tag2',
+                    children: [{
+                        id: expect.stringMatching(/^temp-/),
+                        name: 'tag3',
+                        children: []
+                    }]
+                }]
+            };
+            expect(result).toEqual(expected);
+        });
+    });
+
+    describe('mergeTags', () => {
+        it('should merge source tags into target tags', () => {
+            const target: Tag[] = [{
+                id: 'uuid1',
+                name: 'tag1',
+                children: []
+            }];
+
+            const source: Tag[] = [{
+                id: 'uuid2',
+                name: 'tag2',
+                children: []
+            }];
+
+            const result = mergeTags(target, source);
+            const expected: Tag[] = [
+                {
+                    id: 'uuid1',
+                    name: 'tag1',
+                    children: []
+                },
+                {
+                    id: 'uuid2',
+                    name: 'tag2',
+                    children: []
+                }
+            ];
+            expect(result).toEqual(expected);
+        });
+
+        it('should merge children of source tags into target tags', () => {
+            const target: Tag[] = [{
+                id: 'uuid1',
+                name: 'tag1',
+                children: [{
+                    id: 'uuid2',
+                    name: 'tag2',
+                    children: []
+                }]
+            }];
+
+            const source: Tag[] = [{
+                id: 'uuid1',
+                name: 'tag1',
+                children: [{
+                    id: 'uuid3',
+                    name: 'tag3',
+                    children: []
+                }]
+            }];
+
+            const result = mergeTags(target, source);
+            const expected: Tag[] = [{
+                id: 'uuid1',
+                name: 'tag1',
+                children: [
+                    {
+                        id: 'uuid2',
+                        name: 'tag2',
+                        children: []
+                    },
+                    {
+                        id: 'uuid3',
+                        name: 'tag3',
+                        children: []
+                    }
+                ]
+            }];
+            expect(result).toEqual(expected);
+        });
+    });
 });

@@ -102,6 +102,46 @@ const hierarchyToDbRecords = (tag: Tag, userId: UserId, noteId: NoteId, parent: 
     return rows;
 }
 
+/**
+ * @param tagString  Tag string examples: 
+ * `tag1/tag2`: tag2 is a child of tag1 -> {tag1: children: [tag2]}
+ * `tag1`: tag1 is a root tag -> {tag1}
+ * `tag1/tag2/tag3`: tag3 is a child of tag2, tag2 is a child of tag1 -> {tag1: children: [tag2: children: [tag3]]}
+ */
+const tagStringToHierarchy = (tagString: string): Tag => {
+    const tagParts = tagString.split('/');
+    let currentTag: Tag = { id: `temp-${Date.now()}`, name: tagParts.pop()!, children: [] };
+
+    while (tagParts.length) {
+        currentTag = { id: `temp-${Date.now()}`, name: tagParts.pop()!, children: [currentTag] };
+    }
+
+    return currentTag;
+}
+
+/**
+ * Merge tagsA to tagsB, return the merged tags.
+ * This function is used given tags A the note already has, and tags B the note needs to merge.
+ * If TagsA
+ * @param target Tags the note already has
+ * @param source Tags the note needs to merge
+ */
+const mergeTags = (target: Tag[], source: Tag[]): Tag[] => {
+    const targetMap = new Map(target.map(tag => [tag.id, tag]));
+
+    source.forEach(tag => {
+        if (!targetMap.has(tag.id)) {
+            target.push(tag);
+        } else {
+            const targetTag = targetMap.get(tag.id)!;
+            if (targetTag.children && tag.children) {
+                targetTag.children = mergeTags(targetTag.children, tag.children);
+            }
+        }
+    });
+
+    return target;
+}
 
 
-export { extractTags, modifyTags, tagToHtml, hierarchyToDbRecords, dbRecordsToHierarchy }
+export { extractTags, modifyTags, tagToHtml, hierarchyToDbRecords, dbRecordsToHierarchy, tagStringToHierarchy, mergeTags }
