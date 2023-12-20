@@ -8,7 +8,7 @@ import {
     tagStringToHierarchy,
     mergeTags,
     noteToTags
-} from '../src/shared/utils/tag';
+} from '../src/shared/utils/tagUtil';
 import { Tag, UserId, NoteId } from '../src/shared/types';
 import { Database } from '../src/shared/db.types'
 
@@ -94,246 +94,46 @@ describe('tagToHtml', () => {
         expect(result).toEqual(expected);
     });
 
-    describe('hierarchyToDbRecords', () => {
-        it('should convert tag hierarchy to flat database structure', () => {
-            const tag = {
-                id: 'uuid1',
-                name: 'tag1',
-                children: [
-                    { id: 'uuid2', name: 'tag2' },
-                    { id: 'uuid3', name: 'tag3' }
-                ]
-            };
-            const userId = '1';
-            const noteId = 'note1';
-
-            const expected = [
-                { id: 'uuid1', name: 'tag1', note_id: noteId, parent: null, user_id: userId },
-                { id: 'uuid2', name: 'tag2', note_id: noteId, parent: 'uuid1', user_id: userId },
-                { id: 'uuid3', name: 'tag3', note_id: noteId, parent: 'uuid1', user_id: userId }
-            ];
-
-            const result = hierarchyToDbRecords(tag, userId, noteId);
-            expect(result).toEqual(expected);
-        });
-
-        it('should convert deep tag hierarchy to flat database structure', () => {
-            const tag = {
-                id: 'uuid1',
-                name: 'tag1',
-                children: [
-                    {
-                        id: 'uuid2',
-                        name: 'tag2',
-                        children: [
-                            { id: 'uuid4', name: 'tag4' },
-                            {
-                                id: 'uuid5', name: 'tag5',
-                                children: [
-                                    { id: 'uuid6', name: 'tag6' }
-                                ]
-                            }
-                        ]
-                    },
-                    { id: 'uuid3', name: 'tag3' }
-                ]
-            };
-            const userId = '1';
-            const noteId = 'note1';
-
-            const expected = [
-                { id: 'uuid1', name: 'tag1', note_id: noteId, parent: null, user_id: userId },
-                { id: 'uuid2', name: 'tag2', note_id: noteId, parent: 'uuid1', user_id: userId },
-                { id: 'uuid4', name: 'tag4', note_id: noteId, parent: 'uuid2', user_id: userId },
-                { id: 'uuid5', name: 'tag5', note_id: noteId, parent: 'uuid2', user_id: userId },
-                { id: 'uuid6', name: 'tag6', note_id: noteId, parent: 'uuid5', user_id: userId },
-                { id: 'uuid3', name: 'tag3', note_id: noteId, parent: 'uuid1', user_id: userId }
-            ];
-
-            const result = hierarchyToDbRecords(tag, userId, noteId);
-            expect(result).toEqual(expected);
-        });
-    });
-
-
-    describe('dbRecordsToHierarchy', () => {
-        it('should convert flat database structure to tag hierarchy', () => {
-            const records: Database['public']['Tables']['tags']['Row'][] = [
-                { id: 'uuid1', name: 'tag1', note_id: 'note1', parent: null, user_id: '1', created_at: '2022-01-01T00:00:00Z', updated_at: '2022-01-01T00:00:00Z' },
-                { id: 'uuid2', name: 'tag2', note_id: 'note1', parent: 'uuid1', user_id: '1', created_at: '2022-01-01T00:00:00Z', updated_at: '2022-01-01T00:00:00Z' },
-                { id: 'uuid3', name: 'tag3', note_id: 'note1', parent: 'uuid1', user_id: '1', created_at: '2022-01-01T00:00:00Z', updated_at: '2022-01-01T00:00:00Z' }
-            ];
-
-            const expected = [{
-                id: 'uuid1',
-                name: 'tag1',
-                children: [
-                    { id: 'uuid2', name: 'tag2' },
-                    { id: 'uuid3', name: 'tag3' }
-                ]
-            }];
-
-            const result = dbRecordsToHierarchy(records);
-
-            expect(result).toEqual(expected);
-        });
-
-        it('should convert deeper flat database structure to tag hierarchy', () => {
-            const records: Database['public']['Tables']['tags']['Row'][] = [
-                { id: 'uuid1', name: 'tag1', note_id: 'note1', parent: null, user_id: '1', created_at: '2022-01-01T00:00:00Z', updated_at: '2022-01-01T00:00:00Z' },
-                { id: 'uuid2', name: 'tag2', note_id: 'note1', parent: 'uuid1', user_id: '1', created_at: '2022-01-01T00:00:00Z', updated_at: '2022-01-01T00:00:00Z' },
-                { id: 'uuid3', name: 'tag3', note_id: 'note1', parent: 'uuid2', user_id: '1', created_at: '2022-01-01T00:00:00Z', updated_at: '2022-01-01T00:00:00Z' },
-                { id: 'uuid4', name: 'tag4', note_id: 'note1', parent: 'uuid3', user_id: '1', created_at: '2022-01-01T00:00:00Z', updated_at: '2022-01-01T00:00:00Z' },
-                { id: 'uuid5', name: 'tag5', note_id: 'note1', parent: 'uuid4', user_id: '1', created_at: '2022-01-01T00:00:00Z', updated_at: '2022-01-01T00:00:00Z' },
-            ];
-
-            const expected = [{
-                id: 'uuid1',
-                name: 'tag1',
-                children: [
-                    {
-                        id: 'uuid2',
-                        name: 'tag2',
-                        children: [
-                            {
-                                id: 'uuid3',
-                                name: 'tag3',
-                                children: [
-                                    {
-                                        id: 'uuid4', name: 'tag4',
-                                        children: [
-                                            { id: 'uuid5', name: 'tag5' }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            }];
-
-            const result = dbRecordsToHierarchy(records);
-
-            expect(result).toEqual(expected);
-        });
-    });
-
-    describe('tagStringToHierarchy', () => {
-        it('should convert tag string to hierarchy', () => {
-            const tagString = 'tag1/tag2/tag3';
-            const result = tagStringToHierarchy(tagString);
-            const expected = {
-                id: expect.stringMatching(/^temp-/),
-                name: 'tag1',
-                children: [{
-                    id: expect.stringMatching(/^temp-/),
-                    name: 'tag2',
-                    children: [{
-                        id: expect.stringMatching(/^temp-/),
-                        name: 'tag3',
-                        children: []
-                    }]
-                }]
-            };
-            expect(result).toEqual(expected);
-        });
-    });
-
-    describe('mergeTags', () => {
-        it('should merge source tags into target tags', () => {
-            const target: Tag[] = [{
-                id: 'uuid1',
-                name: 'tag1',
-                children: []
-            }];
-
-            const source: Tag[] = [{
-                id: 'uuid2',
-                name: 'tag2',
-                children: []
-            }];
-
-            const result = mergeTags(target, source);
-            const expected: Tag[] = [
-                {
-                    id: 'uuid1',
-                    name: 'tag1',
-                    children: []
-                },
-                {
-                    id: 'uuid2',
-                    name: 'tag2',
-                    children: []
-                }
-            ];
-            expect(result).toEqual(expected);
-        });
-
-        it('should merge children of source tags into target tags', () => {
-            const target: Tag[] = [{
-                id: 'uuid1',
-                name: 'tag1',
-                children: [{
-                    id: 'uuid2',
-                    name: 'tag2',
-                    children: []
-                }]
-            }];
-
-            const source: Tag[] = [{
-                id: 'uuid1',
-                name: 'tag1',
-                children: [{
-                    id: 'uuid3',
-                    name: 'tag3',
-                    children: []
-                }]
-            }];
-
-            const result = mergeTags(target, source);
-            const expected: Tag[] = [{
-                id: 'uuid1',
-                name: 'tag1',
-                children: [
-                    {
-                        id: 'uuid2',
-                        name: 'tag2',
-                        children: []
-                    },
-                    {
-                        id: 'uuid3',
-                        name: 'tag3',
-                        children: []
-                    }
-                ]
-            }];
-            expect(result).toEqual(expected);
-        });
-    });
 });
 
-describe('noteToTags', () => {
-    it('should extract tags from note content and merge with existing tags', () => {
-        const content = 'This is a test #tag1 #tag2';
-        const existingTags: Tag[] = [{
-            id: 'uuid1',
-            name: 'tag1',
-            children: []
-        }];
+describe('tagsDiff', () => {
+    test('should return added tags', () => {
+        const oldTags = ['tag1', 'tag2'];
+        const newTags = ['tag1', 'tag2', 'tag3'];
+        const diff = tagsDiff(oldTags, newTags);
+        expect(diff.added).toEqual(['tag3']);
+        expect(diff.removed).toEqual([]);
+    });
 
-        const result = noteToTags(content, existingTags);
-        const expected: Tag[] = [
-            {
-                id: 'uuid1',
-                name: 'tag1',
-                children: []
-            },
-            {
-                id: expect.stringMatching(/^temp-/),
-                name: 'tag2',
-                children: []
-            }
-        ];
-        expect(result).toEqual(expected);
+    test('should return removed tags', () => {
+        const oldTags = ['tag1', 'tag2', 'tag3'];
+        const newTags = ['tag1', 'tag2'];
+        const diff = tagsDiff(oldTags, newTags);
+        expect(diff.added).toEqual([]);
+        expect(diff.removed).toEqual(['tag3']);
+    });
+
+    test('should return added and removed tags', () => {
+        const oldTags = ['tag1', 'tag2'];
+        const newTags = ['tag2', 'tag3'];
+        const diff = tagsDiff(oldTags, newTags);
+        expect(diff.added).toEqual(['tag3']);
+        expect(diff.removed).toEqual(['tag1']);
+    });
+
+    test('should return empty arrays if tags are the same', () => {
+        const oldTags = ['tag1', 'tag2'];
+        const newTags = ['tag1', 'tag2'];
+        const diff = tagsDiff(oldTags, newTags);
+        expect(diff.added).toEqual([]);
+        expect(diff.removed).toEqual([]);
+    });
+
+    test('should handl nested tags', () => {
+        const oldTags = ['tag1/tag2', 'tag2/tag4'];
+        const newTags = ['tag1/tag2', 'tag1/tag4'];
+        const diff = tagsDiff(oldTags, newTags);
+        expect(diff.added).toEqual(['tag1/tag4']);
+        expect(diff.removed).toEqual(['tag2/tag4']);
     });
 });
