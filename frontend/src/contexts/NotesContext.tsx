@@ -6,6 +6,8 @@ import {
   uploadImageToStorage,
 } from "../apis/NoteAPI";
 import { Note, NoteId } from "../shared/types";
+import { TagTree } from "../shared/utils/tagTree";
+import { initTagTree } from "../shared/utils/tagTree";
 import camelcaseKeys from "camelcase-keys";
 import {
   createContext,
@@ -67,6 +69,8 @@ type NotesContextType = {
   updateNote: (note: Note) => void;
   getNotes: () => Promise<Note[]>;
   searchNotes: (query: string) => void;
+  tagTree: TagTree;
+  setTagTree: (tagTree: TagTree) => void;
 };
 
 const NotesContext = createContext<NotesContextType>({
@@ -76,10 +80,13 @@ const NotesContext = createContext<NotesContextType>({
   updateNote: (note: Note) => {},
   getNotes: () => Promise.resolve([]),
   searchNotes: (query: string) => {},
+  tagTree: initTagTree(),
+  setTagTree: (tagTree: TagTree) => {},
 });
 
 const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
   const [notes, dispatch] = useReducer(reducer, []);
+  const [tagTree, setTagTree] = useState<TagTree>(initTagTree());
   const [searchResults, setSearchResults] = useState(notes);
 
   async function blobUrlToFile(
@@ -176,6 +183,8 @@ const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
         updateNote,
         getNotes,
         searchNotes,
+        tagTree,
+        setTagTree,
       }}
     >
       {children}

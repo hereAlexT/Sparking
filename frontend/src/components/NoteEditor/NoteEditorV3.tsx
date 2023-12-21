@@ -1,15 +1,16 @@
 import { SubmitButton } from ".";
 import { useAuth } from "../../contexts/AuthContext";
+import { useNotes } from "../../contexts/NotesContext";
 import {
   Note,
   NoteImage,
   NOTE_IMAGE_STATUS,
   NOTE_STATUS,
   NoteId,
-  Tag,
 } from "../../shared/types";
-import { noteToTags } from "../../shared/utils/tag";
-import { mergeTags } from "../../shared/utils/tag";
+import { TagTree } from "../../shared/utils/tagTree";
+import { insertTag } from "../../shared/utils/tagTree";
+import { extractTags } from "../../shared/utils/tagUtil";
 import {
   Bold,
   BulletList,
@@ -63,30 +64,44 @@ const CardEditorV2: React.FC<CardEditorV2Props> = ({
   const _noteid = note?.id || uuidv4();
   const [content, setContent] = useState("");
   const { user, isMember } = useAuth();
+  const { tagTree, setTagTree, createNote } = useNotes();
   const [images, setImages] = useState<NoteImage[]>([]);
 
-  const HandleOnSubmit = () => {
+  const HandleOnSubmit = async () => {
     if (content === "") return;
     if (!user) throw new Error("User is null, you need to login.");
 
-    // get tags from content
-    const tags: Tag[] = noteToTags(content, []);
+    try {
+      /** Handle Note */
+      const tagsString: string[] = extractTags(content);
+      const newNote: Note = {
+        id: _noteid || uuidv4(),
+        body: content,
+        createdAt: note?.createdAt || new Date(),
+        updatedAt: new Date(),
+        images: images,
+        status: NOTE_STATUS.UNSYNCED,
+        userId: user.id,
+        tagsString: tagsString,
+      };
+      console.log("newNote", newNote);
+      await createNote(newNote);
+      /** Handle Tag Tree */
+      tagsString.map((tag) => {
+        insertTag(tagTree, tag, newNote.id);
+      });
+      setTagTree({ ...tagTree });
+      console.log(tagTree);
 
-    const newNote: Note = {
-      id: _noteid,
-      body: content,
-      createdAt: note?.createdAt || new Date(),
-      updatedAt: new Date(),
-      images: images,
-      status: NOTE_STATUS.UNSYNCED,
-      userId: user.id,
-      tags: tags,
-    };
-    console.log("newNote", newNote);
-    onSubmit(newNote);
-    mdxEditorRef.current?.setMarkdown("");
-    setContent("");
-    setImages([]);
+      /** Reset Editor */
+      mdxEditorRef.current?.setMarkdown("");
+      setContent("");
+      setImages([]);
+    } catch (error) {
+      console.log("error");
+      console.log(error);
+      alert((error as Error).message);
+    }
   };
 
   const handleImageButtonClick = async () => {

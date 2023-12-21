@@ -26,13 +26,6 @@ export interface NoteImage {
 }
 
 
-// A linked list of tags
-export interface Tag {
-    id: TagId;
-    name: string;
-    children?: Tag[];
-}
-
 export interface Note {
     id: NoteId;
     body: string;
@@ -42,10 +35,9 @@ export interface Note {
     updatedAt: Date;
     userId: UserId;
     images?: NoteImage[];
-    tags?: Tag[];
+    tagsString?: string[];
     status: NOTE_STATUS;
 }
-
 
 
 export enum AUTH_ACTION {

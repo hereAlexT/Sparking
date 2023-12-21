@@ -1,4 +1,4 @@
-import { tagToHtml } from "../../shared/utils/tag";
+import { tagToHtml } from "../../shared/utils/tagUtil";
 import clsx from "clsx";
 import React from "react";
 import Markdown from "react-markdown";
