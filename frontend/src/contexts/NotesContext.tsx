@@ -8,6 +8,7 @@ import {
 import { Note, NoteId } from "../shared/types";
 import { TagTree } from "../shared/utils/tagTree";
 import { initTagTree } from "../shared/utils/tagTree";
+import { buildIndex } from "../shared/utils/tagUtil";
 import camelcaseKeys from "camelcase-keys";
 import {
   createContext,
@@ -157,6 +158,9 @@ const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
     }));
     console.debug("getNotes called");
     _notes.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+
+    /** Build index for tagtree */
+    setTagTree(buildIndex(_notes));
     dispatch({ type: NOTE_ACTION.GET_NOTES, payload: _notes });
     return _notes;
   };

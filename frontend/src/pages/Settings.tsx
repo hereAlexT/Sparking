@@ -2,7 +2,6 @@ import { useAuth } from "../contexts/AuthContext";
 import { useMeta } from "../contexts/MetaContext";
 import { useNotes } from "../contexts/NotesContext";
 import { THEME_TYPE } from "../shared/types";
-import { TagTree } from "../shared/utils/tagTree";
 import { buildIndex } from "../shared/utils/tagUtil";
 import {
   IonContent,
