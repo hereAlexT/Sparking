@@ -1,6 +1,9 @@
 import { useAuth } from "../contexts/AuthContext";
 import { useMeta } from "../contexts/MetaContext";
+import { useNotes } from "../contexts/NotesContext";
 import { THEME_TYPE } from "../shared/types";
+import { TagTree } from "../shared/utils/tagTree";
+import { buildIndex } from "../shared/utils/tagUtil";
 import {
   IonContent,
   IonHeader,
@@ -23,6 +26,7 @@ import {
   logOutOutline as logOutOutlineIcon,
   hammerOutline as hammerOutlineIcon,
   moonOutline as moonOutlineIcon,
+  pulseOutline as pulseOutlineIcon,
 } from "ionicons/icons";
 import React, { ReactNode } from "react";
 
@@ -45,7 +49,9 @@ const StyledIonList: React.FC<StyledIonListProps> = ({
 const Settings: React.FC = () => {
   console.log("Settings.tsx: Settings");
   const { user } = useAuth();
+  const { notes } = useNotes();
   const { isSplitPaneOn, theme, setTheme } = useMeta();
+  const { tagTree, setTagTree } = useNotes();
 
   return (
     <IonPage id="main">
@@ -79,6 +85,15 @@ const Settings: React.FC = () => {
                 Add your location data to every note.
               </IonNote>
             </IonToggle>
+          </IonItem>
+          <IonItem
+            button={true}
+            onClick={() => {
+              setTagTree(buildIndex(notes));
+            }}
+          >
+            <IonIcon aria-hidden="true" icon={pulseOutlineIcon} slot="start" />
+            <IonLabel> Re-index </IonLabel>
           </IonItem>
         </StyledIonList>
 

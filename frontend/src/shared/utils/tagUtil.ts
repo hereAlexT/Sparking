@@ -1,5 +1,6 @@
 import { TagTree, initTagTree, insertTag } from "./tagTree";
 import { Note } from "../types";
+import TagTreeView from "../../components/TagTreeView";
 
 const TAG_REGEX = /#[\w\/_\\\.]+/g;
 const CODE_BLOCK_REGEX = /```[\s\S]*?```|`[\s\S]*?`/g;
@@ -64,7 +65,7 @@ export const tagsDiff = (oldTags: string[], newTags: string[]): { added: string[
     return { added, removed };
 }
 
-export const buildIndex = (notes: Note[]): { tagTree: TagTree } => {
+export const buildIndex = (notes: Note[]): TagTree => {
     let tagTree = initTagTree();
 
     for (let note of notes) {
@@ -72,6 +73,6 @@ export const buildIndex = (notes: Note[]): { tagTree: TagTree } => {
             insertTag(tagTree, tag, note.id);
         });
     }
-    return { tagTree };
+    return tagTree;
 }
 
