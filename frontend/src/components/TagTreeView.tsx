@@ -6,51 +6,6 @@ import { useState, useEffect } from "react";
 import TreeView, { flattenTree } from "react-accessible-treeview";
 import { IoMdArrowDropright } from "react-icons/io";
 
-const folder = {
-  name: "",
-  children: [
-    {
-      name: "Fruits",
-      children: [
-        { name: "Avocados" },
-        { name: "Bananas" },
-        { name: "Berries" },
-        { name: "Oranges" },
-        { name: "Pears" },
-      ],
-    },
-    {
-      name: "Drinks",
-      children: [
-        { name: "Apple Juice" },
-        { name: "Chocolate" },
-        { name: "Coffee" },
-        {
-          name: "Tea",
-          children: [
-            { name: "Black Tea" },
-            { name: "Green Tea" },
-            { name: "Red Tea" },
-            { name: "Matcha" },
-          ],
-        },
-      ],
-    },
-    {
-      name: "Vegetables",
-      children: [
-        { name: "Beets" },
-        { name: "Carrots" },
-        { name: "Celery" },
-        { name: "Lettuce" },
-        { name: "Onions" },
-      ],
-    },
-  ],
-};
-
-const data = flattenTree(folder);
-
 const TagTreeView: React.FC = () => {
   const [expandedIds, setExpandedIds] = useState();
   const { tagTree, setTagTree } = useNotes();
