@@ -1,5 +1,6 @@
 import { useAuth } from "../../contexts/AuthContext";
 import { useMeta } from "../../contexts/MetaContext";
+import TagTreeView from "../TagTreeView";
 import MenuItem from "./MenuItem";
 import {
   IonContent,
@@ -111,6 +112,7 @@ const Menu: React.FC<MenuProps> = ({}) => {
               />
             </li> */}
         </ul>
+        <TagTreeView />
       </IonContent>
       <div className="mb-5 border-t px-4 py-2">
         <MenuItem
