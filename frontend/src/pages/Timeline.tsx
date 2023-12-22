@@ -29,13 +29,17 @@ import {
   searchOutline as searchOutlineIcon,
 } from "ionicons/icons";
 import { useState, useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 const TimeLine: React.FC = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const search = searchParams.get("search") || "";
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [selectedNote, setSelectedNote] = useState<Note | undefined>(undefined);
+  const [searchValue, setSearchValue] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
   const {
     notes,
     createNote,
@@ -48,9 +52,21 @@ const TimeLine: React.FC = () => {
   const { isOnline, isSplitPaneOn } = useMeta();
   const { isAuthenticated, user } = useAuth();
 
-  const handleSearch = (query: string) => {
-    searchNotes(query);
-  };
+  /** Search features. */
+  // const handleSearch = (query: string) => {
+  //   searchNotes(query);
+  // };
+
+  useEffect(() => {
+    searchNotes(searchValue);
+  }, [searchValue]);
+
+  useEffect(() => {
+    if (!isLoading) {
+      console.log("location changed");
+      setSearchValue(search);
+    }
+  }, [location, isLoading]);
 
   useEffect(() => {
     console.debug(getPlatforms());
@@ -155,7 +171,7 @@ const TimeLine: React.FC = () => {
                 <IonSearchbar
                   placeholder="Search"
                   showCancelButton="always"
-                  onIonInput={(e) => handleSearch(e.detail.value!)}
+                  onIonInput={(e) => setSearchValue(e.detail.value!)}
                   onIonBlur={() => setSearchBarVisible(false)}
                   onIonCancel={() => setSearchBarVisible(false)}
                 />
@@ -171,7 +187,10 @@ const TimeLine: React.FC = () => {
           <IonSearchbar
             className="mb-1 pb-1"
             placeholder="Search"
-            onIonInput={(e) => handleSearch(e.detail.value!)}
+            value={searchValue}
+            onIonInput={(e) => {
+              setSearchValue(e.detail.value!);
+            }}
           ></IonSearchbar>
           <IonCard
             className={clsx(
