@@ -4,6 +4,9 @@ export interface TagNode {
     name: string;
     noteIds: NoteId[];
     children: TagNode[];
+    metadata: {
+        fullTag: string;
+    }
 }
 
 
@@ -12,18 +15,22 @@ export interface TagTree {
 }
 
 export const initTagTree = (): TagTree => {
-    return { root: { name: "", noteIds: [], children: [] } };
+    return { root: { name: "", noteIds: [], children: [], metadata: { fullTag: "" } } };
 }
 
 export const insertTag = (tagTree: TagTree, tag: string, noteId: NoteId): TagTree => {
     const tagNames = tag.replace("#", '').split("/");
     let currentNode = tagTree.root;
+    let fullTag = "";
 
     for (let tagName of tagNames) {
         let found = currentNode.children.find(child => child.name === tagName);
 
         if (!found) {
-            found = { name: tagName, noteIds: [], children: [] };
+            fullTag += (fullTag.length > 0 ? "/" : "") + tagName;
+            found = {
+                name: tagName, noteIds: [], children: [], metadata: { fullTag: fullTag }
+            };
             currentNode.children.push(found);
         }
 

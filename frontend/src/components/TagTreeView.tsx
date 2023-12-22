@@ -11,39 +11,14 @@ import { useState, useEffect } from "react";
 import TreeView, { flattenTree } from "react-accessible-treeview";
 import { FaList, FaRegFolder, FaRegFolderOpen } from "react-icons/fa";
 import { IoMdArrowDropright } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 const TagTreeView: React.FC = () => {
-  const [expandedIds, setExpandedIds] = useState();
   const { tagTree, setTagTree } = useNotes();
+  console.log(tagTree);
 
   // Flatten the tagTree to be used with TreeView
   const data = flattenTree(tagTree.root);
-
-  // const onKeyDown = (e) => {
-  //   if (e.key === "Enter") {
-  //     getAndSetIds();
-  //   }
-  // };
-
-  // const getAndSetIds = () => {
-  //   const element = document.querySelector(
-  //     "#txtIdsToExpand",
-  //   ) as HTMLInputElement;
-  //   if (element) {
-  //     setExpandedIds(
-  //       element.value
-  //         .split(",")
-  //         .filter((val) => !!val.trim())
-  //         .map((x) => {
-  //           if (isNaN(parseInt(x.trim()))) {
-  //             return x;
-  //           }
-  //           return parseInt(x.trim());
-  //         }),
-  //     );
-  //   }
-  // };
-
   return (
     <div>
       <div className="directory">
@@ -63,18 +38,23 @@ const TagTreeView: React.FC = () => {
             getNodeProps,
             level,
           }) => (
-            <div {...getNodeProps()} style={{ paddingLeft: 20 * (level - 1) }}>
-              {isBranch ? (
-                <div className="flex items-center">
-                  <FolderIcon isOpen={isExpanded} />
-                  <span>#{element.name}</span>
-                </div>
-              ) : (
-                <div className="flex items-center">
-                  <span>#{element.name}</span>
-                </div>
-              )}
-            </div>
+            <Link to={`/timeline/pri/?search=%23${element.metadata?.fullTag}`}>
+              <div
+                {...getNodeProps()}
+                style={{ paddingLeft: 20 * (level - 1) }}
+              >
+                {isBranch ? (
+                  <div className="flex items-center">
+                    <FolderIcon isOpen={isExpanded} />
+                    <span>#{element.name}</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center">
+                    <span>#{element.name}</span>
+                  </div>
+                )}
+              </div>
+            </Link>
           )}
         />
       </div>
