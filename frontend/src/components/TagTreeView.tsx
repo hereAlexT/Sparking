@@ -1,9 +1,15 @@
 import { useNotes } from "../contexts/NotesContext";
 import "./TagTreeView.css";
+import { IonIcon } from "@ionic/react";
 import cx from "classnames";
+import {
+  caretForwardOutline as caretForwardOutlineIcon,
+  caretDownOutline as caretDownOutlineIcon,
+} from "ionicons/icons";
 import React from "react";
 import { useState, useEffect } from "react";
 import TreeView, { flattenTree } from "react-accessible-treeview";
+import { FaList, FaRegFolder, FaRegFolderOpen } from "react-icons/fa";
 import { IoMdArrowDropright } from "react-icons/io";
 
 const TagTreeView: React.FC = () => {
@@ -36,51 +42,51 @@ const TagTreeView: React.FC = () => {
 
   return (
     <div>
-      <div className="checkbox">
+      <div className="directory">
         <TreeView
           data={data}
-          aria-label="Controlled expanded node tree"
-          expandedIds={expandedIds}
-          defaultExpandedIds={[1]}
+          aria-label="directory tree"
+          onBlur={({ treeState, dispatch }) => {
+            dispatch({
+              type: "DESELECT",
+              id: Array.from(treeState.selectedIds)[0],
+            });
+          }}
           nodeRenderer={({
             element,
             isBranch,
             isExpanded,
-            isDisabled,
             getNodeProps,
             level,
-            handleExpand,
-          }) => {
-            return (
-              <div
-                {...getNodeProps({ onClick: handleExpand })}
-                style={{
-                  marginLeft: 40 * (level - 1),
-                  opacity: isDisabled ? 0.5 : 1,
-                }}
-              >
-                {isBranch && <ArrowIcon isOpen={isExpanded} />}
-                <span className="name">
-                  {element.name}-{element.id}
-                </span>
-              </div>
-            );
-          }}
+          }) => (
+            <div {...getNodeProps()} style={{ paddingLeft: 20 * (level - 1) }}>
+              {isBranch ? (
+                <div className="flex items-center">
+                  <FolderIcon isOpen={isExpanded} />
+                  <span>{element.name}</span>
+                </div>
+              ) : (
+                <div className="flex items-center">
+                  <span>{element.name}</span>
+                </div>
+              )}
+            </div>
+          )}
         />
       </div>
     </div>
   );
 };
 
-const ArrowIcon = ({ isOpen, className }) => {
-  const baseClass = "arrow";
-  const classes = cx(
-    baseClass,
-    { [`${baseClass}--closed`]: !isOpen },
-    { [`${baseClass}--open`]: isOpen },
-    className,
+interface FolderIconProps {
+  isOpen: boolean;
+}
+
+const FolderIcon: React.FC<FolderIconProps> = ({ isOpen }) =>
+  isOpen ? (
+    <IonIcon icon={caretDownOutlineIcon} />
+  ) : (
+    <IonIcon icon={caretForwardOutlineIcon} />
   );
-  return <IoMdArrowDropright className={classes} />;
-};
 
 export default TagTreeView;
