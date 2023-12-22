@@ -25,20 +25,24 @@ const TagTreeView: React.FC = () => {
     }
   };
 
-  const getAndSetIds = () => {
-    setExpandedIds(
-      document
-        .querySelector("#txtIdsToExpand")
-        .value.split(",")
-        .filter((val) => !!val.trim())
-        .map((x) => {
-          if (isNaN(parseInt(x.trim()))) {
-            return x;
-          }
-          return parseInt(x.trim());
-        }),
-    );
-  };
+  // const getAndSetIds = () => {
+  //   const element = document.querySelector(
+  //     "#txtIdsToExpand",
+  //   ) as HTMLInputElement;
+  //   if (element) {
+  //     setExpandedIds(
+  //       element.value
+  //         .split(",")
+  //         .filter((val) => !!val.trim())
+  //         .map((x) => {
+  //           if (isNaN(parseInt(x.trim()))) {
+  //             return x;
+  //           }
+  //           return parseInt(x.trim());
+  //         }),
+  //     );
+  //   }
+  // };
 
   return (
     <div>
@@ -63,11 +67,11 @@ const TagTreeView: React.FC = () => {
               {isBranch ? (
                 <div className="flex items-center">
                   <FolderIcon isOpen={isExpanded} />
-                  <span>{element.name}</span>
+                  <span>#{element.name}</span>
                 </div>
               ) : (
                 <div className="flex items-center">
-                  <span>{element.name}</span>
+                  <span>#{element.name}</span>
                 </div>
               )}
             </div>
