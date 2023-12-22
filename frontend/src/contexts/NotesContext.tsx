@@ -16,6 +16,7 @@ import {
   useReducer,
   ReactNode,
   useState,
+  useEffect,
 } from "react";
 
 interface NotesProviderProps {
@@ -69,9 +70,10 @@ type NotesContextType = {
   deleteNote: (id: NoteId) => void;
   updateNote: (note: Note) => void;
   getNotes: () => Promise<Note[]>;
-  searchNotes: (query: string) => void;
   tagTree: TagTree;
   setTagTree: (tagTree: TagTree) => void;
+  searchNotes: (query: string) => void;
+  filteredNotes: Note[];
 };
 
 const NotesContext = createContext<NotesContextType>({
@@ -80,15 +82,16 @@ const NotesContext = createContext<NotesContextType>({
   deleteNote: (id: NoteId) => {},
   updateNote: (note: Note) => {},
   getNotes: () => Promise.resolve([]),
-  searchNotes: (query: string) => {},
   tagTree: initTagTree(),
   setTagTree: (tagTree: TagTree) => {},
+  searchNotes: (query: string) => {},
+  filteredNotes: [],
 });
 
 const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
   const [notes, dispatch] = useReducer(reducer, []);
   const [tagTree, setTagTree] = useState<TagTree>(initTagTree());
-  const [searchResults, setSearchResults] = useState(notes);
+  const [filteredNotes, setFilteredNotes] = useState<Note[]>([]);
 
   async function blobUrlToFile(
     blobUrl: string,
@@ -165,18 +168,24 @@ const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
     return _notes;
   };
 
-  // Modify the searchNotes function
+  /**
+   * Searching features.
+   * @param query - The search query.
+   */
   const searchNotes = (query: string) => {
-    console.debug("triggered searchNotes");
-
-    if (query) {
-      const _notes = notes.filter((note) => note.body.includes(query));
-      setSearchResults(_notes);
+    if (query === "") {
+      setFilteredNotes(notes);
     } else {
-      // When the search query is cleared, set searchResults back to notes
-      setSearchResults(notes);
+      const filtered = notes.filter((note: Note) =>
+        note.body.toLowerCase().includes(query.toLowerCase()),
+      );
+      setFilteredNotes(filtered);
     }
   };
+
+  useEffect(() => {
+    setFilteredNotes(notes);
+  }, [notes]);
 
   return (
     <NotesContext.Provider
@@ -186,9 +195,10 @@ const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
         deleteNote,
         updateNote,
         getNotes,
-        searchNotes,
         tagTree,
         setTagTree,
+        filteredNotes,
+        searchNotes,
       }}
     >
       {children}

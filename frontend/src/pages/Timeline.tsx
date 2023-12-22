@@ -36,21 +36,21 @@ const TimeLine: React.FC = () => {
   const [selectedNote, setSelectedNote] = useState<Note | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  const { notes, createNote, deleteNote, updateNote, getNotes } = useNotes();
+  const {
+    notes,
+    createNote,
+    deleteNote,
+    updateNote,
+    getNotes,
+    filteredNotes,
+    searchNotes,
+  } = useNotes();
   const { isOnline, isSplitPaneOn } = useMeta();
   const { isAuthenticated, user } = useAuth();
-  const [filteredNotes, setFilteredNotes] = useState(notes);
 
-  useEffect(() => {
-    if (searchQuery === "") {
-      setFilteredNotes(notes);
-    } else {
-      const filtered = notes.filter((note: Note) =>
-        note.body.toLowerCase().includes(searchQuery.toLowerCase()),
-      );
-      setFilteredNotes(filtered);
-    }
-  }, [searchQuery, notes]);
+  const handleSearch = (query: string) => {
+    searchNotes(query);
+  };
 
   useEffect(() => {
     console.debug(getPlatforms());
@@ -155,7 +155,7 @@ const TimeLine: React.FC = () => {
                 <IonSearchbar
                   placeholder="Search"
                   showCancelButton="always"
-                  onIonInput={(e) => setSearchQuery(e.detail.value!)}
+                  onIonInput={(e) => handleSearch(e.detail.value!)}
                   onIonBlur={() => setSearchBarVisible(false)}
                   onIonCancel={() => setSearchBarVisible(false)}
                 />
@@ -171,7 +171,7 @@ const TimeLine: React.FC = () => {
           <IonSearchbar
             className="mb-1 pb-1"
             placeholder="Search"
-            onIonInput={(e) => setSearchQuery(e.detail.value!)}
+            onIonInput={(e) => handleSearch(e.detail.value!)}
           ></IonSearchbar>
           <IonCard
             className={clsx(

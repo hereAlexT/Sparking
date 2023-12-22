@@ -19,11 +19,11 @@ const TagTreeView: React.FC = () => {
   // Flatten the tagTree to be used with TreeView
   const data = flattenTree(tagTree.root);
 
-  const onKeyDown = (e) => {
-    if (e.key === "Enter") {
-      getAndSetIds();
-    }
-  };
+  // const onKeyDown = (e) => {
+  //   if (e.key === "Enter") {
+  //     getAndSetIds();
+  //   }
+  // };
 
   // const getAndSetIds = () => {
   //   const element = document.querySelector(
