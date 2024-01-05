@@ -44,13 +44,13 @@ const TagTreeView: React.FC = () => {
                 style={{ paddingLeft: 20 * (level - 1) }}
               >
                 {isBranch ? (
-                  <div className="flex items-center">
+                  <div className="mb-1 flex w-full items-center gap-y-4 rounded-lg text-slate-700 hover:bg-slate-200">
                     <FolderIcon isOpen={isExpanded} />
-                    <span>#{element.name}</span>
+                    <span className="">#{element.name}</span>
                   </div>
                 ) : (
-                  <div className="flex items-center">
-                    <span>#{element.name}</span>
+                  <div className="mb-1 w-full gap-y-4 rounded-lg text-slate-700 hover:bg-slate-200">
+                    <span className="">#{element.name}</span>
                   </div>
                 )}
               </div>
