@@ -22,6 +22,7 @@ const TagTreeView: React.FC = () => {
   return (
     <div>
       <div className="directory">
+        <div className="mb-1 font-bold">Tags:</div>
         <TreeView
           data={data}
           aria-label="directory tree"
